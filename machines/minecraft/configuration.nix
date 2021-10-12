@@ -39,7 +39,7 @@
         dataDir = "/var/lib/minecraft";
         declarative = true;
         eula = true;
-        jvmOpts = "-Xmx2048M -Xms2048M";
+        jvmOpts = "-Xmx3584m -Xms2048m";
         openFirewall = true;
         serverProperties = {
           difficulty = 3;
