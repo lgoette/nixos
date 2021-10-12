@@ -22,6 +22,7 @@
         eula = true;
         jvmOpts = "-Xmx3584m -Xms2048m";
         openFirewall = true;
+        plugins = { dynmap = false; };
         serverProperties = {
           difficulty = 3;
           gamemode = 1;

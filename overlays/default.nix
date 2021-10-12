@@ -2,6 +2,7 @@ self: super: {
 
   # custom packages
   bukkit-spigot = super.pkgs.callPackage ../packages/bukkit-spigot { };
+  dynmap = super.pkgs.callPackage ../packages/dynmap { };
 
   # override with newer version from nixpkgs-unstable (home-manager related)
   chromium = self.unstable.chromium;

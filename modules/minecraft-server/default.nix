@@ -95,6 +95,14 @@ in {
         '';
       };
 
+      plugins.dynmap = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Whether to enable dynmap
+        '';
+      };
+
       whitelist = mkOption {
         type = let
           minecraftUUID = types.strMatching
@@ -196,6 +204,13 @@ in {
       createHome      = true;
       uid             = config.ids.uids.minecraft;
     };
+
+    systemd.tmpfiles.rules = [
+      (lib.mkIf (cfg.plugins.dynmap)
+        "C '/var/lib/minecraft/plugins/dynmap.jar' 0777 minecraft nogroup - ${pkgs.dynmap}/dynmap.jar")
+      (lib.mkIf (!cfg.plugins.dynmap)
+        "r '/var/lib/minecraft/plugins/dynmap.jar' - - - - -")
+    ];
 
     systemd.services.minecraft-server = {
       description   = "Minecraft Server Service";
