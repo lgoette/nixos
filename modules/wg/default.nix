@@ -23,12 +23,11 @@ in {
 
   config = mkIf cfg.enable {
 
-    networking.wireguard.interfaces.wg0 = {
-      ips = [ "${cfg.ip}/24" ];
+    networking.wg-quick.interfaces.wg0 = {
+      address = [ "${cfg.ip}/24" ];
 
       # Path to the private key file
-      privateKeyFile = toString /var/src/secrets/wireguard/private;
-      generatePrivateKeyFile = true;
+      privateKeyFile = "/var/src/secrets/wireguard/private";
 
       peers = [{
 
