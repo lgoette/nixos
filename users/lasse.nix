@@ -4,6 +4,7 @@
     isNormalUser = true;
     home = "/home/lasse";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.zsh;
     openssh.authorizedKeys.keyFiles = [
       (pkgs.fetchurl {
         url = "https://github.com/lgoette.keys";
