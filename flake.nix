@@ -100,17 +100,13 @@
         };
       in rec {
 
-        packages = flake-utils.lib.flattenTree {
-          bukkit-spigot = pkgs.bukkit-spigot;
-          dynmap = pkgs.dynmap;
-        };
+        packages =
+          flake-utils.lib.flattenTree { bukkit-spigot = pkgs.bukkit-spigot; };
 
         apps = {
           # Allow custom packages to be run using `nix run`
           bukkit-spigot =
             flake-utils.lib.mkApp { drv = packages.bukkit-spigot; };
-          dynmap =
-            flake-utils.lib.mkApp { drv = packages.dynmap; };
         };
       });
 }
