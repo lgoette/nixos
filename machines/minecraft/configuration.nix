@@ -13,26 +13,7 @@
     # ./disk-image.nix
   ];
 
-  networking = { hostName = "minecraft"; };
-
-  environment.systemPackages =
-    with self.inputs.nixpkgs.legacyPackages.x86_64-linux; [
-      bash-completion
-      git
-      nixfmt
-      wget
-    ];
-
   mayniklas = {
-    var.mainUser = "lasse";
-    locale.enable = true;
-    openssh.enable = true;
-    nix-common = {
-      enable = true;
-      disable-cache = true;
-    };
-    vmware-guest.enable = true;
-    zsh.enable = true;
     services = {
       minecraft-server = {
         enable = true;
@@ -58,6 +39,25 @@
         };
       };
     };
+    var.mainUser = "lasse";
+    locale.enable = true;
+    openssh.enable = true;
+    nix-common = {
+      enable = true;
+      disable-cache = true;
+    };
+    vmware-guest.enable = true;
+    zsh.enable = true;
   };
+
+  networking = { hostName = "minecraft"; };
+
+  environment.systemPackages =
+    with self.inputs.nixpkgs.legacyPackages.x86_64-linux; [
+      bash-completion
+      git
+      nixfmt
+      wget
+    ];
 
 }
