@@ -65,10 +65,12 @@
         whitelist = {
           BobderEhrenmann = "55df1dd6-8232-47f5-abbf-67c8f49ad26f";
           JulianRooms = "a89ab984-6b22-4ba1-902a-8e44f65c6df7";
+          mineslime2000 = "d6d40e5f-75af-4713-b1fa-522229425116";
         };
         ops = {
           BobderEhrenmann = "55df1dd6-8232-47f5-abbf-67c8f49ad26f";
           JulianRooms = "a89ab984-6b22-4ba1-902a-8e44f65c6df7";
+          mineslime2000 = "d6d40e5f-75af-4713-b1fa-522229425116";
         };
       };
     };
