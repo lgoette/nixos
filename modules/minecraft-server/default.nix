@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.services.minecraft-server;
+  cfg = config.mayniklas.services.minecraft-server;
 
   # We don't allow eula=false anyways
   eulaFile = builtins.toFile "eula.txt" ''
