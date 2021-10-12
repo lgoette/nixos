@@ -13,6 +13,14 @@
     # ./disk-image.nix
   ];
 
+  lgoette = {
+    wg = {
+      enable = true;
+      ip = "10.11.12.8";
+      allowedIPs = [ "10.11.12.1/32" ];
+    };
+  };
+
   mayniklas = {
     services = {
       minecraft-server = {
