@@ -19,7 +19,7 @@ sudo nixos-rebuild switch -v --show-trace --flake .
 nix build build .#bukkit-spigot
 
 # run flake app
-nix rub .#bukkit-spigot
+nix run .#bukkit-spigot
 
 # run flake app externally
 nix run 'github:mayniklas/nixos#owncast'
