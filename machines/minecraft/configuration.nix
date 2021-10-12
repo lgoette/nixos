@@ -6,6 +6,11 @@
     ../../users/lasse.nix
     ../../users/nik.nix
     ../../users/root.nix
+
+    ### to build disk image:
+    ### nix build .#nixosConfigurations.minecraft.config.system.build.vmwareImage
+
+    # ./disk-image.nix
   ];
 
   networking = { hostName = "minecraft"; };
