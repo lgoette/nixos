@@ -4,7 +4,7 @@
   inputs = {
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-21.05";
-    
+
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager.url = "github:nix-community/home-manager/release-21.05";
@@ -15,6 +15,7 @@
     mayniklas.url = "github:mayniklas/nixos";
     mayniklas.inputs.nixpkgs.follows = "nixpkgs";
     mayniklas.inputs.home-manager.follows = "home-manager";
+    mayniklas.inputs.flake-utils.follows = "flake-utils";
 
   };
 
