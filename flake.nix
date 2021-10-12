@@ -2,7 +2,9 @@
   description = "A very basic flake";
 
   inputs = {
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-21.05";
+    
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager.url = "github:nix-community/home-manager/release-21.05";
@@ -85,7 +87,7 @@
       }) (builtins.attrNames (builtins.readDir ./machines)));
     } //
 
-    (flake-utils.lib.eachSystem [ "i686-linux" "x86_64-linux" ]) (system:
+    (flake-utils.lib.eachSystem [ "x86_64-linux" ]) (system:
       let
         pkgs = import nixpkgs {
           inherit system;
