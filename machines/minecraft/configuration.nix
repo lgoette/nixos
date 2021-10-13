@@ -42,7 +42,7 @@
           mineslime2000 = "d6d40e5f-75af-4713-b1fa-522229425116";
           hellslime2000 = "41555a0b-9a6f-4596-98eb-d60ed5b02cb3";
           Endslime2000 = "8e82ce9f-80fe-4a23-ab3e-464e0d3776f6";
-          EnderSnow_ = "73341ad1-dabb-4547-b00e-33fb1c488464"
+          EnderSnow_ = "73341ad1-dabb-4547-b00e-33fb1c488464";
         };
         ops = {
           BobderEhrenmann = "55df1dd6-8232-47f5-abbf-67c8f49ad26f";
