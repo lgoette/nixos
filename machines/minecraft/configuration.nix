@@ -31,20 +31,21 @@
         jvmOpts = "-Xms2048m -Xmx3584m";
         openFirewall = true;
         serverProperties = {
-          difficulty = 3;
-          gamemode = 1;
+          difficulty = 2;
+          gamemode = 0;
           max-players = 10;
-          motd = "NixOS Minecraft server!";
+          motd = "\u00a7e  \u273f\u00a72\u00a7l Lamacraft\u00a7e \u273f\nMap: Brave New World";
           white-list = true;
         };
         whitelist = {
           BobderEhrenmann = "55df1dd6-8232-47f5-abbf-67c8f49ad26f";
-          JulianRooms = "a89ab984-6b22-4ba1-902a-8e44f65c6df7";
           mineslime2000 = "d6d40e5f-75af-4713-b1fa-522229425116";
+          hellslime2000 = "41555a0b-9a6f-4596-98eb-d60ed5b02cb3";
+          Endslime2000 = "8e82ce9f-80fe-4a23-ab3e-464e0d3776f6";
+          EnderSnow_ = "73341ad1-dabb-4547-b00e-33fb1c488464"
         };
         ops = {
           BobderEhrenmann = "55df1dd6-8232-47f5-abbf-67c8f49ad26f";
-          JulianRooms = "a89ab984-6b22-4ba1-902a-8e44f65c6df7";
           mineslime2000 = "d6d40e5f-75af-4713-b1fa-522229425116";
         };
       };
