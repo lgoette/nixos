@@ -70,4 +70,19 @@
       wget
     ];
 
+  home-manager.users = {
+    lasse = {
+      imports = [
+        ../../home-manager/lasse.nix
+        { nixpkgs.overlays = [ self.overlay self.overlay-unstable ]; }
+      ];
+    };
+    nik = {
+      imports = [
+        ../../home-manager/nik.nix
+        { nixpkgs.overlays = [ self.overlay self.overlay-unstable ]; }
+      ];
+    };
+  };
+
 }
