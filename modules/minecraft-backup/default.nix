@@ -45,7 +45,7 @@ in {
     systemd.timers.minecraft-backup = {
       wantedBy = [ "timers.target" ];
       partOf = [ "minecraft-backup.service" ];
-      timerConfig.OnCalendar = "*-*-* *:05:00";
+      timerConfig.OnCalendar = "*-*-* 05:00:00";
     };
 
     services.nginx = mkIf cfg.enableWebservice {
