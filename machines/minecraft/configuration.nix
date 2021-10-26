@@ -19,6 +19,7 @@
       ip = "10.11.12.8";
       allowedIPs = [ "10.11.12.0/24" "0.0.0.0/0" ];
     };
+    services.minecraft-backup.enable = true; 
   };
 
   mayniklas = {
@@ -34,7 +35,8 @@
           difficulty = 2;
           gamemode = 0;
           max-players = 10;
-          motd = "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\nMap: Brave New World";
+          motd =
+            "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\nMap: Brave New World";
           white-list = true;
         };
         whitelist = {
@@ -44,6 +46,7 @@
           Endslime2000 = "8e82ce9f-80fe-4a23-ab3e-464e0d3776f6";
           EnderSnow_ = "73341ad1-dabb-4547-b00e-33fb1c488464";
           hako55 = "df1fc00d-e816-4356-870c-a1492be67740";
+          PlanetMaker3000 = "e909c435-b18f-4bea-94c8-ead3b843f2c6";
         };
         ops = {
           BobderEhrenmann = "55df1dd6-8232-47f5-abbf-67c8f49ad26f";
