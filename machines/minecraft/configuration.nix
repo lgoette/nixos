@@ -19,7 +19,11 @@
       ip = "10.11.12.8";
       allowedIPs = [ "10.11.12.0/24" "0.0.0.0/0" ];
     };
-    services.minecraft-backup.enable = true; 
+    services.minecraft-backup = {
+      enable = true;
+      enableWebservice = true; 
+      openFirewall = true;
+    };
   };
 
   mayniklas = {

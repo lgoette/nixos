@@ -26,7 +26,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf ( cfg.enable && config.mayniklas.services.minecraft-server.enable ) {
 
     systemd.services.minecraft-backup = {
       serviceConfig = {
@@ -34,7 +34,7 @@ in {
         Type = "oneshot";
         ExecStart = ''
           systemctl stop minecraft-server ; \
-           ${pkgs.zip}/bin/zip -r ${cfg.dataDir}/minecraft.zip /var/lib/minecraft ; \
+           ${pkgs.zip}/bin/zip -r ${cfg.dataDir}/minecraft.zip ${config.mayniklas.services.minecraft-server.dataDir} ; \
           systemctl start minecraft-server ; \
           ${pkgs.coreutils}/bin/chown nginx:nginx /var/www/minecraft-backup/minecraft.zip ; \
           ${pkgs.coreutils}/bin/chmod 550 /var/www/minecraft-backup/minecraft.zip
@@ -48,8 +48,10 @@ in {
       timerConfig.OnCalendar = "*-*-* *:05:00";
     };
 
-    services.nginx = {
+    services.nginx = mkIf cfg.enableWebservice {
       enable = true;
+      recommendedOptimisation = true;
+      recommendedTlsSettings = true;
       virtualHosts."backup.minecraft" = {
         default = true;
         root = "/var/www/minecraft-backup";
@@ -61,7 +63,7 @@ in {
       };
     };
 
-    networking.firewall.interfaces.wg0.allowedTCPPorts = [ 80 ];
+    networking.firewall.interfaces.wg0.allowedTCPPorts = mkIf ( cfg.openFirewall && cfg.enableWebservice ) [ 80 ];
 
   };
 }
