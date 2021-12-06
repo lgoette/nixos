@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.mayniklas.services.minecraft-server;
+  cfg = config.mayniklas.minecraft-server;
 
   # We don't allow eula=false anyways
   eulaFile = builtins.toFile "eula.txt" ''
@@ -44,7 +44,7 @@ let
 
 in {
   options = {
-    mayniklas.services.minecraft-server = {
+    mayniklas.minecraft-server = {
 
       enable = mkOption {
         type = types.bool;
@@ -194,8 +194,10 @@ in {
       description     = "Minecraft server service user";
       home            = cfg.dataDir;
       createHome      = true;
-      uid             = config.ids.uids.minecraft;
+      isSystemUser    = true;
+      group           = "minecraft";
     };
+    users.groups.minecraft = {};
 
     systemd.services.minecraft-server = {
       description   = "Minecraft Server Service";
