@@ -54,7 +54,7 @@ in {
       recommendedTlsSettings = true;
       virtualHosts."backup.minecraft" = {
         default = true;
-        root = "/var/www/minecraft-backup";
+        root = "${cfg.dataDir}";
         listen = [{
           addr = "10.11.12.8";
           port = 80;

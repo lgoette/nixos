@@ -35,7 +35,7 @@
       jvmOpts = "-Xms2048m -Xmx3584m";
       openFirewall = true;
       serverProperties = {
-        difficulty = 2;
+        difficulty = 3;
         gamemode = 0;
         max-players = 10;
         motd =
