@@ -21,21 +21,20 @@
     };
     services.minecraft-backup = {
       enable = true;
-      enableWebservice = true; 
+      enableWebservice = true;
       openFirewall = true;
     };
     debug-json = {
       enable = true;
       data = {
         BobderEhrenmann = {
-          uuid="55df1dd6-8232-47f5-abbf-67c8f49ad26f";
-          level=4;
-          bypassesPlayerLimit=false;
+          uuid = "55df1dd6-8232-47f5-abbf-67c8f49ad26f";
+          level = 4;
         };
         mineslime2000 = {
-          uuid="d6d40e5f-75af-4713-b1fa-522229425116";
-          level=4;
-          bypassesPlayerLimit=false;
+          uuid = "d6d40e5f-75af-4713-b1fa-522229425116";
+          level = 4;
+          bypassesPlayerLimit = true;
         };
       };
     };
@@ -66,21 +65,19 @@
         hako55 = "df1fc00d-e816-4356-870c-a1492be67740";
         PlanetMaker3000 = "e909c435-b18f-4bea-94c8-ead3b843f2c6";
       };
-      #ops = {
-      #  BobderEhrenmann={
-      #    uuid="55df1dd6-8232-47f5-abbf-67c8f49ad26f";
-      #    level=4;
-      #    bypassesPlayerLimit=false;
-      #  };
-      #  mineslime2000={
-      #    uuid="d6d40e5f-75af-4713-b1fa-522229425116";
-      #    level=4;
-      #    bypassPlayerLimit=false;
-      #  };
-      #};
       ops = {
-        BobderEhrenmann = "55df1dd6-8232-47f5-abbf-67c8f49ad26f";
-        mineslime2000 = "d6d40e5f-75af-4713-b1fa-522229425116";
+        enable = true;
+        data = {
+          BobderEhrenmann = {
+            uuid = "55df1dd6-8232-47f5-abbf-67c8f49ad26f";
+            level = 4;
+          };
+          mineslime2000 = {
+            uuid = "d6d40e5f-75af-4713-b1fa-522229425116";
+            level = 4;
+            bypassesPlayerLimit = true;
+          };
+        };
       };
     };
     var.mainUser = "lasse";
