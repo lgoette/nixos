@@ -5,7 +5,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://download.mayniklas.de/builds/bukkit/spigot-${version}.jar";
-    hash = "sha256-IBKr/xTexbVbMTrrRf62IAcUIgvEUPNzTUBXMZvD0ps=";
+    hash = "sha256-kIU7P55XuB1o3PqtN6wzx4mCAgl5a1ooCbeLmfxZH/A=";
   };
 
   preferLocalBuild = true;
