@@ -19,6 +19,10 @@ let
     (builtins.toJSON
       (mapAttrsToList (n: v: { name = n; uuid = v; }) cfg.ops));
 
+  #opsFile = pkgs.writeText "ops.json"
+  #  (builtins.toJSON
+  #    (mapAttrsToList (n: v: { name = n; uuid = v; level = l; bypassesPlayerLimit = bpl; }) cfg.ops));
+
   cfgToString = v: if builtins.isBool v then boolToString v else toString v;
 
   serverPropertiesFile = pkgs.writeText "server.properties" (''
