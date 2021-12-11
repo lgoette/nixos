@@ -1,6 +1,6 @@
 { lib, stdenv, fetchurl, nixosTests, jre_headless }:
 stdenv.mkDerivation rec {
-  version = "1.18";
+  version = "1.18.1";
   pname = "bukkit-spigot";
 
   src = fetchurl {
