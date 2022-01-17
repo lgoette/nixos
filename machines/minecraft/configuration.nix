@@ -66,6 +66,10 @@
     var.mainUser = "lasse";
     locale.enable = true;
     openssh.enable = true;
+    metrics = {
+      node.enable = true;
+      flake.enable = true;
+    };
     nix-common = {
       enable = true;
       disable-cache = true;
@@ -76,6 +80,7 @@
 
   networking = {
     hostName = "minecraft";
+    firewall.interfaces.ens192.allowedTCPPorts = [ 9100 ];
     interfaces.ens192.ipv4.routes = [
       {
         address = "192.168.5.0";
