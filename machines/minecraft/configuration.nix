@@ -74,7 +74,21 @@
     zsh.enable = true;
   };
 
-  networking = { hostName = "minecraft"; };
+  networking = {
+    hostName = "minecraft";
+    interfaces.ens192.ipv4.routes = [
+      {
+        address = "192.168.5.0";
+        prefixLength = 24;
+        via = "192.168.20.1";
+      }
+      {
+        address = "10.88.88.0";
+        prefixLength = 24;
+        via = "192.168.20.1";
+      }
+    ];
+  };
 
   environment.systemPackages =
     with self.inputs.nixpkgs.legacyPackages.x86_64-linux; [
