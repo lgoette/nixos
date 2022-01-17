@@ -99,4 +99,10 @@
     };
   };
 
+  # swapfile
+  swapDevices = [{
+    device = "/var/swapfile";
+    size = (1024 * 8);
+  }];
+
 }
