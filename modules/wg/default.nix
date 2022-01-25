@@ -35,11 +35,6 @@ in {
         ip route add 10.88.88.0/24 via 192.168.20.1 dev ens192 metric 0
       '';
 
-      postDown = ''
-        ip route del 192.168.5.0/24 via 192.168.20.1 dev ens192 metric 0
-        ip route del 10.88.88.0/24 via 192.168.20.1 dev ens192 metric 0
-      '';
-
       # Path to the private key file
       privateKeyFile = "/var/src/secrets/wireguard/private";
 
