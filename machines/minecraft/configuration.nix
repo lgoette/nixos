@@ -72,7 +72,7 @@
     };
     nix-common = {
       enable = true;
-      disable-cache = true;
+      disable-cache = false;
     };
     vmware-guest.enable = true;
     zsh.enable = true;
@@ -93,6 +93,11 @@
         via = "192.168.20.1";
       }
     ];
+    # Additional hosts to put in /etc/hosts
+    extraHosts = ''
+      # binary cache
+      192.168.20.5 cache.lounge.rocks
+    '';
   };
 
   environment.systemPackages =
