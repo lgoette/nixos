@@ -14,6 +14,7 @@
 
     mayniklas.url = "github:mayniklas/nixos";
     mayniklas.inputs.nixpkgs.follows = "nixpkgs";
+    mayniklas.inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     mayniklas.inputs.home-manager.follows = "home-manager";
     mayniklas.inputs.flake-utils.follows = "flake-utils";
 
