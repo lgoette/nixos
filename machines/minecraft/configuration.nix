@@ -1,17 +1,7 @@
 { self, ... }:
 
 {
-  imports = [
-    # Users
-    ../../users/lasse.nix
-    ../../users/nik.nix
-    ../../users/root.nix
-
-    ### to build disk image:
-    ### nix build .#nixosConfigurations.minecraft.config.system.build.vmwareImage
-
-    # ./disk-image.nix
-  ];
+  imports = [ ../../users/lasse.nix ../../users/nik.nix ../../users/root.nix ];
 
   lgoette = {
     wg = {
