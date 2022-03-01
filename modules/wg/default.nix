@@ -31,8 +31,6 @@ in {
 
       postUp = ''
         wg set wg0 peer ${publicKey} persistent-keepalive 25
-        ip route add 192.168.5.0/24 via 192.168.20.1 dev ens192 metric 0
-        ip route add 10.88.88.0/24 via 192.168.20.1 dev ens192 metric 0
       '';
 
       # Path to the private key file
@@ -49,7 +47,7 @@ in {
         # connect to the peer, apparently that doesn't happen if the private
         # key is set after the PersistentKeepalive setting which happens if
         # we load it from a file
-        #persistentKeepalive = 25;
+        # persistentKeepalive = 25;
       }];
     };
 
