@@ -25,29 +25,25 @@ in {
 
   config = mkIf cfg.enable {
 
-    networking.wg-quick.interfaces.wg0 = {
+    networking.interfaces.ens192.ipv4.routes = [{
+      address = "5.45.108.206";
+      prefixLength = 32;
+      via = "192.168.20.1";
+      options = { metric = "0"; };
+    }];
 
-      address = [ "${cfg.ip}/24" ];
+    networking.wireguard.interfaces.wg0 = {
 
-      postUp = ''
-        wg set wg0 peer ${publicKey} persistent-keepalive 25
-      '';
+      ips = [ "${cfg.ip}/24" ];
 
       # Path to the private key file
       privateKeyFile = "/var/src/secrets/wireguard/private";
 
       peers = [{
         inherit publicKey; # set publicKey to the publicKey we've defined above
-
         allowedIPs = cfg.allowedIPs;
-
         endpoint = "lamafarm.lasse-goette.de:53115";
-
-        # Use postUp instead of this setting because otherwise it doesn't auto
-        # connect to the peer, apparently that doesn't happen if the private
-        # key is set after the PersistentKeepalive setting which happens if
-        # we load it from a file
-        # persistentKeepalive = 25;
+        persistentKeepalive = 25;
       }];
     };
 
