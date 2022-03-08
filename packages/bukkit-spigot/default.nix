@@ -1,11 +1,11 @@
 { lib, stdenv, fetchurl, nixosTests, jre_headless }:
 stdenv.mkDerivation rec {
-  version = "1.18.1";
+  version = "1.18.2";
   pname = "bukkit-spigot";
 
   src = fetchurl {
     url = "https://download.mayniklas.de/builds/bukkit/spigot-${version}.jar";
-    hash = "sha256-Mq7L+9gs9ZfvrG36JPcBf3fJnr2EGKLop6Qaerqga/w=";
+    hash = "sha256-AmKcx9AJXTA72/WATqeK7aj7VV7JR/E0kePV6SbNqas=";
   };
 
   preferLocalBuild = true;
