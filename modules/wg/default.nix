@@ -25,12 +25,30 @@ in {
 
   config = mkIf cfg.enable {
 
-    networking.interfaces.ens192.ipv4.routes = [{
-      address = "5.45.108.206";
-      prefixLength = 32;
-      via = "192.168.20.1";
-      options = { metric = "0"; };
-    }];
+    systemd.services.network-addresses-ens192 = {
+      after = [ "dhcpcd.service" ];
+    };
+
+    networking.interfaces.ens192.ipv4.routes = [
+      {
+        address = "5.45.108.206";
+        prefixLength = 32;
+        via = "192.168.20.1";
+        options = { metric = "0"; };
+      }
+      {
+        address = "10.88.88.0";
+        prefixLength = 24;
+        via = "192.168.20.1";
+        options = { metric = "202"; };
+      }
+      {
+        address = "192.168.5.0";
+        prefixLength = 24;
+        via = "192.168.20.1";
+        options = { metric = "202"; };
+      }
+    ];
 
     networking.wireguard.interfaces.wg0 = {
 

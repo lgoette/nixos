@@ -68,29 +68,9 @@
     zsh.enable = true;
   };
 
-  systemd.services.network-addresses-ens192 = { after = [ "dhcpcd.service" ]; };
   networking = {
     hostName = "minecraft";
     firewall.interfaces.ens192.allowedTCPPorts = [ 9100 ];
-    interfaces.ens192.ipv4.routes = [
-      {
-        address = "10.88.88.0";
-        prefixLength = 24;
-        via = "192.168.20.1";
-        options = { metric = "202"; };
-      }
-      {
-        address = "192.168.5.0";
-        prefixLength = 24;
-        via = "192.168.20.1";
-        options = { metric = "202"; };
-      }
-    ];
-    # Additional hosts to put in /etc/hosts
-    extraHosts = ''
-      # binary cache
-      192.168.20.5 cache.lounge.rocks
-    '';
   };
 
   environment.systemPackages =
