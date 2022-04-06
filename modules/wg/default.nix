@@ -11,6 +11,11 @@ in {
       default = "10.88.88.1";
       example = "10.88.88.20";
     };
+    uplink_interface = mkOption {
+      type = types.str;
+      default = "ens192";
+      example = "eth0";
+    };
     allowedIPs = mkOption {
       type = with types; listOf str;
       default = [ "10.88.88.0/24" ];
@@ -25,14 +30,12 @@ in {
 
   config = mkIf cfg.enable {
 
-    networking.interfaces.ens192.ipv4.routes = [
-      {
-        address = "5.45.108.206";
-        prefixLength = 32;
-        via = "192.168.20.1";
-        options = { metric = "0"; };
-      }
-    ];
+    networking.interfaces.${cfg.uplink_interface}.ipv4.routes = [{
+      address = "5.45.108.206";
+      prefixLength = 32;
+      via = "192.168.20.1";
+      options = { metric = "0"; };
+    }];
 
     networking.wireguard.interfaces.wg0 = {
 

@@ -8,6 +8,7 @@
       enable = true;
       ip = "10.11.12.8";
       allowedIPs = [ "10.11.12.0/24" "0.0.0.0/0" ];
+      uplink_interface = "ens192";
     };
     services.minecraft-backup = {
       enable = true;
