@@ -110,13 +110,17 @@
         };
       in rec {
 
-        packages =
-          flake-utils.lib.flattenTree { bukkit-spigot = pkgs.bukkit-spigot; };
+        packages = flake-utils.lib.flattenTree {
+          bukkit-spigot = pkgs.bukkit-spigot;
+          minecraft-controller = pkgs.minecraft-controller;
+        };
 
         apps = {
           # Allow custom packages to be run using `nix run`
           bukkit-spigot =
             flake-utils.lib.mkApp { drv = packages.bukkit-spigot; };
+          minecraft-controller =
+            flake-utils.lib.mkApp { drv = packages.minecraft-controller; };
         };
       });
 }

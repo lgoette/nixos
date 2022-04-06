@@ -2,6 +2,8 @@ self: super: {
 
   # custom packages
   bukkit-spigot = super.pkgs.callPackage ../packages/bukkit-spigot { };
+  minecraft-controller =
+    super.pkgs.callPackage ../packages/minecraft-controller { };
 
   # override with newer version from nixpkgs-unstable (home-manager related)
   chromium = self.unstable.chromium;
