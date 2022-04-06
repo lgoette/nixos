@@ -21,26 +21,29 @@ steps:
 - name: run flake checks
   commands:
   - nix --experimental-features "nix-command flakes" flake check --show-trace
+{{#hosts}}
 
 ---
 kind: pipeline
 type: exec
-name: build amd64 hosts
+name: build {{arch}} hosts
 
 platform:
   os: linux
-  arch: amd64
+  arch: {{arch}}
 
 clone:
   depth: 1
 
 steps:
 
-- name: build minecraft
+{{#machines}}
+- name: build {{name}}
   commands:
-  - nix build '.#nixosConfigurations.minecraft.config.system.build.toplevel' --out-link result-minecraft
-  - nix path-info --closure-size -h $(readlink -f result-minecraft)
+  - nix build '.#nixosConfigurations.{{name}}.config.system.build.toplevel' --out-link result-{{name}}
+  - nix path-info --closure-size -h $(readlink -f result-{{name}})
 
+{{/machines}}
 - name: upload to binary cache via s3
   commands:
   - nix run 'github:mayniklas/nixos'#s3uploader
@@ -56,31 +59,35 @@ trigger:
   event:
   - cron
   - push
+{{/hosts}}
 
+{{#packages}}
 ---
 kind: pipeline
 type: exec
-name: build amd64 flake apps
+name: build {{arch}} flake apps
 
 platform:
   os: linux
-  arch: amd64
+  arch: {{arch}}
 
 clone:
   depth: 1
 
 steps:
 
-- name: Build bukkit-spigot
+{{#apps}}
+- name: Build {{name}}
   commands:
-  - nix build .#bukkit-spigot --out-link result-bukkit-spigot
-  - nix path-info --closure-size -h $(readlink -f result-bukkit-spigot)
+  - nix build .#{{name}} --out-link result-{{name}}
+  - nix path-info --closure-size -h $(readlink -f result-{{name}})
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: aws_key
     AWS_SECRET_ACCESS_KEY:
       from_secret: aws_secret
 
+{{/apps}}
 - name: upload to binary cache via s3
   commands:
   - nix run 'github:mayniklas/nixos'#s3uploader
@@ -96,3 +103,4 @@ trigger:
   event:
   - push
   - cron
+{{/packages}}

@@ -1,0 +1,22 @@
+{
+    "hosts": [
+        {
+            "arch": "amd64",
+            "machines": [
+                {
+                    "name": "minecraft"
+                }
+            ]
+        }
+    ],
+    "packages": [
+        {
+            "arch": "amd64",
+            "apps": [
+                {
+                    "name": "bukkit-spigot"
+                }
+            ]
+        }
+    ]
+}
