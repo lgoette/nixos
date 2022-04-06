@@ -71,6 +71,7 @@
   networking = {
     hostName = "minecraft";
     dhcpcd.enable = false;
+    enableIPv6 = false;
     interfaces.ens192.ipv4.addresses = [{
       address = "192.168.20.75";
       prefixLength = 24;
