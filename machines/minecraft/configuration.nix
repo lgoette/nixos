@@ -1,7 +1,7 @@
 { self, ... }:
 
 {
-  imports = [ ../../users/lasse.nix ../../users/nik.nix ../../users/root.nix ];
+  imports = [ ../../users/lasse.nix ../../users/root.nix ];
 
   lgoette = {
     wg = {
@@ -18,6 +18,10 @@
   };
 
   mayniklas = {
+    user = {
+      root.enable = true;
+      nik.enable = true;
+    };
     minecraft-server = {
       enable = true;
       dataDir = "/var/lib/minecraft";
