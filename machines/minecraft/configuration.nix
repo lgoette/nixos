@@ -112,14 +112,12 @@
     lasse = {
       imports = [
         ../../home-manager/lasse.nix
-        { nixpkgs.overlays = [ self.overlay self.overlay-unstable ]; }
+        { nixpkgs.overlays = [ self.overlay ]; }
       ];
     };
     nik = {
-      imports = [
-        ../../home-manager/nik.nix
-        { nixpkgs.overlays = [ self.overlay self.overlay-unstable ]; }
-      ];
+      imports =
+        [ ../../home-manager/nik.nix { nixpkgs.overlays = [ self.overlay ]; } ];
     };
   };
 
