@@ -41,6 +41,11 @@ steps:
   - nix build '.#nixosConfigurations.minecraft.config.system.build.toplevel' --out-link result-minecraft
   - nix path-info --closure-size -h $(readlink -f result-minecraft)
 
+- name: build wireguard
+  commands:
+  - nix build '.#nixosConfigurations.wireguard.config.system.build.toplevel' --out-link result-wireguard
+  - nix path-info --closure-size -h $(readlink -f result-wireguard)
+
 - name: upload to binary cache via s3
   commands:
   - nix run 'github:mayniklas/nixos'#s3uploader

@@ -5,6 +5,9 @@
             "machines": [
                 {
                     "name": "minecraft"
+                },
+                {
+                    "name": "wireguard"
                 }
             ]
         }
