@@ -4,6 +4,13 @@
   imports = [ ../../users/lasse.nix ../../users/root.nix ];
 
   mayniklas = {
+    container.unifi = {
+      enable = true;
+      acmeMail = "acme@lasse-goette.de";
+      domain = "unifi.lasse-goette.de";
+      version = "7.1.61";
+    };
+    docker.enable = true;
     user = {
       root.enable = true;
       nik.enable = true;
