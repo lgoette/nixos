@@ -19,7 +19,20 @@
     zsh.enable = true;
   };
 
-  networking = { hostName = "wireguard"; };
+  networking = {
+    hostName = "wireguard";
+    # interfaces.ens3 = {
+    #   ipv6.addresses = [{
+    #     address = "";
+    #     prefixLength = 128;
+    #   }];
+    # };
+    firewall = { enable = false; };
+    nftables = {
+      enable = true;
+      rulesetFile = ./ruleset.nft;
+    };
+  };
 
   environment.systemPackages =
     with self.inputs.nixpkgs.legacyPackages.x86_64-linux; [
