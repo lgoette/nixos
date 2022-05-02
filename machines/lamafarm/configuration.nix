@@ -14,13 +14,24 @@
     user = { root.enable = true; };
     var.mainUser = "lasse";
     locale.enable = true;
-    openssh.enable = true;
     nix-common = {
       enable = true;
       disable-cache = false;
     };
     kvm-guest.enable = true;
     zsh.enable = true;
+  };
+
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    passwordAuthentication = false;
+    startWhenNeeded = true;
+    kbdInteractiveAuthentication = false;
+    listenAddresses = [{
+      addr = "0.0.0.0";
+      port = 50937;
+    }];
   };
 
   networking = {
