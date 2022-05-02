@@ -11,10 +11,7 @@
       version = "7.1.61";
     };
     docker.enable = true;
-    user = {
-      root.enable = true;
-      nik.enable = true;
-    };
+    user = { root.enable = true; };
     var.mainUser = "lasse";
     locale.enable = true;
     openssh.enable = true;
