@@ -95,7 +95,7 @@
       }) (builtins.attrNames (builtins.readDir ./machines)));
 
       # nix build .#wireguard-image
-      wireguard-image = import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
+      lamafarm-image = import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
         # See for further options:
         # https://github.com/NixOS/nixpkgs/blob/master/nixos/lib/make-disk-image.nix
         config = (self.nixosConfigurations.wireguard).config;

@@ -27,7 +27,7 @@
   };
 
   networking = {
-    hostName = "wireguard";
+    hostName = "lamafarm";
     # interfaces.ens3 = {
     #   ipv6.addresses = [{
     #     address = "";
