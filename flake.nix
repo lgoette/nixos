@@ -62,6 +62,14 @@
           ];
         };
 
+      ### BEGIN: tmp fix netcup-qcow2-image
+      lib = nixpkgs.lib;
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        config = { allowUnfree = true; };
+      };
+      ### END: tmp fix netcup-qcow2-image
+
     in {
 
       # Expose overlay to flake outputs, to allow using it from other flakes.
@@ -85,7 +93,21 @@
           ];
         };
       }) (builtins.attrNames (builtins.readDir ./machines)));
-    } //
+
+      # nix build .#wireguard-image
+      wireguard-image = import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
+        # See for further options:
+        # https://github.com/NixOS/nixpkgs/blob/master/nixos/lib/make-disk-image.nix
+        config = (self.nixosConfigurations.wireguard).config;
+        inherit pkgs lib;
+        format = "qcow2";
+        name = "wireguard-image";
+        configFile = ./machines/wireguard/configuration.nix;
+      };
+
+    }
+
+    //
 
     (flake-utils.lib.eachSystem [ "x86_64-linux" ]) (system:
       let
