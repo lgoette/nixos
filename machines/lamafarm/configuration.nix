@@ -1,7 +1,7 @@
 { self, ... }:
 
 {
-  imports = [ ../../users/lasse.nix ../../users/root.nix ];
+  imports = [ ../../users/lasse.nix ../../users/root.nix ./wg0.nix ];
 
   mayniklas = {
     container.unifi = {
