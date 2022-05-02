@@ -29,6 +29,9 @@ table inet filter {
 
         # accept SSH connections (required for a server)
         tcp dport 22 accept
+        
+        # accept http / https
+        tcp dport {http,https} accept
 
         # accept Wireguard connections
         udp dport 53115 accept
