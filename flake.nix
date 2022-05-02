@@ -98,11 +98,11 @@
       lamafarm-image = import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
         # See for further options:
         # https://github.com/NixOS/nixpkgs/blob/master/nixos/lib/make-disk-image.nix
-        config = (self.nixosConfigurations.wireguard).config;
+        config = (self.nixosConfigurations.lamafarm).config;
         inherit pkgs lib;
         format = "qcow2";
-        name = "wireguard-image";
-        configFile = ./machines/wireguard/configuration.nix;
+        name = "lamafarm-image";
+        configFile = ./machines/lamafarm/configuration.nix;
       };
 
     }

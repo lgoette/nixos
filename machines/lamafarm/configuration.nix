@@ -53,10 +53,6 @@
         { nixpkgs.overlays = [ self.overlay ]; }
       ];
     };
-    nik = {
-      imports =
-        [ ../../home-manager/nik.nix { nixpkgs.overlays = [ self.overlay ]; } ];
-    };
   };
 
   # swapfile
