@@ -42,14 +42,17 @@
     }];
   };
 
+  # systemd.services.docker.reloadTriggers = [ "nftables.service" ];
+  # systemd.services.docker.restartTriggers = [ "nftables.service" ];
+
   networking = {
     hostName = "lamafarm";
     firewall = {
-      enable = true;
+      enable = false;
       allowedTCPPorts = [ 50937 ];
     };
     nftables = {
-      enable = false;
+      enable = true;
       rulesetFile = ./ruleset.nft;
     };
     # interfaces.ens3 = {

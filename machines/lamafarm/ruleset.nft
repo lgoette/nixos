@@ -7,9 +7,9 @@ define VPN_NET = { 10.11.12.0/24 }
 
 define WAN_IP = 5.45.108.206
 
-table inet filter {
+table ip filter {
     # Block all incomming connections traffic except SSH and "ping".
-    chain input {
+    chain INPUT {
         type filter hook input priority 0;
 
         # accept any localhost traffic
@@ -20,16 +20,16 @@ table inet filter {
 
         # ICMP
         # routers may also want: mld-listener-query, nd-router-solicit
-        ip6 nexthdr icmpv6 icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } accept
+        # ip6 nexthdr icmpv6 icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } accept
         ip protocol icmp icmp type { destination-unreachable, router-advertisement, time-exceeded, parameter-problem } accept
 
         # allow "ping"
-        ip6 nexthdr icmpv6 icmpv6 type echo-request accept
+        # ip6 nexthdr icmpv6 icmpv6 type echo-request accept
         ip protocol icmp icmp type echo-request accept
 
         # accept SSH connections (required for a server)
         tcp dport 50937 accept
-        
+
         # accept http / https
         tcp dport {http,https} accept
 
@@ -41,14 +41,37 @@ table inet filter {
     }
 
     # Allow all outgoing connections.
-    chain output {
+    chain OUTPUT {
         type filter hook output priority 0;
         accept
     }
 
-    chain forward {
+    chain FORWARD {
         type filter hook forward priority 0;
+
+        counter jump DOCKER-ISOLATION-STAGE-1
+        oifname "docker0" ct state related,established counter accept
+        oifname "docker0" counter jump DOCKER
+        iifname "docker0" oifname != "docker0" counter accept
+        iifname "docker0" oifname "docker0" counter accept
+
         accept
+    }
+
+    chain DOCKER {
+        iifname != "docker0" oifname "docker0" meta l4proto tcp ip daddr 172.17.0.2 tcp dport 8443 counter accept
+        iifname != "docker0" oifname "docker0" meta l4proto tcp ip daddr 172.17.0.2 tcp dport 8080 counter accept
+        iifname != "docker0" oifname "docker0" meta l4proto udp ip daddr 172.17.0.2 udp dport 3478 counter accept
+    }
+
+    chain DOCKER-ISOLATION-STAGE-1 {
+        iifname "docker0" oifname != "docker0" counter jump DOCKER-ISOLATION-STAGE-2
+        counter return
+    }
+
+    chain DOCKER-ISOLATION-STAGE-2 {
+        oifname "docker0" counter drop
+        counter return
     }
 }
 
@@ -59,6 +82,8 @@ table ip nat {
         ip daddr $WAN_IP udp dport 25565 counter dnat to 10.11.12.8
         ip daddr $WAN_IP tcp dport 25565 counter dnat to 10.11.12.8
         ip daddr $WAN_IP tcp dport 25564 counter dnat to 10.11.12.8:22
+
+        fib daddr type local counter jump DOCKER
     }
 
     chain INPUT {
@@ -67,10 +92,24 @@ table ip nat {
 
     chain OUTPUT {
         type nat hook output priority -100; policy accept;
+
+        ip daddr != 127.0.0.0/8 fib daddr type local counter jump DOCKER
     }
 
     chain POSTROUTING {
         type nat hook postrouting priority srcnat; policy accept;
         oifname $WAN_IFC ip saddr $VPN_NET counter packets 8 bytes 448 masquerade
+
+        oifname != "docker0" ip saddr 172.17.0.0/16 counter masquerade
+        ip saddr 172.17.0.2 ip daddr 172.17.0.2 tcp dport 8443 counter masquerade
+        ip saddr 172.17.0.2 ip daddr 172.17.0.2 tcp dport 8080 counter masquerade
+        ip saddr 172.17.0.2 ip daddr 172.17.0.2 udp dport 3478 counter masquerade
+    }
+
+    chain DOCKER {
+        iifname "docker0" counter return
+        iifname != "docker0" ip daddr 127.0.0.1 tcp dport 8443 counter dnat to 172.17.0.2:8443
+        iifname != "docker0" tcp dport 8080 counter dnat to 172.17.0.2:8080
+        iifname != "docker0" udp dport 3478 counter dnat to 172.17.0.2:3478
     }
 }
