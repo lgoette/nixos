@@ -36,6 +36,14 @@
 
   networking = {
     hostName = "lamafarm";
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 50937 ];
+    };
+    nftables = {
+      enable = false;
+      rulesetFile = ./ruleset.nft;
+    };
     # interfaces.ens3 = {
     #   ipv6.addresses = [{
     #     address = "";
