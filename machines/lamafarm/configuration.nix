@@ -9,6 +9,10 @@
       workshop = true;
       urban-disclaimer = true;
     };
+    # unifi-controller = {
+    #   enable = true;
+    #   domain = "unifi.lasse-goette.de";
+    # };
   };
 
   mayniklas = {
