@@ -3,6 +3,14 @@
 {
   imports = [ ../../users/lasse.nix ../../users/root.nix ./wg0.nix ];
 
+  # lgoette = {
+  #   nginx = {
+  #     enable = true;
+  #     workshop = true;
+  #     urban = true;
+  #   };
+  # };
+
   mayniklas = {
     container.unifi = {
       enable = true;
@@ -50,11 +58,6 @@
     #     prefixLength = 128;
     #   }];
     # };
-    firewall = { enable = false; };
-    nftables = {
-      enable = true;
-      rulesetFile = ./ruleset.nft;
-    };
   };
 
   environment.systemPackages =
@@ -63,6 +66,7 @@
       git
       nixfmt
       wget
+      wg-friendly-peer-names
     ];
 
   home-manager.users = {
