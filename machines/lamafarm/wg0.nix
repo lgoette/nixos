@@ -1,4 +1,6 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
+let wg0_port = 53115;
+in {
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
@@ -8,14 +10,14 @@
 
   networking = {
 
-    firewall = { allowedUDPPorts = [ 53115 ]; };
+    firewall = { allowedUDPPorts = [ wg0_port ]; };
 
     interfaces.wg0 = { mtu = 1412; };
 
     wireguard.interfaces.wg0 = {
 
       ips = [ "10.11.12.1/24" ];
-      listenPort = 53115;
+      listenPort = wg0_port;
       # Path to the private key file
       privateKeyFile = toString /var/src/secrets/wireguard/private;
 
