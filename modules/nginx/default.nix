@@ -38,7 +38,7 @@ in {
           # enableACME = true; # -> get a LE certificate
           sslCertificateKey = "/var/src/secrets/ssl/cf_urban-disclaimer.de.key";
           sslCertificate = "/var/src/secrets/ssl/cf_urban-disclaimer.de.pem";
-          # addSSL = true;
+          addSSL = true;
           root = "/var/www/urban-disclaimer.de";
         };
 
