@@ -30,7 +30,7 @@ in {
 
     services.unifi = {
       enable = true;
-      unifiPackage = pkgs.unifi;
+      unifiPackage = (pkgs.callPackages ../../packages/unifi { }).unifi7;
       openFirewall = false;
     };
 
