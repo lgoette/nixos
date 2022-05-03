@@ -18,6 +18,9 @@
             "apps": [
                 {
                     "name": "bukkit-spigot"
+                },
+                {
+                    "name": "unifi"
                 }
             ]
         }
