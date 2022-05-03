@@ -30,7 +30,7 @@ in {
             "/var/src/secrets/ssl/cf_workshop.lasse-goette.de.key";
           sslCertificate =
             "/var/src/secrets/ssl/cf_workshop.lasse-goette.de.pem";
-          addSSL = true;
+          onlySSL = true;
           root = "/var/www/workshop.lasse-goette.de";
           extraConfig = ''
             # https://www.cloudflare.com/ips
@@ -72,7 +72,7 @@ in {
           # enableACME = true; # -> get a LE certificate
           sslCertificateKey = "/var/src/secrets/ssl/cf_urban-disclaimer.de.key";
           sslCertificate = "/var/src/secrets/ssl/cf_urban-disclaimer.de.pem";
-          addSSL = true;
+          onlySSL = true;
           root = "/var/www/urban-disclaimer.de";
           extraConfig = ''
             # https://www.cloudflare.com/ips
