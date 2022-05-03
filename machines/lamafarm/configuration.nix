@@ -3,13 +3,13 @@
 {
   imports = [ ../../users/lasse.nix ../../users/root.nix ./wg0.nix ];
 
-  # lgoette = {
-  #   nginx = {
-  #     enable = true;
-  #     workshop = true;
-  #     urban = true;
-  #   };
-  # };
+  lgoette = {
+    nginx = {
+      enable = true;
+      workshop = true;
+      urban-disclaimer = true;
+    };
+  };
 
   mayniklas = {
     container.unifi = {
