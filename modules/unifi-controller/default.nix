@@ -43,7 +43,7 @@ in {
           enableACME = true;
           forceSSL = true;
           locations = {
-            "/" = { return = "404"; };
+            "/" = { return = "403"; };
             "~(/wss|/manage|/login|/status|/templates|/src|/services|/directives|/api)" =
               {
                 proxyPass = "https://127.0.0.1:8443";
