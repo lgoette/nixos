@@ -9,20 +9,15 @@
       workshop = true;
       urban-disclaimer = true;
     };
-    # unifi-controller = {
-    #   enable = true;
-    #   domain = "unifi.lasse-goette.de";
-    # };
+
+    unifi-controller = {
+      enable = true;
+      domain = "unifi.lasse-goette.de";
+    };
+
   };
 
   mayniklas = {
-    container.unifi = {
-      enable = true;
-      acmeMail = "acme@lasse-goette.de";
-      domain = "unifi.lasse-goette.de";
-      version = "7.1.61";
-    };
-    docker.enable = true;
     user = { root.enable = true; };
     var.mainUser = "lasse";
     locale.enable = true;
@@ -49,11 +44,11 @@
   networking = {
     hostName = "lamafarm";
     firewall = {
-      # enable = false;
+      enable = false;
       allowedTCPPorts = [ 50937 ];
     };
     nftables = {
-      # enable = true;
+      enable = true;
       rulesetFile = ./ruleset.nft;
     };
     # interfaces.ens3 = {

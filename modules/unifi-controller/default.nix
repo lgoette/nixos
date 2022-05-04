@@ -24,7 +24,7 @@ in {
 
     # Open firewall ports
     networking.firewall = {
-      allowedTCPPorts = [ 80 443 ];
+      allowedTCPPorts = [ 80 443 8080 ];
       allowedUDPPorts = [ 3478 ];
     };
 
