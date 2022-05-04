@@ -75,6 +75,11 @@
 
   home-manager.users = {
     lasse = {
+      # packages from mayniklas
+      home.packages = with self.inputs.mayniklas.packages.x86_64-linux; [
+        drone-gen
+        vs-fix
+      ];
       imports = [
         ../../home-manager/lasse.nix
         { nixpkgs.overlays = [ self.overlay ]; }
