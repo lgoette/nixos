@@ -30,7 +30,8 @@ in {
 
     services.unifi = {
       enable = true;
-      unifiPackage = (pkgs.callPackages ../../packages/unifi { }).unifi7;
+      # unifiPackage = (pkgs.callPackages ../../packages/unifi { }).unifi7; # -> use our own package
+      unifiPackage = pkgs.unifi; # -> use newest package in NixPkgs
       openFirewall = false;
     };
 
