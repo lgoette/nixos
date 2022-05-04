@@ -124,11 +124,6 @@
         packages = flake-utils.lib.flattenTree {
           bukkit-spigot = pkgs.bukkit-spigot;
           minecraft-controller = pkgs.minecraft-controller;
-          unifiLTS = pkgs.unifiLTS;
-          unifi5 = pkgs.unifi5;
-          unifi6 = pkgs.unifi6;
-          unifi7 = pkgs.unifi7;
-          unifi = pkgs.unifi;
         };
 
         apps = {
@@ -137,12 +132,6 @@
             flake-utils.lib.mkApp { drv = packages.bukkit-spigot; };
           minecraft-controller =
             flake-utils.lib.mkApp { drv = packages.minecraft-controller; };
-
-          unifiLTS = flake-utils.lib.mkApp { drv = packages.unifiLTS; };
-          unifi5 = flake-utils.lib.mkApp { drv = packages.unifi5; };
-          unifi6 = flake-utils.lib.mkApp { drv = packages.unifi6; };
-          unifi7 = flake-utils.lib.mkApp { drv = packages.unifi7; };
-          unifi = flake-utils.lib.mkApp { drv = packages.unifi; };
         };
       });
 }
