@@ -3,9 +3,7 @@ with lib;
 let cfg = config.lgoette.bluetooth;
 in {
 
-  options.lgoette.bluetooth = {
-    enable = mkEnableOption "activate bluetooth";
-  };
+  options.lgoette.bluetooth = { enable = mkEnableOption "activate bluetooth"; };
 
   config = mkIf cfg.enable {
 

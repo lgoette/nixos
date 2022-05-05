@@ -13,11 +13,11 @@
   nixpkgs.config = { allowUnfree = true; };
 
   # Imports
-  imports = [ 
-      ./modules/neovim.nix
-      ./modules/htop.nix
-      ./modules/shell.nix
-      ./modules/vscode.nix
+  imports = [
+    ./modules/neovim.nix
+    ./modules/htop.nix
+    ./modules/shell.nix
+    ./modules/vscode.nix
   ];
 
   programs = {
