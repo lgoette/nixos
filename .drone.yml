@@ -36,6 +36,11 @@ clone:
 
 steps:
 
+- name: build lasse-laptop
+  commands:
+  - nix build '.#nixosConfigurations.lasse-laptop.config.system.build.toplevel' --out-link result-lasse-laptop
+  - nix path-info --closure-size -h $(readlink -f result-lasse-laptop)
+
 - name: build minecraft
   commands:
   - nix build '.#nixosConfigurations.minecraft.config.system.build.toplevel' --out-link result-minecraft

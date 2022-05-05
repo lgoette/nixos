@@ -4,6 +4,9 @@
             "arch": "amd64",
             "machines": [
                 {
+                    "name": "lasse-laptop"
+                },
+                {
                     "name": "minecraft"
                 },
                 {
@@ -14,12 +17,12 @@
     ],
     "packages": [
         {
-            "arch": "amd64",
             "apps": [
                 {
                     "name": "bukkit-spigot"
                 }
-            ]
+            ],
+            "arch": "amd64"
         }
     ]
 }
