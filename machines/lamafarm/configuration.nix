@@ -51,12 +51,12 @@
       enable = true;
       rulesetFile = ./ruleset.nft;
     };
-    # interfaces.ens3 = {
-    #   ipv6.addresses = [{
-    #     address = "";
-    #     prefixLength = 128;
-    #   }];
-    # };
+    interfaces.ens3 = {
+      ipv6.addresses = [{
+        address = "2a03:4000:30:8f53::13:7161";
+        prefixLength = 64;
+      }];
+    };
   };
 
   environment.systemPackages =
