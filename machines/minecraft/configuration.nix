@@ -116,7 +116,7 @@
         vs-fix
       ];
       imports = [
-        ../../home-manager/lasse.nix
+        ../../home-manager/lasse-server.nix
         { nixpkgs.overlays = [ self.overlay ]; }
       ];
     };
