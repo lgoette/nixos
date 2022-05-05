@@ -4,9 +4,9 @@
   imports = [ ../../users/lasse.nix ../../users/root.nix ];
 
   lgoette = {
-      grub.enable = true;
-      kde.enable = true;
-      bluetooth.enable = true;
+    grub.enable = true;
+    kde.enable = true;
+    bluetooth.enable = true;
   };
 
   mayniklas = {
@@ -21,12 +21,10 @@
 
   networking = {
     hostName = "Lasse-Laptop";
-    firewall = {
-      enable = true;
-    };
+    firewall = { enable = true; };
     # Enable networkmanager
     networkmanager.enable = true;
-};
+  };
   users.extraUsers.lasse.extraGroups = [ "networkmanager" ];
 
   environment.systemPackages =
@@ -35,7 +33,7 @@
       git
       nixfmt
       wget
-      ];
+    ];
 
   home-manager.users = {
     lasse = {
@@ -51,15 +49,15 @@
     };
   };
 
-    fileSystems."/" = {
-        device = "/dev/disk/by-label/nixos";
-        autoResize = true;
-        fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/nixos";
+    autoResize = true;
+    fsType = "ext4";
+  };
 
-    fileSystems."/boot" = {
-        device = "/dev/disk/by-label/ESP";
-        fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/ESP";
+    fsType = "vfat";
+  };
 
 }
