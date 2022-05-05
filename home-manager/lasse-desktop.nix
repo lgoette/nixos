@@ -23,7 +23,6 @@
   programs = {
 
     zsh = { sessionVariables = { ZDOTDIR = "/home/lasse/.config/zsh"; }; };
-    kdeconnect.enable = true;
 
   };
 

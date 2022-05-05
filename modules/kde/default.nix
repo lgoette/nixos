@@ -15,5 +15,6 @@ in {
       layout = "de";
       xkbOptions = "eurosign:e";
     };
+    programs.kdeconnect.enable = true;
   };
 }
