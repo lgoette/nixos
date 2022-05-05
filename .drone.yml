@@ -80,21 +80,6 @@ steps:
   commands:
   - nix build .#bukkit-spigot --out-link result-bukkit-spigot
   - nix path-info --closure-size -h $(readlink -f result-bukkit-spigot)
-  environment:
-    AWS_ACCESS_KEY_ID:
-      from_secret: aws_key
-    AWS_SECRET_ACCESS_KEY:
-      from_secret: aws_secret
-
-- name: Build unifi
-  commands:
-  - nix build .#unifi --out-link result-unifi
-  - nix path-info --closure-size -h $(readlink -f result-unifi)
-  environment:
-    AWS_ACCESS_KEY_ID:
-      from_secret: aws_key
-    AWS_SECRET_ACCESS_KEY:
-      from_secret: aws_secret
 
 - name: upload to binary cache via s3
   commands:
