@@ -4,7 +4,7 @@
     openssh.authorizedKeys.keyFiles = [
       (pkgs.fetchurl {
         url = "https://github.com/lgoette.keys";
-        hash = "sha256-tO5cED/b1eEuqvuGfzjAd3WhCO/oGvwRep0+jJA7B5E=";
+        hash = "sha256-DNLHQJ0gz+kstDpiJvIigJ0dw6kw9CZGhA0RHSw3Wgc=";
       })
     ];
   };
