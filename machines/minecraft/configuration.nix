@@ -36,7 +36,6 @@
       eula = true;
       jvmOpts = "-Xms2048m -Xmx6656m";
       openFirewall = true;
-      package = (pkgs.callPackage ../../packages/bukkit-spigot { });
       serverProperties = {
         difficulty = 3;
         gamemode = 0;

@@ -54,6 +54,7 @@
               imports = builtins.attrValues self.nixosModules
                 ++ builtins.attrValues mayniklas.nixosModules;
             }
+            { nixpkgs.overlays = [ self.overlays.default ]; }
           ];
         };
       }) (builtins.attrNames (builtins.readDir ./machines)));
