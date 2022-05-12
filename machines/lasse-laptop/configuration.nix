@@ -55,4 +55,6 @@
     fsType = "vfat";
   };
 
+  system.stateVersion = "22.05";
+
 }

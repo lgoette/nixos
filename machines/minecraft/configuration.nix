@@ -127,4 +127,6 @@
     size = (1024 * 8);
   }];
 
+  system.stateVersion = "22.05";
+
 }
