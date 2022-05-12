@@ -1,4 +1,4 @@
-{ self, pkgs, mayniklas, home-manager, ... }:
+{ pkgs, mayniklas, home-manager, ... }:
 
 {
   imports = [

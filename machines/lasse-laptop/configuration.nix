@@ -1,4 +1,4 @@
-{ self, pkgs, mayniklas, home-manager, ... }:
+{ pkgs, mayniklas, home-manager, ... }:
 
 {
   imports = [
@@ -40,10 +40,7 @@
         drone-gen
         vs-fix
       ];
-      imports = [
-        ../../home-manager/lasse-desktop.nix
-        { nixpkgs.overlays = [ self.overlay ]; }
-      ];
+      imports = [ ../../home-manager/lasse-desktop.nix ];
     };
   };
 
