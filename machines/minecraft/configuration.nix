@@ -1,7 +1,11 @@
-{ self, ... }:
+{ self, pkgs, mayniklas, home-manager, ... }:
 
 {
-  imports = [ ../../users/lasse.nix ../../users/root.nix ];
+  imports = [
+    ../../users/lasse.nix
+    ../../users/root.nix
+    # home-manager.nixosModules.home-manager
+  ];
 
   lgoette = {
     wg = {
@@ -22,7 +26,7 @@
       root.enable = true;
       nik = {
         enable = true;
-        home-manager.headless = true;
+        home-manager.enable = true;
       };
     };
     minecraft-server = {
@@ -32,6 +36,7 @@
       eula = true;
       jvmOpts = "-Xms2048m -Xmx6656m";
       openFirewall = true;
+      package = (pkgs.callPackage ../../packages/bukkit-spigot { });
       serverProperties = {
         difficulty = 3;
         gamemode = 0;
@@ -103,25 +108,16 @@
     firewall.interfaces.ens192.allowedTCPPorts = [ 9100 ];
   };
 
-  environment.systemPackages =
-    with self.inputs.nixpkgs.legacyPackages.x86_64-linux; [
-      bash-completion
-      git
-      nixfmt
-      wget
-    ];
+  environment.systemPackages = with pkgs; [ bash-completion git nixfmt wget ];
 
   home-manager.users = {
     lasse = {
       # packages from mayniklas
-      home.packages = with self.inputs.mayniklas.packages.x86_64-linux; [
+      home.packages = with mayniklas.packages.x86_64-linux; [
         drone-gen
         vs-fix
       ];
-      imports = [
-        ../../home-manager/lasse-server.nix
-        { nixpkgs.overlays = [ self.overlay ]; }
-      ];
+      imports = [ ../../home-manager/lasse-server.nix ];
     };
   };
 

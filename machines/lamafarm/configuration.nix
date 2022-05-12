@@ -1,7 +1,12 @@
-{ self, ... }:
+{ self, pkgs, mayniklas, home-manager, ... }:
 
 {
-  imports = [ ../../users/lasse.nix ../../users/root.nix ./wg0.nix ];
+  imports = [
+    ../../users/lasse.nix
+    ../../users/root.nix
+    ./wg0.nix
+    # home-manager.nixosModules.home-manager
+  ];
 
   lgoette = {
     nginx = {
@@ -59,19 +64,18 @@
     };
   };
 
-  environment.systemPackages =
-    with self.inputs.nixpkgs.legacyPackages.x86_64-linux; [
-      bash-completion
-      git
-      nixfmt
-      wget
-      wg-friendly-peer-names
-    ];
+  environment.systemPackages = with pkgs; [
+    bash-completion
+    git
+    nixfmt
+    wget
+    wg-friendly-peer-names
+  ];
 
   home-manager.users = {
     lasse = {
       # packages from mayniklas
-      home.packages = with self.inputs.mayniklas.packages.x86_64-linux; [
+      home.packages = with mayniklas.packages.x86_64-linux; [
         drone-gen
         vs-fix
       ];
