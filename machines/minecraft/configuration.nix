@@ -19,6 +19,7 @@
       enableWebservice = true;
       openFirewall = true;
     };
+    user.lasse.home-manager.enable = true;
   };
 
   mayniklas = {
@@ -107,18 +108,13 @@
     firewall.interfaces.ens192.allowedTCPPorts = [ 9100 ];
   };
 
-  environment.systemPackages = with pkgs; [ bash-completion git nixfmt wget ];
+  home-manager.users.lasse.home.packages =
+    with mayniklas.packages.x86_64-linux; [
+      drone-gen
+      vs-fix
+    ];
 
-  home-manager.users = {
-    lasse = {
-      # packages from mayniklas
-      home.packages = with mayniklas.packages.x86_64-linux; [
-        drone-gen
-        vs-fix
-      ];
-      imports = [ ../../home-manager/lasse-server.nix ];
-    };
-  };
+  environment.systemPackages = with pkgs; [ bash-completion git nixfmt wget ];
 
   # swapfile
   swapDevices = [{

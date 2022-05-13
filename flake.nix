@@ -31,7 +31,20 @@
       nixosModules = builtins.listToAttrs (map (x: {
         name = x;
         value = import (./modules + "/${x}");
-      }) (builtins.attrNames (builtins.readDir ./modules)));
+      }) (builtins.attrNames (builtins.readDir ./modules)))
+
+        //
+
+        {
+
+          home-manager = { pkgs, ... }: {
+            imports = [
+              ./home-manager/home.nix
+              ./home-manager/home-desktop.nix
+            ];
+          };
+
+        };
 
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called

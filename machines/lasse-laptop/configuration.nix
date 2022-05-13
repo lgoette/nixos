@@ -11,6 +11,7 @@
     grub.enable = true;
     kde.enable = true;
     bluetooth.enable = true;
+    user.lasse.home-manager.desktop = true;
   };
 
   mayniklas = {
@@ -31,18 +32,13 @@
   };
   users.extraUsers.lasse.extraGroups = [ "networkmanager" ];
 
-  environment.systemPackages = with pkgs; [ bash-completion git nixfmt wget ];
+  home-manager.users.lasse.home.packages =
+    with mayniklas.packages.x86_64-linux; [
+      drone-gen
+      vs-fix
+    ];
 
-  home-manager.users = {
-    lasse = {
-      # packages from mayniklas
-      home.packages = with mayniklas.packages.x86_64-linux; [
-        drone-gen
-        vs-fix
-      ];
-      imports = [ ../../home-manager/lasse-desktop.nix ];
-    };
-  };
+  environment.systemPackages = with pkgs; [ bash-completion git nixfmt wget ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";

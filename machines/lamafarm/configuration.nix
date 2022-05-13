@@ -20,6 +20,8 @@
       domain = "unifi.lasse-goette.de";
     };
 
+    user.lasse.home-manager.enable = true;
+
   };
 
   mayniklas = {
@@ -64,6 +66,12 @@
     };
   };
 
+  home-manager.users.lasse.home.packages =
+    with mayniklas.packages.x86_64-linux; [
+      drone-gen
+      vs-fix
+    ];
+
   environment.systemPackages = with pkgs; [
     bash-completion
     git
@@ -71,17 +79,6 @@
     wget
     wg-friendly-peer-names
   ];
-
-  home-manager.users = {
-    lasse = {
-      # packages from mayniklas
-      home.packages = with mayniklas.packages.x86_64-linux; [
-        drone-gen
-        vs-fix
-      ];
-      imports = [ ../../home-manager/lasse-server.nix ];
-    };
-  };
 
   # swapfile
   swapDevices = [{
