@@ -62,55 +62,26 @@
           system = "x86_64-linux";
 
           modules = [
-            (./machines + "/${x}/configuration.nix")
-            mayniklas.nixosModules.bluetooth
+
+            # https://github.com/MayNiklas/nixos/tree/main/modules
             mayniklas.nixosModules.cloud-provider
-            mayniklas.nixosModules.containers
-            mayniklas.nixosModules.desktop
             mayniklas.nixosModules.docker
-            mayniklas.nixosModules.fonts
-            mayniklas.nixosModules.github-runner
-            mayniklas.nixosModules.gnome
-            mayniklas.nixosModules.grub
-            mayniklas.nixosModules.grub-luks
-            mayniklas.nixosModules.hellonik
             mayniklas.nixosModules.home-manager
-            mayniklas.nixosModules.hosts
             mayniklas.nixosModules.iperf
-            mayniklas.nixosModules.jackett
-            mayniklas.nixosModules.jitsi
-            mayniklas.nixosModules.kde
-            mayniklas.nixosModules.librespeedtest
             mayniklas.nixosModules.locale
-            mayniklas.nixosModules.matrix
             mayniklas.nixosModules.minecraft
             mayniklas.nixosModules.monitoring
-            mayniklas.nixosModules.netbox
-            mayniklas.nixosModules.networking
-            mayniklas.nixosModules.nginx
             mayniklas.nixosModules.nix-common
-            mayniklas.nixosModules.nvidia
-            mayniklas.nixosModules.octoprint
             mayniklas.nixosModules.openssh
             mayniklas.nixosModules.options
-            mayniklas.nixosModules.owncast
-            mayniklas.nixosModules.pi4b
-            mayniklas.nixosModules.pihole
-            mayniklas.nixosModules.plex
-            mayniklas.nixosModules.screen-config
-            mayniklas.nixosModules.server
-            mayniklas.nixosModules.sonarr
             mayniklas.nixosModules.sound
-            mayniklas.nixosModules.transmission
             mayniklas.nixosModules.user
-            mayniklas.nixosModules.virtualisation
-            mayniklas.nixosModules.wg
-            mayniklas.nixosModules.xfce
-            mayniklas.nixosModules.xserver
-            mayniklas.nixosModules.yubikey
             mayniklas.nixosModules.zsh
+
+            (./machines + "/${x}/configuration.nix")
             { imports = builtins.attrValues self.nixosModules; }
             { nixpkgs.overlays = [ self.overlays.default ]; }
+
           ];
         };
       }) (builtins.attrNames (builtins.readDir ./machines)))
