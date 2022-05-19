@@ -12,7 +12,7 @@
       keyFiles = [
         (pkgs.fetchurl {
           url = "https://github.com/lgoette.keys";
-          hash = "sha256-DNLHQJ0gz+kstDpiJvIigJ0dw6kw9CZGhA0RHSw3Wgc=";
+          hash = "sha256-hX9gcnrW+1hwSt5M0VRZl+i2O9iOy/EoZjYakn5FE+g=";
         })
       ];
     };
