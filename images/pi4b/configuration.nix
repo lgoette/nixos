@@ -1,13 +1,10 @@
-{ config, pkgs, lib, nixos-hardware, ... }: {
+{ config, pkgs, lib, ... }: {
 
   imports = [
 
     # users
     ../../users/lasse.nix
     ../../users/root.nix
-
-    # https://github.com/NixOS/nixos-hardware/tree/master/raspberry-pi/4
-    nixos-hardware.nixosModules.raspberry-pi-4
 
   ];
 
