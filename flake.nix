@@ -5,6 +5,8 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -38,10 +40,8 @@
         {
 
           home-manager = { pkgs, ... }: {
-            imports = [
-              ./home-manager/home.nix
-              ./home-manager/home-desktop.nix
-            ];
+            imports =
+              [ ./home-manager/home.nix ./home-manager/home-desktop.nix ];
           };
 
         };
@@ -70,7 +70,32 @@
             { nixpkgs.overlays = [ self.overlays.default ]; }
           ];
         };
-      }) (builtins.attrNames (builtins.readDir ./machines)));
+      }) (builtins.attrNames (builtins.readDir ./machines)))
+
+        //
+
+        {
+          pi4b-image = nixpkgs.lib.nixosSystem rec {
+            specialArgs = { flake-self = self; } // inputs;
+            system = "aarch64-linux";
+            modules = [
+              ./images/pi4b/configuration.nix
+              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+              {
+                imports = builtins.attrValues self.nixosModules
+                  ++ builtins.attrValues mayniklas.nixosModules;
+              }
+              {
+                nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+                nix.registry.nixpkgs.flake = nixpkgs;
+                sdImage.compressImage = false;
+                sdImage.imageBaseName = "pi4b-image";
+
+              }
+            ];
+          };
+        };
+
     }
 
     //
@@ -92,6 +117,12 @@
         packages = flake-utils.lib.flattenTree {
           bukkit-spigot = pkgs.bukkit-spigot;
           minecraft-controller = pkgs.minecraft-controller;
+
+          # Generate a sd-card image for the pi
+          # nix build '.#pi4b-image'
+          pi4b-image =
+            self.nixosConfigurations.pi4b-image.config.system.build.sdImage;
+
         };
 
         apps = {
