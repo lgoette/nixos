@@ -44,6 +44,30 @@
               [ ./home-manager/home.nix ./home-manager/home-desktop.nix ];
           };
 
+        } // {
+
+          # lgoette.mayniklas
+          # -> imports used flake inputs
+          # -> this way, they can easily be imported to different flake outputs
+          mayniklas = { ... }: {
+            imports = [
+              # https://github.com/MayNiklas/nixos/tree/main/modules
+              mayniklas.nixosModules.cloud-provider
+              mayniklas.nixosModules.docker
+              mayniklas.nixosModules.home-manager
+              mayniklas.nixosModules.iperf
+              mayniklas.nixosModules.locale
+              mayniklas.nixosModules.minecraft
+              mayniklas.nixosModules.monitoring
+              mayniklas.nixosModules.nix-common
+              mayniklas.nixosModules.openssh
+              mayniklas.nixosModules.options
+              mayniklas.nixosModules.sound
+              mayniklas.nixosModules.user
+              mayniklas.nixosModules.zsh
+            ];
+          };
+
         };
 
       # Each subdirectory in ./machines is a host. Add them all to
@@ -63,21 +87,6 @@
 
           modules = [
 
-            # https://github.com/MayNiklas/nixos/tree/main/modules
-            mayniklas.nixosModules.cloud-provider
-            mayniklas.nixosModules.docker
-            mayniklas.nixosModules.home-manager
-            mayniklas.nixosModules.iperf
-            mayniklas.nixosModules.locale
-            mayniklas.nixosModules.minecraft
-            mayniklas.nixosModules.monitoring
-            mayniklas.nixosModules.nix-common
-            mayniklas.nixosModules.openssh
-            mayniklas.nixosModules.options
-            mayniklas.nixosModules.sound
-            mayniklas.nixosModules.user
-            mayniklas.nixosModules.zsh
-
             (./machines + "/${x}/configuration.nix")
             { imports = builtins.attrValues self.nixosModules; }
             { nixpkgs.overlays = [ self.overlays.default ]; }
@@ -95,10 +104,7 @@
             modules = [
               ./images/pi4b/configuration.nix
               "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-              {
-                imports = builtins.attrValues self.nixosModules
-                  ++ builtins.attrValues mayniklas.nixosModules;
-              }
+              { imports = builtins.attrValues self.nixosModules; }
               {
                 nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
                 nix.registry.nixpkgs.flake = nixpkgs;
