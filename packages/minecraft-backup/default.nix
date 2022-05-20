@@ -10,6 +10,8 @@ stdenv.mkDerivation {
 
   installPhase = let
     minecraft-backup-skript = pkgs.writeShellScriptBin "minecraft-backup" ''
+      backup_dir=$1
+      mc_dir=$2
       status=$(systemctl is-active minecraft-server.service)
       if [ $status == active ]; then
         active=true
@@ -19,16 +21,17 @@ stdenv.mkDerivation {
 
       if ($active); then
         ${pkgs.systemd}/bin/systemctl stop minecraft-server
-        ${pkgs.zip}/bin/zip -r /var/www/minecraft-backup/minecraft.zip /var/lib/minecraft
+        ${pkgs.zip}/bin/zip -r $backup_dir/minecraft.zip $mc_dir
         ${pkgs.systemd}/bin/systemctl start minecraft-server
-        ${pkgs.coreutils}/bin/chown nginx:nginx /var/www/minecraft-backup/minecraft.zip
-        ${pkgs.coreutils}/bin/chmod 550 /var/www/minecraft-backup/minecraft.zip
+        ${pkgs.coreutils}/bin/chown nginx:nginx $backup_dir/minecraft.zip
+        ${pkgs.coreutils}/bin/chmod 550 $backup_dir/minecraft.zip
 
       else
-        ${pkgs.zip}/bin/zip -r /var/www/minecraft-backup/minecraft.zip /var/lib/minecraft
-        ${pkgs.coreutils}/bin/chown nginx:nginx /var/www/minecraft-backup/minecraft.zip
-        ${pkgs.coreutils}/bin/chmod 550 /var/www/minecraft-backup/minecraft.zip
+        ${pkgs.zip}/bin/zip -r $backup_dir/minecraft.zip $mc_dir
+        ${pkgs.coreutils}/bin/chown nginx:nginx $backup_dir/minecraft.zip
+        ${pkgs.coreutils}/bin/chmod 550 $backup_dir/minecraft.zip
       fi
+
     '';
   in ''
     cp -r ${minecraft-backup-skript} $out

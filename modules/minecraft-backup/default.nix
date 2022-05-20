@@ -33,7 +33,7 @@ in {
         User = "root";
         Type = "oneshot";
         ExecStart = ''
-          ${pkgs.minecraft-backup}/bin/minecraft-backup
+          ${pkgs.minecraft-backup}/bin/minecraft-backup ${cfg.dataDir} ${config.mayniklas.services.minecraft-server.dataDir}
         '';
       };
     };
