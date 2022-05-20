@@ -21,6 +21,7 @@ stdenv.mkDerivation {
 
       if ($active); then
         ${pkgs.systemd}/bin/systemctl stop minecraft-server
+        sleep 30
         ${pkgs.zip}/bin/zip -r $backup_dir/minecraft.zip $mc_dir
         ${pkgs.systemd}/bin/systemctl start minecraft-server
         ${pkgs.coreutils}/bin/chown nginx:nginx $backup_dir/minecraft.zip
