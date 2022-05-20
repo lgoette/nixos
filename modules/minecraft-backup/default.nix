@@ -33,9 +33,10 @@ in {
         User = "root";
         Type = "oneshot";
         ExecStart = ''
-          systemctl stop minecraft-server ; \
+          running = systemctl is-active --quiet minecraft-server ; \
+          if ($running) then systemctl stop minecraft-server ; fi \
            ${pkgs.zip}/bin/zip -r ${cfg.dataDir}/minecraft.zip ${config.mayniklas.services.minecraft-server.dataDir} ; \
-          systemctl start minecraft-server ; \
+          if ($running) then systemctl start minecraft-server ; fi \
           ${pkgs.coreutils}/bin/chown nginx:nginx /var/www/minecraft-backup/minecraft.zip ; \
           ${pkgs.coreutils}/bin/chmod 550 /var/www/minecraft-backup/minecraft.zip
         '';
