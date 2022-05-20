@@ -136,6 +136,7 @@
 
         packages = flake-utils.lib.flattenTree {
           bukkit-spigot = pkgs.bukkit-spigot;
+          minecraft-backup = pkgs.minecraft-backup;
           minecraft-controller = pkgs.minecraft-controller;
 
           # Generate a sd-card image for the pi
@@ -149,6 +150,8 @@
           # Allow custom packages to be run using `nix run`
           bukkit-spigot =
             flake-utils.lib.mkApp { drv = packages.bukkit-spigot; };
+          minecraft-backup =
+            flake-utils.lib.mkApp { drv = packages.minecraft-backup; };
           minecraft-controller =
             flake-utils.lib.mkApp { drv = packages.minecraft-controller; };
         };

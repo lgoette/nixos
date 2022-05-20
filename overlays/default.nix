@@ -12,6 +12,8 @@ in self: super: {
   minecraft-controller =
     super.pkgs.callPackage ../packages/minecraft-controller { };
 
+  minecraft-backup = super.pkgs.callPackage ../packages/minecraft-backup { };
+
   # inherit (super.pkgs.callPackages ../packages/unifi { }) unifiLTS unifi5 unifi6 unifi7;
   # unifi = super.pkgs.unifi7;
 
