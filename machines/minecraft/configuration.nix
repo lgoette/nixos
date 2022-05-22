@@ -25,11 +25,9 @@
   mayniklas = {
     user = {
       root.enable = true;
-      nik = {
-        enable = true;
-        home-manager.enable = true;
-      };
+      nik = { enable = true; };
     };
+    home-manager.enable = true;
     minecraft-server = {
       enable = true;
       dataDir = "/var/lib/minecraft";
