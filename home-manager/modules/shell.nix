@@ -8,6 +8,11 @@
     initExtra = ''
       bindkey "^[[1;5C" forward-word
       bindkey "^[[1;5D" backward-word
+      
+      # revert last n commits
+      grv() {
+        git reset --soft HEAD~$1
+      }
     '';
     history = {
       expireDuplicatesFirst = true;
@@ -20,6 +25,11 @@
       file = "nix-shell.plugin.zsh";
       src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
     }];
+    shellAliases = rec {
+      # nix
+      nixos-rebuild =
+        "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo";
+    };
   };
 
   programs.dircolors = {
