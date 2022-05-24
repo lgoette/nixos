@@ -1,5 +1,4 @@
 ---
-# nix run nixpkgs#mustache-go -- drone.json drone-yaml.mustache > .drone.yml
 kind: pipeline
 type: exec
 name: flake info
@@ -53,7 +52,7 @@ steps:
 
 - name: upload to binary cache via s3
   commands:
-  - nix run 'github:mayniklas/nixos'#s3uploader
+  - nix run .#s3uploader
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: aws_key
@@ -66,6 +65,43 @@ trigger:
   event:
   - cron
   - push
+  - pull_request
+
+---
+kind: pipeline
+type: exec
+name: build arm64 hosts
+
+platform:
+  os: linux
+  arch: arm64
+
+clone:
+  depth: 1
+
+steps:
+
+- name: build lamabasis
+  commands:
+  - nix build '.#nixosConfigurations.lamabasis.config.system.build.toplevel' --out-link result-lamabasis
+  - nix path-info --closure-size -h $(readlink -f result-lamabasis)
+
+- name: upload to binary cache via s3
+  commands:
+  - nix run .#s3uploader
+  environment:
+    AWS_ACCESS_KEY_ID:
+      from_secret: aws_key
+    AWS_SECRET_ACCESS_KEY:
+      from_secret: aws_secret
+
+trigger:
+  branch:
+  - main
+  event:
+  - cron
+  - push
+  - pull_request
 
 ---
 kind: pipeline
@@ -88,7 +124,7 @@ steps:
 
 - name: upload to binary cache via s3
   commands:
-  - nix run 'github:mayniklas/nixos'#s3uploader
+  - nix run .#s3uploader
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: aws_key
@@ -101,3 +137,5 @@ trigger:
   event:
   - push
   - cron
+  - pull_request
+

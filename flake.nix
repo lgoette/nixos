@@ -95,29 +95,29 @@
         };
       }) (builtins.attrNames (builtins.readDir ./machines/x86_64-linux)))
 
-        # //
+        //
 
-        # builtins.listToAttrs (map (x: {
-        #   name = x;
-        #   value = nixpkgs.lib.nixosSystem {
+        builtins.listToAttrs (map (x: {
+          name = x;
+          value = nixpkgs.lib.nixosSystem {
 
-        #     # Make inputs and the flake itself accessible as module parameters.
-        #     # Technically, adding the inputs is redundant as they can be also
-        #     # accessed with flake-self.inputs.X, but adding them individually
-        #     # allows to only pass what is needed to each module.
-        #     specialArgs = { flake-self = self; } // inputs;
+            # Make inputs and the flake itself accessible as module parameters.
+            # Technically, adding the inputs is redundant as they can be also
+            # accessed with flake-self.inputs.X, but adding them individually
+            # allows to only pass what is needed to each module.
+            specialArgs = { flake-self = self; } // inputs;
 
-        #     system = "aarch64-linux";
+            system = "aarch64-linux";
 
-        #     modules = [
+            modules = [
 
-        #       (./machines/aarch64-linux + "/${x}/configuration.nix")
-        #       { imports = builtins.attrValues self.nixosModules; }
-        #       { nixpkgs.overlays = [ self.overlays.default ]; }
+              (./machines/aarch64-linux + "/${x}/configuration.nix")
+              { imports = builtins.attrValues self.nixosModules; }
+              { nixpkgs.overlays = [ self.overlays.default ]; }
 
-        #     ];
-        #   };
-        # }) (builtins.attrNames (builtins.readDir ./machines/aarch64-linux)))
+            ];
+          };
+        }) (builtins.attrNames (builtins.readDir ./machines/aarch64-linux)))
 
         //
 

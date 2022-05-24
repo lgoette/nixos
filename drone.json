@@ -13,6 +13,14 @@
                     "name": "lamafarm"
                 }
             ]
+        },
+        {
+            "arch": "arm64",
+            "machines": [
+                {
+                    "name": "lamabasis"
+                }
+            ]
         }
     ],
     "packages": [
