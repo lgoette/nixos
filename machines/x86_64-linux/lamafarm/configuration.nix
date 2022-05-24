@@ -32,7 +32,7 @@
       enable = true;
       disable-cache = false;
     };
-    kvm-guest.enable = true;
+    cloud.netcup-x86.enable = true;
     zsh.enable = true;
   };
 
