@@ -1,4 +1,4 @@
-{ pkgs, mayniklas, home-manager, ... }:
+{ pkgs, lib, mayniklas, home-manager, ... }:
 
 {
   imports = [
