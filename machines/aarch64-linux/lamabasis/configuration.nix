@@ -4,6 +4,7 @@
   imports = [
     ../../../users/lasse.nix
     ../../../users/root.nix
+    ./wg0.nix
     # home-manager.nixosModules.home-manager
   ];
 
