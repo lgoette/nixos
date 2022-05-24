@@ -35,7 +35,7 @@
           publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
           allowedIPs = [ "10.11.12.1" "192.168.176.0/24" ];
           persistentKeepalive = 15;
-          Endpoint = "lamafarm.lasse-goette.de:53115";
+          endpoint = "lamafarm.lasse-goette.de:53115";
         }
 
       ];
