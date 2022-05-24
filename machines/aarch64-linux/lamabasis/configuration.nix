@@ -31,7 +31,10 @@
     }];
   };
 
-  networking = { hostName = "lamabasis"; };
+  networking = {
+    hostName = "lamabasis";
+    firewall.allowedTCPPorts = [ 50937 ];
+  };
 
   home-manager.users.lasse.home.packages =
     with mayniklas.packages.x86_64-linux; [
