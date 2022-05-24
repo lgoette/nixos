@@ -77,7 +77,7 @@
       enable = true;
       disable-cache = false;
     };
-    vmware-guest.enable = true;
+    cloud.vmware-x86.enable = true;
     zsh.enable = true;
   };
 
