@@ -8,7 +8,7 @@
     initExtra = ''
       bindkey "^[[1;5C" forward-word
       bindkey "^[[1;5D" backward-word
-      
+
       # revert last n commits
       grv() {
         git reset --soft HEAD~$1

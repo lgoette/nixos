@@ -170,14 +170,14 @@ in {
         default = { };
         example = literalExample ''
           {
-            server-port = 43000;
+            server-port = 25565;
             difficulty = 3;
             gamemode = 1;
             max-players = 5;
             motd = "NixOS Minecraft server!";
             white-list = true;
             enable-rcon = true;
-            "rcon.password" = "hunter2";
+            "rcon.password" = "minecraft";
           }
         '';
         description = ''

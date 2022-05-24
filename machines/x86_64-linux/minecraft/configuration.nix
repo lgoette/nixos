@@ -1,4 +1,4 @@
-{ pkgs, mayniklas, home-manager, ... }:
+{lib, pkgs, mayniklas, home-manager, ... }:
 
 {
   imports = [
@@ -37,7 +37,7 @@
       openFirewall = true;
       serverProperties = {
         enable-rcon = true;
-        "rcon.password" = "hunter2";
+        "rcon.password" = "minecraft";
         difficulty = 3;
         gamemode = 0;
         max-players = 10;
@@ -114,7 +114,13 @@
       vs-fix
     ];
 
-  environment.systemPackages = with pkgs; [ bash-completion git nixfmt wget ];
+  environment.systemPackages = with pkgs; [ 
+    bash-completion
+    git
+    nixfmt
+    wget 
+    mcrcon
+    ];
 
   # swapfile
   swapDevices = [{
