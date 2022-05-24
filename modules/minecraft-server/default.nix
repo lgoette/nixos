@@ -226,7 +226,8 @@ in {
 
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/bukkit-spigot ${cfg.jvmOpts}";
-        Restart = "always";
+        Restart = "on-failure";
+        RestartSec="5s";
         User = "minecraft";
         WorkingDirectory = cfg.dataDir;
       };
