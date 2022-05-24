@@ -49,6 +49,13 @@ in {
           # persistentKeepalive = 15;
         }
 
+        # 10.11.12.7
+        {
+          publicKey = "YjyZJW6Pefeq3XNpaqAQWzwyMCZnIMfkXJG8Kvqr+hs=";
+          allowedIPs = [ "10.11.12.7" "192.168.176.0/24" ];
+          # persistentKeepalive = 15;
+        }
+
         # 10.11.12.8
         {
           publicKey = "5KIvDXqEpt/bDd0pao0CrnaZTeZtYBtGq//bSjHScDY=";

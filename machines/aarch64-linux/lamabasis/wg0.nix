@@ -33,7 +33,7 @@
         # 10.11.12.5 (noch 7)
         {
           publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
-          allowedIPs = [ "10.11.12.1" "192.168.176.0/24" ];
+          allowedIPs = [ "10.11.12.1" "10.11.12.6" "10.11.12.7" "10.11.12.8" "10.11.12.100" "10.11.12.101" "192.168.178.0/24" "10.11.12.203" ];
           persistentKeepalive = 15;
           endpoint = "lamafarm.lasse-goette.de:53115";
         }
