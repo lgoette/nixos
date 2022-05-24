@@ -28,6 +28,32 @@
       # it can use the sources pinned in flake.lock
       overlays.default = final: prev: (import ./overlays inputs) final prev;
 
+      pi = {
+        pi4b = { config, pkgs, lib, ... }: {
+          imports = [
+            # https://github.com/NixOS/nixos-hardware/tree/master/raspberry-pi/4
+            nixos-hardware.nixosModules.raspberry-pi-4
+          ];
+          networking = {
+            wireguard.interfaces = {
+              wg0 = {
+                privateKeyFile = toString /var/src/secrets/wireguard/private;
+                generatePrivateKeyFile = true;
+              };
+            };
+          };
+          hardware = { raspberry-pi."4".poe-hat.enable = true; };
+          # Assuming this is installed on top of the disk image.
+          fileSystems = {
+            "/" = {
+              device = "/dev/disk/by-label/NIXOS_SD";
+              fsType = "ext4";
+              options = [ "noatime" ];
+            };
+          };
+        };
+      };
+
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
       nixosModules = builtins.listToAttrs (map (x: {
@@ -110,7 +136,7 @@
             system = "aarch64-linux";
 
             modules = [
-
+              self.pi.pi4b
               (./machines/aarch64-linux + "/${x}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
               { nixpkgs.overlays = [ self.overlays.default ]; }
