@@ -32,6 +32,15 @@
     }];
   };
 
+  # Enable the Cloudflare Dyndns daemon.
+  services.cloudflare-dyndns = {
+    enable = true;
+    proxied = false;
+    ipv4 = true;
+    domains = [ lamabasis.lasse-goette.de ];
+    apiTokenFile = toString /var/src/secrets/cloudflare/token;
+  };
+
   networking = {
     hostName = "lamabasis";
     firewall.allowedTCPPorts = [ 50937 ];
