@@ -34,7 +34,7 @@
 
   # Enable the Cloudflare Dyndns daemon.
   services.cloudflare-dyndns = {
-    enable = false;
+    enable = true;
     proxied = false;
     ipv4 = true;
     domains = [ "lamabasis.lasse-goette.de" ];
