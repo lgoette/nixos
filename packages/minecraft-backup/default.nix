@@ -16,15 +16,15 @@ stdenv.mkDerivation {
       rcon_pw=$(cat "$mc_dir/server.properties" | grep "rcon.password" | cut -d'=' -f2)
 
       status=$(systemctl is-active minecraft-server.service)
-      if [ $status == active ]; then
+      if [[ $status == active ]]; then
         active=true
       else
         active=false
       fi
 
-      if ($active); then
+      if [[ $active ]]; then
         ${pkgs.mcrcon}/bin/mcrcon -H localhost -p $rcon_pw -w 5 save-all stop
-        if [ $? == 0 ]; then
+        if [[ $? == 0 ]]; then
           sleep 5
           ${pkgs.zip}/bin/zip -r $backup_dir/minecraft.zip $mc_dir
           ${pkgs.systemd}/bin/systemctl start minecraft-server
