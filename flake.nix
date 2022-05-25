@@ -188,6 +188,7 @@
           bukkit-spigot = pkgs.bukkit-spigot;
           minecraft-backup = pkgs.minecraft-backup;
           minecraft-controller = pkgs.minecraft-controller;
+          minecraft-stop = pkgs.minecraft-stop;
 
           # Generate a sd-card image for the pi
           # nix build '.#pi4b-image'
@@ -204,6 +205,8 @@
             flake-utils.lib.mkApp { drv = packages.minecraft-backup; };
           minecraft-controller =
             flake-utils.lib.mkApp { drv = packages.minecraft-controller; };
+          minecraft-stop =
+            flake-utils.lib.mkApp { drv = packages.minecraft-stop; };
         };
       });
 }
