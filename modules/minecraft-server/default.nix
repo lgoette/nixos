@@ -227,9 +227,12 @@ in {
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/bukkit-spigot ${cfg.jvmOpts}";
         Restart = "on-failure";
-        RestartSec="5s";
+        RestartSec = "5s";
         User = "minecraft";
         WorkingDirectory = cfg.dataDir;
+        ExecStop = "${pkgs.minecraft-stop}/bin/minecraft-stop ${cfg.dataDir}";
+        # Control process exited, code=exited, status=1/FAILURE
+        SuccessExitStatus = "0";
       };
 
       preStart = ''
