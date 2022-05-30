@@ -47,7 +47,7 @@
   };
 
   home-manager.users.lasse.home.packages =
-    with mayniklas.packages.x86_64-linux; [
+    with mayniklas.packages.aarch64-linux; [
       drone-gen
       vs-fix
     ];
