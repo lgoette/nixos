@@ -14,10 +14,15 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
-    mayniklas.url = "github:mayniklas/nixos";
-    mayniklas.inputs.nixpkgs.follows = "nixpkgs";
-    mayniklas.inputs.home-manager.follows = "home-manager";
-    mayniklas.inputs.flake-utils.follows = "flake-utils";
+    mayniklas = {
+      url = "github:mayniklas/nixos";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        flake-utils.follows = "flake-utils";
+        nixos-hardware.follows = "nixos-hardware";
+      };
+    };
 
   };
 
@@ -58,74 +63,81 @@
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
-      nixosModules = builtins.listToAttrs (map (x: {
-        name = x;
-        value = import (./modules + "/${x}");
-      }) (builtins.attrNames (builtins.readDir ./modules)))
+      nixosModules = builtins.listToAttrs
+        (map
+          (x: {
+            name = x;
+            value = import (./modules + "/${x}");
+          })
+          (builtins.attrNames (builtins.readDir ./modules)))
 
-        //
+      //
 
-        {
+      {
 
-          home-manager = { pkgs, ... }: {
-            imports =
-              [ ./home-manager/home.nix ./home-manager/home-desktop.nix ];
-          };
-
-        } // {
-
-          # lgoette.mayniklas
-          # -> imports used flake inputs
-          # -> this way, they can easily be imported to different flake outputs
-          mayniklas = { ... }: {
-            imports = [
-              # https://github.com/MayNiklas/nixos/tree/main/modules
-              mayniklas.nixosModules.cloud-provider
-              mayniklas.nixosModules.docker
-              mayniklas.nixosModules.home-manager
-              mayniklas.nixosModules.iperf
-              mayniklas.nixosModules.locale
-              mayniklas.nixosModules.minecraft
-              mayniklas.nixosModules.monitoring
-              mayniklas.nixosModules.nix-common
-              mayniklas.nixosModules.openssh
-              mayniklas.nixosModules.options
-              mayniklas.nixosModules.sound
-              mayniklas.nixosModules.user
-              mayniklas.nixosModules.zsh
-            ];
-          };
-
+        home-manager = { pkgs, ... }: {
+          imports =
+            [ ./home-manager/home.nix ./home-manager/home-desktop.nix ];
         };
+
+      } // {
+
+        # lgoette.mayniklas
+        # -> imports used flake inputs
+        # -> this way, they can easily be imported to different flake outputs
+        mayniklas = { ... }: {
+          imports = [
+            # https://github.com/MayNiklas/nixos/tree/main/modules
+            mayniklas.nixosModules.cloud-provider
+            mayniklas.nixosModules.docker
+            mayniklas.nixosModules.home-manager
+            mayniklas.nixosModules.iperf
+            mayniklas.nixosModules.locale
+            mayniklas.nixosModules.minecraft
+            mayniklas.nixosModules.monitoring
+            mayniklas.nixosModules.nix-common
+            mayniklas.nixosModules.openssh
+            mayniklas.nixosModules.options
+            mayniklas.nixosModules.sound
+            mayniklas.nixosModules.user
+            mayniklas.nixosModules.zsh
+          ];
+        };
+
+      };
 
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
       # configuration.nix that will be read first
-      nixosConfigurations = builtins.listToAttrs (map (x: {
-        name = x;
-        value = nixpkgs.lib.nixosSystem {
+      nixosConfigurations = builtins.listToAttrs
+        (map
+          (x: {
+            name = x;
+            value = nixpkgs.lib.nixosSystem {
 
-          # Make inputs and the flake itself accessible as module parameters.
-          # Technically, adding the inputs is redundant as they can be also
-          # accessed with flake-self.inputs.X, but adding them individually
-          # allows to only pass what is needed to each module.
-          specialArgs = { flake-self = self; } // inputs;
+              # Make inputs and the flake itself accessible as module parameters.
+              # Technically, adding the inputs is redundant as they can be also
+              # accessed with flake-self.inputs.X, but adding them individually
+              # allows to only pass what is needed to each module.
+              specialArgs = { flake-self = self; } // inputs;
 
-          system = "x86_64-linux";
+              system = "x86_64-linux";
 
-          modules = [
+              modules = [
 
-            (./machines/x86_64-linux + "/${x}/configuration.nix")
-            { imports = builtins.attrValues self.nixosModules; }
-            { nixpkgs.overlays = [ self.overlays.default ]; }
+                (./machines/x86_64-linux + "/${x}/configuration.nix")
+                { imports = builtins.attrValues self.nixosModules; }
+                { nixpkgs.overlays = [ self.overlays.default ]; }
 
-          ];
-        };
-      }) (builtins.attrNames (builtins.readDir ./machines/x86_64-linux)))
+              ];
+            };
+          })
+          (builtins.attrNames (builtins.readDir ./machines/x86_64-linux)))
 
-        //
+      //
 
-        builtins.listToAttrs (map (x: {
+      builtins.listToAttrs (map
+        (x: {
           name = x;
           value = nixpkgs.lib.nixosSystem {
 
@@ -145,28 +157,29 @@
 
             ];
           };
-        }) (builtins.attrNames (builtins.readDir ./machines/aarch64-linux)))
+        })
+        (builtins.attrNames (builtins.readDir ./machines/aarch64-linux)))
 
-        //
+      //
 
-        {
-          pi4b-image = nixpkgs.lib.nixosSystem rec {
-            specialArgs = { flake-self = self; } // inputs;
-            system = "aarch64-linux";
-            modules = [
-              ./images/pi4b/configuration.nix
-              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-              { imports = builtins.attrValues self.nixosModules; }
-              {
-                nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-                nix.registry.nixpkgs.flake = nixpkgs;
-                sdImage.compressImage = false;
-                sdImage.imageBaseName = "pi4b-image";
+      {
+        pi4b-image = nixpkgs.lib.nixosSystem rec {
+          specialArgs = { flake-self = self; } // inputs;
+          system = "aarch64-linux";
+          modules = [
+            ./images/pi4b/configuration.nix
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            { imports = builtins.attrValues self.nixosModules; }
+            {
+              nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+              nix.registry.nixpkgs.flake = nixpkgs;
+              sdImage.compressImage = false;
+              sdImage.imageBaseName = "pi4b-image";
 
-              }
-            ];
-          };
+            }
+          ];
         };
+      };
 
     }
 
@@ -182,6 +195,8 @@
             allowUnfree = true;
           };
         };
+      in
+      rec {
 
         # Use nixpkgs-fmt for `nix fmt'
         formatter = pkgs.nixpkgs-fmt;
