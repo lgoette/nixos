@@ -50,8 +50,8 @@ in
         zoom-us
 
         #mayniklas
-        drone-gen
-        vs-fix
+        mayniklas.drone-gen
+        mayniklas.vs-fix
       ];
 
     };

@@ -46,7 +46,13 @@
     firewall.allowedTCPPorts = [ 50937 ];
   };
 
-  environment.systemPackages = with pkgs; [ bash-completion git nixfmt wget ];
+  environment.systemPackages = with pkgs;
+    with pkgs.mayniklas; [
+      bash-completion
+      git
+      nixfmt
+      wget
+    ];
 
   system.stateVersion = "22.05";
 

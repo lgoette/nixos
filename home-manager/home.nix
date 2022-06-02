@@ -1,4 +1,4 @@
-{ lib, pkgs, config, mayniklas, ... }:
+{ lib, pkgs, config, ... }:
 with lib;
 let cfg = config.lgoette.user.lasse.home-manager;
 in
@@ -41,8 +41,8 @@ in
         unzip
 
         #mayniklas
-        drone-gen
-        vs-fix
+        mayniklas.drone-gen
+        mayniklas.vs-fix
       ];
 
       imports = [ ./modules/neovim.nix ./modules/htop.nix ./modules/shell.nix ];

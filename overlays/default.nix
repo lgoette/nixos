@@ -20,7 +20,6 @@ self: super: {
 
   # experimental:
   # packages from MayNiklas
-  drone-gen = inputs.mayniklas.packages.${super.pkgs.system}.drone-gen;
-  vs-fix = inputs.mayniklas.packages.${super.pkgs.system}.vs-fix;
+  mayniklas = inputs.mayniklas.packages.${super.pkgs.system};
 
 }

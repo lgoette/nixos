@@ -108,13 +108,14 @@
     firewall.interfaces.ens192.allowedTCPPorts = [ 9100 ];
   };
 
-  environment.systemPackages = with pkgs; [
-    bash-completion
-    git
-    nixfmt
-    wget
-    mcrcon
-  ];
+  environment.systemPackages = with pkgs;
+    with pkgs.mayniklas; [
+      bash-completion
+      git
+      nixfmt
+      wget
+      mcrcon
+    ];
 
   # swapfile
   swapDevices = [{

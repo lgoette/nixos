@@ -66,13 +66,14 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    bash-completion
-    git
-    nixfmt
-    wget
-    wg-friendly-peer-names
-  ];
+  environment.systemPackages = with pkgs;
+    with pkgs.mayniklas; [
+      bash-completion
+      git
+      nixfmt
+      wget
+      wg-friendly-peer-names
+    ];
 
   # swapfile
   swapDevices = [{
