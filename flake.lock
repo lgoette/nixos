@@ -50,14 +50,14 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "shelly-prometheus-exporter": "shelly-prometheus-exporter"
+        "shelly-exporter": "shelly-exporter"
       },
       "locked": {
-        "lastModified": 1654022477,
-        "narHash": "sha256-uT1SCkc2h3CuexFgAKaH1TpjHLHiKLv/kWwq4hE8iew=",
+        "lastModified": 1654178215,
+        "narHash": "sha256-8qu12H64pFNDihvc/q3/h+lSszYvwx0ojKikNR9CfIs=",
         "owner": "mayniklas",
         "repo": "nixos",
-        "rev": "cf75d8d75db27ac67565f7558285032ef6afe816",
+        "rev": "feb0072328b1bff9d28befee42e79e172dbb8921",
         "type": "github"
       },
       "original": {
@@ -107,7 +107,7 @@
         "nixpkgs": "nixpkgs"
       }
     },
-    "shelly-prometheus-exporter": {
+    "shelly-exporter": {
       "inputs": {
         "flake-utils": [
           "mayniklas",
@@ -119,16 +119,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1654012284,
-        "narHash": "sha256-f2eFvUE9YzCQKvsf/bWxI4TSga39jstTaZs3qKYFW8s=",
+        "lastModified": 1654159587,
+        "narHash": "sha256-2wSENFKA0fpypO+VjP/Yfj629qYT9dLl8iRX/khp98I=",
         "owner": "MayNiklas",
-        "repo": "shelly-plug-s-prometheus-exporter",
-        "rev": "5777b0eabaa0d4baf7f52c8883a5862e47539a7d",
+        "repo": "shelly-exporter",
+        "rev": "e491d89afca8e08858adf7c6f4b2b1a58c7f99da",
         "type": "github"
       },
       "original": {
         "owner": "MayNiklas",
-        "repo": "shelly-plug-s-prometheus-exporter",
+        "repo": "shelly-exporter",
         "type": "github"
       }
     }

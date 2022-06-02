@@ -18,8 +18,5 @@ self: super: {
   # inherit (super.pkgs.callPackages ../packages/unifi { }) unifiLTS unifi5 unifi6 unifi7;
   # unifi = super.pkgs.unifi7;
 
-  # experimental:
-  # packages from MayNiklas
-  mayniklas = inputs.mayniklas.packages.${super.pkgs.system};
 
 }

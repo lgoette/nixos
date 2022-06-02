@@ -127,7 +127,7 @@
 
                 (./machines/x86_64-linux + "/${x}/configuration.nix")
                 { imports = builtins.attrValues self.nixosModules; }
-                { nixpkgs.overlays = [ self.overlays.default ]; }
+                { nixpkgs.overlays = [ self.overlays.default mayniklas.overlays.mayniklas ]; }
 
               ];
             };
@@ -153,7 +153,7 @@
               self.pi.pi4b
               (./machines/aarch64-linux + "/${x}/configuration.nix")
               { imports = builtins.attrValues self.nixosModules; }
-              { nixpkgs.overlays = [ self.overlays.default ]; }
+              { nixpkgs.overlays = [ self.overlays.default mayniklas.overlays.mayniklas ]; }
 
             ];
           };
@@ -189,7 +189,7 @@
       let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ self.overlays.default ];
+          overlays = [ self.overlays.default mayniklas.overlays.mayniklas ];
           config = {
             allowUnsupportedSystem = true;
             allowUnfree = true;
