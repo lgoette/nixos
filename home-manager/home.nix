@@ -1,8 +1,8 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, mayniklas, ... }:
 with lib;
 let cfg = config.lgoette.user.lasse.home-manager;
-
-in {
+in
+{
 
   options.lgoette.user.lasse.home-manager = {
     enable = mkEnableOption "activate headless home-manager profile for lasse";
@@ -33,7 +33,17 @@ in {
       };
 
       # Install these packages for my user
-      home.packages = with pkgs; [ iperf3 nmap unzip ];
+
+      home.packages = with pkgs; [
+        #pkgs
+        iperf3
+        nmap
+        unzip
+
+        #mayniklas
+        drone-gen
+        vs-fix
+      ];
 
       imports = [ ./modules/neovim.nix ./modules/htop.nix ./modules/shell.nix ];
 

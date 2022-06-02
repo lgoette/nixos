@@ -1,4 +1,4 @@
-{lib, pkgs, mayniklas, home-manager, ... }:
+{ lib, pkgs, mayniklas, home-manager, ... }:
 
 {
   imports = [
@@ -108,19 +108,13 @@
     firewall.interfaces.ens192.allowedTCPPorts = [ 9100 ];
   };
 
-  home-manager.users.lasse.home.packages =
-    with mayniklas.packages.x86_64-linux; [
-      drone-gen
-      vs-fix
-    ];
-
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
     bash-completion
     git
     nixfmt
-    wget 
+    wget
     mcrcon
-    ];
+  ];
 
   # swapfile
   swapDevices = [{

@@ -32,12 +32,6 @@
   };
   users.extraUsers.lasse.extraGroups = [ "networkmanager" ];
 
-  home-manager.users.lasse.home.packages =
-    with mayniklas.packages.x86_64-linux; [
-      drone-gen
-      vs-fix
-    ];
-
   environment.systemPackages = with pkgs; [ bash-completion git nixfmt wget ];
 
   fileSystems."/" = {
