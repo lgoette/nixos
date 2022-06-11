@@ -70,8 +70,10 @@
     locale.enable = true;
     openssh.enable = true;
     metrics = {
-      node.enable = true;
-      flake.enable = true;
+      node = {
+        enable = true;
+        flake = true;
+      };
     };
     nix-common = {
       enable = true;
