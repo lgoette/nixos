@@ -8,7 +8,10 @@
     # home-manager.nixosModules.home-manager
   ];
 
-  lgoette = { user.lasse.home-manager.enable = true; };
+  lgoette = {
+    user.lasse.home-manager.enable = true;
+    services.home-assistant.enable = true;
+  };
 
   mayniklas = {
     var.mainUser = "lasse";
