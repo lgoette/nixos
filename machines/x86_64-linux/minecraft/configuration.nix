@@ -1,4 +1,4 @@
-{lib, pkgs, mayniklas, home-manager, ... }:
+{ lib, pkgs, mayniklas, home-manager, ... }:
 
 {
   imports = [
@@ -70,8 +70,10 @@
     locale.enable = true;
     openssh.enable = true;
     metrics = {
-      node.enable = true;
-      flake.enable = true;
+      node = {
+        enable = true;
+        flake = true;
+      };
     };
     nix-common = {
       enable = true;
@@ -108,18 +110,13 @@
     firewall.interfaces.ens192.allowedTCPPorts = [ 9100 ];
   };
 
-  home-manager.users.lasse.home.packages =
-    with mayniklas.packages.x86_64-linux; [
-      drone-gen
-      vs-fix
-    ];
-
-  environment.systemPackages = with pkgs; [ 
-    bash-completion
-    git
-    nixfmt
-    wget 
-    mcrcon
+  environment.systemPackages = with pkgs;
+    with pkgs.mayniklas; [
+      bash-completion
+      git
+      nixfmt
+      wget
+      mcrcon
     ];
 
   # swapfile

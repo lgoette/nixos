@@ -2,7 +2,8 @@
 with lib;
 let cfg = config.lgoette.user.lasse.home-manager;
 
-in {
+in
+{
 
   options.lgoette.user.lasse.home-manager = {
     desktop = mkEnableOption "activate desktop home-manager profile for lasse";
@@ -18,6 +19,7 @@ in {
       imports = [ ./modules/vscode.nix ];
 
       home.packages = with pkgs; [
+        # pkgs
         arduino
         atom
         blender
@@ -46,6 +48,10 @@ in {
         vlc
         youtube-dl
         zoom-us
+
+        #mayniklas
+        mayniklas.drone-gen
+        mayniklas.vs-fix
       ];
 
     };
