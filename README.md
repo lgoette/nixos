@@ -6,16 +6,25 @@
 # basic flake check
 nix flake check
 
-# update flake.lock
-nix flake update      
+# update flake.lock -> updates all flake inputs (e.g. system update)
+nix flake update
+
+# update a single flake input
+nix flake lock --update-input mayniklas
+
+# show contents of flake
+nix flake show
+
+# show flake info
+nix flake info
 
 # build / check config without applying
-nix build -v '.#nixosConfigurations.minecraft.config.system.build.toplevel' 
+nix build -v '.#nixosConfigurations.lamabasis.config.system.build.toplevel' 
 
 # switch to new config
-sudo nixos-rebuild switch -v --show-trace --flake .
+nixos-rebuild --use-remote-sudo switch --flake .
 
-# build flake app
+# build flake output
 nix build build .#bukkit-spigot
 
 # run flake app
@@ -33,9 +42,15 @@ nix-shell -p nodejs-14_x
 # run app in nix-shell
 nix-shell -p nodejs-14_x --run "node -v"
 
-# delete nix store
+# lists all syslinks into the nix store (helpfull for finding old builds that can be deleted)
+nix-store --gc --print-roots
+
+# delete unused elements in nix store
+nix-collect-garbage
+
+# also delete iterations from boot
 nix-collect-garbage -d
 
 # use auto formatter on flake.nix
-nixfmt flake.nix
+nix fmt flake.nix
 ```
