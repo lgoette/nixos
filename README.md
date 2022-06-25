@@ -12,6 +12,9 @@ nix flake update
 # update a single flake input
 nix flake lock --update-input mayniklas
 
+# for dev purposes - overwrite the flake input with a local repository
+nix flake update --override-input mayniklas /home/lasse/mayniklas
+
 # show contents of flake
 nix flake show
 
