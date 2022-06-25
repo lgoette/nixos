@@ -1,12 +1,79 @@
 {
   "nodes": {
+    "adblock-unbound": {
+      "inputs": {
+        "adblockStevenBlack": "adblockStevenBlack",
+        "flake-utils": [
+          "mayniklas",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "mayniklas",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1655220242,
+        "narHash": "sha256-rWPK2ya7PyB4n+Kbf6sfv1RUzeAl20F6Z+bH13SHNBw=",
+        "owner": "MayNiklas",
+        "repo": "nixos-adblock-unbound",
+        "rev": "a05f34f74e315d539fe40882f65978ad5279aebd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MayNiklas",
+        "repo": "nixos-adblock-unbound",
+        "type": "github"
+      }
+    },
+    "adblockStevenBlack": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1654831104,
+        "narHash": "sha256-qybp7aELcGKZjcPBR3ouXEoUgMKlfcxGecvCalMvT2w=",
+        "owner": "StevenBlack",
+        "repo": "hosts",
+        "rev": "11b8c3d9ac5b154ff4a5f5ff203b822e9fc27d11",
+        "type": "github"
+      },
+      "original": {
+        "owner": "StevenBlack",
+        "repo": "hosts",
+        "type": "github"
+      }
+    },
+    "dyson-exporter": {
+      "inputs": {
+        "flake-utils": [
+          "mayniklas",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "mayniklas",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1655643732,
+        "narHash": "sha256-eHxAuLbzytsAOWk8y3XrlWqb/3SiJBoJ9JBp3s0hQlI=",
+        "owner": "MayNiklas",
+        "repo": "dyson-exporter",
+        "rev": "01cfa3ad1cbf359bda10fb10be01e4408452978c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MayNiklas",
+        "repo": "dyson-exporter",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
-        "lastModified": 1653893745,
-        "narHash": "sha256-0jntwV3Z8//YwuOjzhV2sgJJPt+HY6KhU7VZUL0fKZQ=",
+        "lastModified": 1656065134,
+        "narHash": "sha256-oc6E6ByIw3oJaIyc67maaFcnjYOz1mMcOtHxbEf9NwQ=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "1ed9fb1935d260de5fe1c2f7ee0ebaae17ed2fa1",
+        "rev": "bee6a7250dd1b01844a2de7e02e4df7d8a0a206c",
         "type": "github"
       },
       "original": {
@@ -22,11 +89,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1654113405,
-        "narHash": "sha256-VpK+0QaWG2JRgB00lw77N9TjkE3ec0iMYIX1TzGpxa4=",
+        "lastModified": 1655880690,
+        "narHash": "sha256-pO+EqUefNFolIWV1DHXPfI8NuUtD4fd7JFKoaCjVXOs=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ac2287df5a2d6f0a44bbcbd11701dbbf6ec43675",
+        "rev": "a839432a5c3d2a762d68168093349097e6affb07",
         "type": "github"
       },
       "original": {
@@ -38,6 +105,8 @@
     },
     "mayniklas": {
       "inputs": {
+        "adblock-unbound": "adblock-unbound",
+        "dyson-exporter": "dyson-exporter",
         "flake-utils": [
           "flake-utils"
         ],
@@ -50,14 +119,15 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "shelly-exporter": "shelly-exporter"
+        "shelly-exporter": "shelly-exporter",
+        "valorant-exporter": "valorant-exporter"
       },
       "locked": {
-        "lastModified": 1654938984,
-        "narHash": "sha256-K3/1EuY8FGLPF7GSlMQkL0xJINr9fWWccle4KKT9324=",
+        "lastModified": 1656144635,
+        "narHash": "sha256-eYRPBCn/B4t3C0PNGPDZIHwaHg1f+moUq6wRwwKAdT8=",
         "owner": "mayniklas",
         "repo": "nixos",
-        "rev": "eb0584d06221cd8f5014c4ee1920a927a7d82425",
+        "rev": "507d319f15723203a5f5a031b994add5770c9961",
         "type": "github"
       },
       "original": {
@@ -68,11 +138,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1654057797,
-        "narHash": "sha256-mXo7C4v7Jj2feBzcReu1Eu/3Rnw5b023E9kOyFsHZQw=",
+        "lastModified": 1655789751,
+        "narHash": "sha256-DbL2gn7YwkuX10OdlWfZ/A7zEJztwHh9NMeau1JMTdk=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "0cab18a48de7914ef8cad35dca0bb36868f3e1af",
+        "rev": "f9d8dff4e621f2d7f2b84d9e84bc6359715f971c",
         "type": "github"
       },
       "original": {
@@ -84,11 +154,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1654847188,
-        "narHash": "sha256-MC+eP7XOGE1LAswOPqdcGoUqY9mEQ3ZaaxamVTbc0hM=",
+        "lastModified": 1656007306,
+        "narHash": "sha256-MsC44YZ6wuBwn5Bu8T+RVoQWlp2l5BR6hhmNoAAHIEw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "8b66e3f2ebcc644b78cec9d6f152192f4e7d322f",
+        "rev": "ccf8bdf72624521358be6bb7d9b524c4cbcf7aff",
         "type": "github"
       },
       "original": {
@@ -119,16 +189,41 @@
         ]
       },
       "locked": {
-        "lastModified": 1654867274,
-        "narHash": "sha256-dsrOvEtZY+OaKKNKF9ERnTK0ekFi9LtSY8eGa/ypbOk=",
+        "lastModified": 1655803837,
+        "narHash": "sha256-ZkOH6XTPkb6iIyV8GWTvJGvGXBAtVghNc1dbEKK1S5w=",
         "owner": "MayNiklas",
         "repo": "shelly-exporter",
-        "rev": "b4c00fb945de560ecb947c847d064fe392145e6a",
+        "rev": "90a9eb6df1abebfe5c262779e1c71edd5d24b0d3",
         "type": "github"
       },
       "original": {
         "owner": "MayNiklas",
         "repo": "shelly-exporter",
+        "type": "github"
+      }
+    },
+    "valorant-exporter": {
+      "inputs": {
+        "flake-utils": [
+          "mayniklas",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "mayniklas",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1656144261,
+        "narHash": "sha256-DpXjRzynD3NaN91DbGvx1Wn62qRYaHHhKiZOexbxBmU=",
+        "owner": "MayNiklas",
+        "repo": "valorant-exporter",
+        "rev": "bd4a8f0b2c002af1296610367301d3a6ac156837",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MayNiklas",
+        "repo": "valorant-exporter",
         "type": "github"
       }
     }
