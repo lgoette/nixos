@@ -4,9 +4,6 @@
             "arch": "amd64",
             "machines": [
                 {
-                    "name": "lasse-laptop"
-                },
-                {
                     "name": "minecraft"
                 },
                 {
