@@ -12,7 +12,7 @@
       enable = true;
       ip = "10.11.12.8";
       allowedIPs = [ "10.11.12.0/24" "0.0.0.0/0" ];
-      uplink_interface = "ens192";
+      uplink_interface = "enp6s18";
     };
     services.minecraft-backup = {
       enable = true;
@@ -87,13 +87,13 @@
     hostName = "minecraft";
     dhcpcd.enable = false;
     enableIPv6 = false;
-    interfaces.ens192.ipv4.addresses = [{
+    interfaces.enp6s18.ipv4.addresses = [{
       address = "192.168.20.75";
       prefixLength = 24;
     }];
     defaultGateway = "192.168.20.1";
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
-    interfaces.ens192.ipv4.routes = [
+    interfaces.enp6s18.ipv4.routes = [
       {
         address = "10.88.88.0";
         prefixLength = 24;
@@ -107,7 +107,7 @@
         options = { metric = "202"; };
       }
     ];
-    firewall.interfaces.ens192.allowedTCPPorts = [ 9100 ];
+    firewall.interfaces.enp6s18.allowedTCPPorts = [ 9100 ];
   };
 
   environment.systemPackages = with pkgs;
