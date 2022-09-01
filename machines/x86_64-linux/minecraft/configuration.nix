@@ -119,6 +119,8 @@
       mcrcon
     ];
 
+  services.qemuGuest.enable = true;
+
   # swapfile
   swapDevices = [{
     device = "/var/swapfile";
