@@ -79,7 +79,7 @@
       enable = true;
       disable-cache = false;
     };
-    cloud.vmware-x86.enable = true;
+    cloud.pve-x86.enable = true;
     zsh.enable = true;
   };
 
@@ -118,8 +118,6 @@
       wget
       mcrcon
     ];
-
-  services.qemuGuest.enable = true;
 
   # swapfile
   swapDevices = [{
