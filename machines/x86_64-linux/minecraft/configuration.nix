@@ -42,7 +42,7 @@
         gamemode = 0;
         max-players = 10;
         motd =
-          "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\nMap: Brave New World";
+          "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\nMap: Ich hab keine Hobbys";
         white-list = true;
       };
       whitelist = {
@@ -53,8 +53,8 @@
         #EnderSnow_ = "73341ad1-dabb-4547-b00e-33fb1c488464";
         #hako55 = "df1fc00d-e816-4356-870c-a1492be67740";
         #PlanetMaker3000 = "e909c435-b18f-4bea-94c8-ead3b843f2c6";
-        cukiGAN = "d276f577-8791-4d60-8a05-9dc0d16fcf59"
-        1gjxnx = "dc58d757-3b29-4b69-b18c-164ac6ff156e"
+        cukiGAN = "d276f577-8791-4d60-8a05-9dc0d16fcf59";
+        "1gjxnx" = "dc58d757-3b29-4b69-b18c-164ac6ff156e";
       };
       ops = {
         BobderEhrenmann = {
