@@ -55,6 +55,8 @@
         #PlanetMaker3000 = "e909c435-b18f-4bea-94c8-ead3b843f2c6";
         cukiGAN = "d276f577-8791-4d60-8a05-9dc0d16fcf59";
         "1gjxnx" = "dc58d757-3b29-4b69-b18c-164ac6ff156e";
+        LovedByZyzz = "4feeb0a1-f64a-4214-ae16-5d75b09d6c8f";
+        vivithere = "a7e7c9c9-203c-4feb-b094-e39639067847";
       };
       ops = {
         BobderEhrenmann = {
