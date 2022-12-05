@@ -97,6 +97,18 @@
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
     interfaces.enp6s18.ipv4.routes = [
       {
+        address = "1.1.1.1";
+        prefixLength = 32;
+        via = "192.168.20.1";
+        options = { metric = "202"; };
+      }
+      {
+        address = "8.8.8.8";
+        prefixLength = 32;
+        via = "192.168.20.1";
+        options = { metric = "202"; };
+      }
+      {
         address = "10.88.88.0";
         prefixLength = 24;
         via = "192.168.20.1";
