@@ -206,6 +206,7 @@
 
         packages = flake-utils.lib.flattenTree {
           bukkit-spigot = pkgs.bukkit-spigot;
+          papermc = pkgs.papermc;
           minecraft-backup = pkgs.minecraft-backup;
           minecraft-controller = pkgs.minecraft-controller;
 
@@ -220,6 +221,7 @@
           # Allow custom packages to be run using `nix run`
           bukkit-spigot =
             flake-utils.lib.mkApp { drv = packages.bukkit-spigot; };
+          papermc = flake-utils.lib.mkApp { drv = packages.papermc; };
           minecraft-backup =
             flake-utils.lib.mkApp { drv = packages.minecraft-backup; };
           minecraft-controller =
