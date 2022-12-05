@@ -191,7 +191,7 @@ in {
 
       package = mkOption {
         type = types.package;
-        default = pkgs.bukkit-spigot;
+        default = pkgs.papermc;
         example = literalExample "pkgs.minecraft-server_1_12_2";
         description = "Version of minecraft-server to run.";
       };
@@ -225,7 +225,7 @@ in {
       after = [ "network.target" ];
 
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/bukkit-spigot ${cfg.jvmOpts}";
+        ExecStart = "${cfg.package}/bin/papermc ${cfg.jvmOpts}";
         Restart = "on-failure";
         RestartSec="5s";
         User = "minecraft";
