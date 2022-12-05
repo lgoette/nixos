@@ -25,7 +25,7 @@ stdenv.mkDerivation {
       if [[ $active ]]; then
         ${pkgs.mcrcon}/bin/mcrcon -H localhost -p $rcon_pw -w 5 save-all stop
         if [[ $? == 0 ]]; then
-          sleep 5
+          sleep 60
           ${pkgs.zip}/bin/zip -r $backup_dir/minecraft.zip $mc_dir
           ${pkgs.systemd}/bin/systemctl start minecraft-server
           ${pkgs.coreutils}/bin/chown nginx:nginx $backup_dir/minecraft.zip
