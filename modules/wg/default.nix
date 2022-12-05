@@ -3,7 +3,8 @@ with lib;
 let
   cfg = config.lgoette.wg;
   publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
-in {
+in
+{
   options.lgoette.wg = {
     enable = mkEnableOption "activate wireguard";
     ip = mkOption {
@@ -26,16 +27,35 @@ in {
         be specified for matching all IPv4 addresses, and ::/0 may be specified
         for matching all IPv6 addresses.'';
     };
+    gateway = mkOption {
+      type = types.str;
+      default = "192.168.20.1";
+      example = "192.168.1.1";
+    };
   };
 
   config = mkIf cfg.enable {
 
-    networking.interfaces.${cfg.uplink_interface}.ipv4.routes = [{
-      address = "5.45.108.206";
-      prefixLength = 32;
-      via = "192.168.20.1";
-      options = { metric = "0"; };
-    }];
+    networking.interfaces.${cfg.uplink_interface}.ipv4.routes = [
+      {
+        address = "5.45.108.206";
+        prefixLength = 32;
+        via = "${cfg.gateway}";
+        options = { metric = "0"; };
+      }
+      {
+        address = "1.1.1.1";
+        prefixLength = 32;
+        via = "${cfg.gateway}";
+        options = { metric = "0"; };
+      }
+      {
+        address = "8.8.8.8";
+        prefixLength = 32;
+        via = "${cfg.gateway}";
+        options = { metric = "0"; };
+      }
+    ];
 
     networking.wireguard.interfaces.wg0 = {
 
