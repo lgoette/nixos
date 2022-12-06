@@ -38,10 +38,10 @@
       package = pkgs.papermc.overrideAttrs (finalAttrs: previousAttrs:
         let
           mcVersion = "1.19.2";
-          buildNum = "304";
+          buildNum = "305";
           jar = pkgs.fetchurl {
             url = "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
-            sha256 = "sha256-UiTZPr8auvge7oYmhk+OedqyUlx0yq5ePW0ZkYUQdq0=";
+            hash = "sha256-KDb/ZyKiRLLaix7IaBTwdbj1Awz9cSKuarCyAkJB7WA=";
           };
         in
         {
