@@ -30,6 +30,19 @@
     home-manager.enable = true;
     minecraft-server = {
       enable = true;
+      package = pkgs.papermc.overrideAttrs (finalAttrs: previousAttrs:
+        let
+          # https://papermc.io/downloads
+          mcVersion = "1.19.2";
+          buildNum = "304";
+        in
+        {
+          version = "${mcVersion}r${buildNum}";
+          jar = pkgs.fetchurl {
+            url = "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
+            sha256 = "sha256-UiTZPr8auvge7oYmhk+OedqyUlx0yq5ePW0ZkYUQdq0=";
+          };
+        });
       dataDir = "/var/lib/minecraft";
       declarative = true;
       eula = true;

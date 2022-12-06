@@ -10,7 +10,6 @@ self: super: {
 
   # custom packages
   bukkit-spigot = super.pkgs.callPackage ../packages/bukkit-spigot { };
-  papermc = super.pkgs.callPackage ../packages/papermc { };
   minecraft-controller =
     super.pkgs.callPackage ../packages/minecraft-controller { };
 
