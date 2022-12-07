@@ -225,7 +225,7 @@ in {
       after = [ "network.target" ];
 
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/papermc ${cfg.jvmOpts}";
+        ExecStart = "${cfg.package}/bin/minecraft-server ${cfg.jvmOpts}";
         Restart = "on-failure";
         RestartSec="5s";
         User = "minecraft";

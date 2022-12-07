@@ -30,6 +30,27 @@
     home-manager.enable = true;
     minecraft-server = {
       enable = true;
+      # For performance reasons, we choose to use the papermc fork
+      # of minecraft-server.
+      # The newest version of papermc can be found here:
+      # https://papermc.io/downloads
+      # We are overriding the version from the repositories to use the latest version.
+      package = pkgs.papermc.overrideAttrs (finalAttrs: previousAttrs:
+        let
+          mcVersion = "1.19.2";
+          buildNum = "305";
+          jar = pkgs.fetchurl {
+            url = "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
+            hash = "sha256-KDb/ZyKiRLLaix7IaBTwdbj1Awz9cSKuarCyAkJB7WA=";
+          };
+        in
+        {
+          version = "${mcVersion}r${buildNum}";
+          installPhase = ''
+            install -Dm444 ${jar} $out/share/papermc/papermc.jar
+            install -Dm555 -t $out/bin minecraft-server
+          '';
+        });
       dataDir = "/var/lib/minecraft";
       declarative = true;
       eula = true;
