@@ -58,6 +58,8 @@
         LovedByZyzz = "4feeb0a1-f64a-4214-ae16-5d75b09d6c8f";
         vivithere = "a7e7c9c9-203c-4feb-b094-e39639067847";
         Rocky0401 = "b15504ff-50f9-4fc4-a71b-86ebb2ba53b6";
+        GummiLPs = "8c21bd0e-c067-4dc7-a857-52dfb8c3ed26";
+        mia24_official = "bde2ece2-e806-4235-a237-785c2dafc4ff";
       };
       ops = {
         BobderEhrenmann = {
