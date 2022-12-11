@@ -93,6 +93,10 @@
           level = 4;
           bypassesPlayerLimit = true;
         };
+        cukiGAN = {
+          uuid = "d276f577-8791-4d60-8a05-9dc0d16fcf59";
+          level = 2;
+        };
       };
     };
     var.mainUser = "lasse";
