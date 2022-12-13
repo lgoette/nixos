@@ -82,6 +82,8 @@
         GummiLPs = "8c21bd0e-c067-4dc7-a857-52dfb8c3ed26";
         mia24_official = "bde2ece2-e806-4235-a237-785c2dafc4ff";
         TeeJay1306 = "49da54b2-5472-4c3f-92ec-00a3bb1a7f0e";
+        ImJonazz = "82bcbf74-1488-4d76-a5fb-5bd3391db937";
+        ESL_Eugen = "bea7add8-c91c-4ee6-b8c2-eff5df663037";
       };
       ops = {
         BobderEhrenmann = {
