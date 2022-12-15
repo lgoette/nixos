@@ -13,8 +13,6 @@ stdenv.mkDerivation {
       backup_dir=$1
       mc_dir=$2
       
-      rcon_pw=$(cat "$mc_dir/server.properties" | grep "rcon.password" | cut -d'=' -f2)
-
       status=$(systemctl is-active minecraft-server.service)
       if [[ $status == active ]]; then
         active=true
@@ -23,7 +21,7 @@ stdenv.mkDerivation {
       fi
 
       if [[ $active ]]; then
-        ${pkgs.mcrcon}/bin/mcrcon -H localhost -p $rcon_pw -w 5 save-all stop #TODO: This can be changed to use systemd to stop it when using the upstreammodule
+        ${pkgs.systemd}/bin/systemctl stop minecraft-server
         if [[ $? == 0 ]]; then
           sleep 60
           ${pkgs.zip}/bin/zip -r $backup_dir/minecraft.zip $mc_dir

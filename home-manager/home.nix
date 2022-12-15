@@ -39,6 +39,7 @@ in
         iperf3
         nmap
         unzip
+        mcrcon
 
         #mayniklas
         mayniklas.drone-gen

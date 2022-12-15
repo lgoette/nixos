@@ -26,14 +26,14 @@ in {
     };
   };
 
-  config = mkIf (cfg.enable && config.mayniklas.minecraft-server.enable) { #TODO: This should be changed when using the upstream module
+  config = mkIf (cfg.enable && config.services.minecraft-server.enable) {
 
     systemd.services.minecraft-backup = {
       serviceConfig = {
         User = "root";
         Type = "oneshot";
         ExecStart = ''
-          ${pkgs.minecraft-backup}/bin/minecraft-backup ${cfg.dataDir} ${config.mayniklas.services.minecraft-server.dataDir}
+          ${pkgs.minecraft-backup}/bin/minecraft-backup ${cfg.dataDir} ${config.services.minecraft-server.dataDir}
         '';
       };
     };
