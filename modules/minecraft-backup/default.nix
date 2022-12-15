@@ -26,7 +26,7 @@ in {
     };
   };
 
-  config = mkIf (cfg.enable && config.mayniklas.minecraft-server.enable) {
+  config = mkIf (cfg.enable && config.mayniklas.minecraft-server.enable) { #TODO: This should be changed when using the upstream module
 
     systemd.services.minecraft-backup = {
       serviceConfig = {

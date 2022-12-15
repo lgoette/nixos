@@ -23,7 +23,7 @@ stdenv.mkDerivation {
       fi
 
       if [[ $active ]]; then
-        ${pkgs.mcrcon}/bin/mcrcon -H localhost -p $rcon_pw -w 5 save-all stop
+        ${pkgs.mcrcon}/bin/mcrcon -H localhost -p $rcon_pw -w 5 save-all stop #TODO: This can be changed to use systemd to stop it when using the upstreammodule
         if [[ $? == 0 ]]; then
           sleep 60
           ${pkgs.zip}/bin/zip -r $backup_dir/minecraft.zip $mc_dir
