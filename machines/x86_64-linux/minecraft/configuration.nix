@@ -120,13 +120,13 @@
     # };
   };
 
-  # Old Hardcoded Cronjob TODO: This is temporary, in the overwrite of the upstream module, this will be replaced with a systemd timer (shold be placed in the overlay too)
+  # Old Hardcoded Cronjob # TODO: This is temporary, in the overwrite of the upstream module, this will be replaced with a systemd timer (shold be placed in the overlay too)
   services.cron = {
     enable = true;
     systemCronJobs = [
-      "50 1 * * *     minectaft    echo 'say Server is shutting down in 10 minutes!' > ${config.systemd.sockets.minecraft-server.socketConfig.ListenFIFO}"
-      "0 2 * * *      minecraft    ${pkgs.systemd}/bin/systemctl stop minecraft-server"
-      "0 8 * * *      minecraft    ${pkgs.systemd}/bin/systemctl start minecraft-server"
+      "50 1 * * *     root    echo 'say Server is shutting down in 10 minutes!' > ${config.systemd.sockets.minecraft-server.socketConfig.ListenFIFO}"
+      "0 2 * * *      root    ${pkgs.systemd}/bin/systemctl stop minecraft-server"
+      "0 8 * * *      root    ${pkgs.systemd}/bin/systemctl start minecraft-server"
     ];
   };
 
