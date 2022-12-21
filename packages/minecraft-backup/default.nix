@@ -12,15 +12,8 @@ stdenv.mkDerivation {
     minecraft-backup-skript = pkgs.writeShellScriptBin "minecraft-backup" ''
       backup_dir=$1
       mc_dir=$2
-      
-      status=$(systemctl is-active minecraft-server.service)
-      if [[ $status == active ]]; then
-        active=true
-      else
-        active=false
-      fi
 
-      if [[ $active ]]; then
+      if systemctl is-active --quiet minecraft-server.service; then
         ${pkgs.systemd}/bin/systemctl stop minecraft-server
         if [[ $? == 0 ]]; then
           sleep 60

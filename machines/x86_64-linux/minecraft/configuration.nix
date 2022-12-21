@@ -82,6 +82,9 @@
       motd =
         "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\nMap: Ich hab keine Hobbys";
       white-list = true;
+      entity-broadcast-range-percentage=100;
+      view-distance=16;
+      simulation-distance=14;
     };
     whitelist = {
       #BobderEhrenmann = "55df1dd6-8232-47f5-abbf-67c8f49ad26f";
