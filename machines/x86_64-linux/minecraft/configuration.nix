@@ -78,7 +78,7 @@
       "rcon.password" = "minecraft";
       difficulty = 3;
       gamemode = 0;
-      max-players = 10;
+      max-players = 12;
       motd =
         "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\nMap: Ich hab keine Hobbys";
       white-list = true;
@@ -104,6 +104,7 @@
       TeeJay1306 = "49da54b2-5472-4c3f-92ec-00a3bb1a7f0e";
       ImJonazz = "82bcbf74-1488-4d76-a5fb-5bd3391db937";
       ESL_Eugen = "bea7add8-c91c-4ee6-b8c2-eff5df663037";
+      aikoomi = "05a0e4cd-c4bb-4657-b484-f336751ea66b";
     };
     # TODO: Add Overlay with ops option
     # ops = {
