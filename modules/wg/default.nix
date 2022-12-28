@@ -70,7 +70,7 @@ in
         inherit publicKey; # set publicKey to the publicKey we've defined above
         allowedIPs = cfg.allowedIPs;
         endpoint = "lamafarm.lasse-goette.de:53115";
-        persistentKeepalive = 25;
+        persistentKeepalive = 15;
       }];
     };
 
