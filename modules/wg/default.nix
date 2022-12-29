@@ -43,19 +43,13 @@ in
         via = "${cfg.gateway}";
         options = { metric = "0"; };
       }
-      {
-        address = "1.1.1.1";
-        prefixLength = 32;
-        via = "${cfg.gateway}";
-        options = { metric = "0"; };
-      }
-      {
-        address = "8.8.8.8";
-        prefixLength = 32;
-        via = "${cfg.gateway}";
-        options = { metric = "0"; };
-      }
     ];
+
+    # hardcode wireguard endpoint
+    # -> wireguard can be started before DNS is available
+    networking.extraHosts = ''
+      5.45.108.206 lamafarm.lasse-goette.de
+    '';
 
     networking.interfaces.wg0 = { mtu = 1412; };
 
