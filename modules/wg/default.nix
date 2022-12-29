@@ -43,18 +43,18 @@ in
         via = "${cfg.gateway}";
         options = { metric = "0"; };
       }
-      # {
-      #   address = "1.1.1.1";
-      #   prefixLength = 32;
-      #   via = "${cfg.gateway}";
-      #   options = { metric = "0"; };
-      # }
-      # {
-      #   address = "8.8.8.8";
-      #   prefixLength = 32;
-      #   via = "${cfg.gateway}";
-      #   options = { metric = "0"; };
-      # }
+      {
+        address = "1.1.1.1";
+        prefixLength = 32;
+        via = "${cfg.gateway}";
+        options = { metric = "0"; };
+      }
+      {
+        address = "8.8.8.8";
+        prefixLength = 32;
+        via = "${cfg.gateway}";
+        options = { metric = "0"; };
+      }
     ];
 
     networking.interfaces.wg0 = { mtu = 1412; };
