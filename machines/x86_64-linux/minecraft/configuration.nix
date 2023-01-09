@@ -133,6 +133,7 @@
   networking =
     let
       uplink_interface = "enp6s18";
+      ip = "192.168.20.75";
       gateway = "192.168.20.1";
     in
     {
@@ -140,7 +141,7 @@
 
       dhcpcd.enable = false;
       enableIPv6 = false;
-      defaultGateway = "192.168.20.1";
+      defaultGateway = "${gateway}";
       nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
       wireguard.interfaces.wg0 = {
@@ -162,7 +163,7 @@
         ${uplink_interface}.ipv4 = {
           addresses = [
             {
-              address = "192.168.20.75";
+              address = "${ip}";
               prefixLength = 24;
             }
           ];
