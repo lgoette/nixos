@@ -100,6 +100,7 @@
       aikoomi = "05a0e4cd-c4bb-4657-b484-f336751ea66b";
       lyly97 = "947b948d-52ab-40aa-a295-76198e0b6b11";
       LukasGameTime = "20447a78-872a-461d-87d9-a015ab4af2cc";
+      emofr = "ae1c886b-75ba-47c2-a00b-20246205a355";
     };
     # TODO: Add Overlay with ops option
     # ops = {
