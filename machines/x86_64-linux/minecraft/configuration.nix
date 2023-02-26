@@ -90,7 +90,6 @@
       #PlanetMaker3000 = "e909c435-b18f-4bea-94c8-ead3b843f2c6";
       cukiGAN = "d276f577-8791-4d60-8a05-9dc0d16fcf59";
       "1gjxnx" = "dc58d757-3b29-4b69-b18c-164ac6ff156e";
-      LovedByZyzz = "4feeb0a1-f64a-4214-ae16-5d75b09d6c8f";
       vivithere = "a7e7c9c9-203c-4feb-b094-e39639067847";
       Rocky0401 = "b15504ff-50f9-4fc4-a71b-86ebb2ba53b6";
       GummiLPs = "8c21bd0e-c067-4dc7-a857-52dfb8c3ed26";
@@ -101,6 +100,7 @@
       aikoomi = "05a0e4cd-c4bb-4657-b484-f336751ea66b";
       lyly97 = "947b948d-52ab-40aa-a295-76198e0b6b11";
       LukasGameTime = "20447a78-872a-461d-87d9-a015ab4af2cc";
+      emofr = "ae1c886b-75ba-47c2-a00b-20246205a355";
     };
     # TODO: Add Overlay with ops option
     # ops = {
