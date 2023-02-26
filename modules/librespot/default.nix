@@ -1,0 +1,103 @@
+{ config, lib, pkgs, ... }:
+
+with lib;
+
+let cfg = config.lgoette.services.librespot;
+
+in {
+  options = {
+    lgoette.services.librespot = {
+      enable = mkEnableOption
+        "If enabled, a librespot instance will be launched with the name <option>services.librespot.name</option>";
+
+      name = mkOption {
+        type = types.str;
+        default = "Librespot";
+        description = "Name shown in Spotify";
+      };
+
+      bitrate = mkOption {
+        type = types.int;
+        default = 320;
+        description = "Bitrate for audio";
+      };
+
+      enableCache = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Enables caching for faster reponsetime";
+      };
+
+      initialVolume = mkOption {
+        type = types.int;
+        default = 75;
+        description = "Initial volume in percent";
+      };
+
+      deviceType = mkOption {
+        type = types.str;
+        default = "speaker";
+        description = ''
+          Device Type (Icon shown in Spotify)
+           Options are: computer, tablet, smartphone, speaker, tv, avr, stb, audiodongle, gameconsole, castaudio, castvideo, automobile, smartwatch, chromebook, carthing, homething'';
+      };
+
+      zeroconfigPort = mkOption {
+        type = types.port;
+        default = 54120;
+        description = "Port for the zeroconfig response";
+      };
+
+      openFirewall = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Opens the ports in the firewall for librespot";
+      };
+    };
+  };
+
+  config = mkIf cfg.enable {
+
+    users.users.librespot = {
+      description = "Librespot service user";
+      createHome = flase;
+      isSystemUser = true;
+      group = "librespot";
+    };
+    users.groups.librespot = { };
+
+    systemd.services.minecraft-server = {
+      description = "Librespot Service";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+
+      serviceConfig = {
+        ExecStart = ''
+          ${pkgs.librespot} -n \"${cfg.name}\" -b ${cfg.bitrate} 
+        '' + (if cfg.enableCache then ''
+          -c ./cache 
+        '' else
+          "") + ''
+            --enable-volume-normalisation --initial-volume ${cfg.initialVolume} --device-type ${cfg.deviceType}" --zeroconf-port ${cfg.zeroconfigPort};
+          '';
+        Restart = "on-failure";
+        RestartSec = "5s";
+        User = "librespot";
+      };
+    };
+
+    sound.enable = true;
+    # Use pipeware to emulate jack and pulseaudio
+    services.pipewire = {
+      enable = true;
+      jack.enable = true;
+      pulse.enable = true;
+    };
+
+    networking.firewall.allowedTCPPorts =
+      mkIf cfg.openFirewall [ cfg.zeroconfigPort ];
+    #4070, 65535, 38143 für Librespot?
+    # firewall.allowedUDPPorts = [ 5353 ]; # mdns für Librespot?
+
+  };
+}
