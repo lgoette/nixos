@@ -60,26 +60,29 @@ in {
 
     users.users.librespot = {
       description = "Librespot service user";
-      createHome = flase;
+      createHome = false;
       isSystemUser = true;
       group = "librespot";
     };
     users.groups.librespot = { };
 
-    systemd.services.minecraft-server = {
+    systemd.services.librespot = {
       description = "Librespot Service";
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
 
       serviceConfig = {
+        # ExecStart = ''
+        #   ${pkgs.librespot} -n \"${cfg.name}\" -b ${cfg.bitrate}
+        # '' + (if cfg.enableCache then ''
+        #   -c ./cache 
+        # '' else
+        #   "") + ''
+        #     --enable-volume-normalisation --initial-volume ${cfg.initialVolume} --device-type ${cfg.deviceType}" --zeroconf-port ${cfg.zeroconfigPort}
+        #   '';
         ExecStart = ''
-          ${pkgs.librespot} -n \"${cfg.name}\" -b ${cfg.bitrate} 
-        '' + (if cfg.enableCache then ''
-          -c ./cache 
-        '' else
-          "") + ''
-            --enable-volume-normalisation --initial-volume ${cfg.initialVolume} --device-type ${cfg.deviceType}" --zeroconf-port ${cfg.zeroconfigPort};
-          '';
+          ${pkgs.librespot}/bin/librespot -n "${cfg.name}" -b 320 --enable-volume-normalisation --initial-volume 75 --device-type ${cfg.deviceType} --zeroconf-port 54120
+        '';
         Restart = "on-failure";
         RestartSec = "5s";
         User = "librespot";
@@ -94,10 +97,10 @@ in {
       pulse.enable = true;
     };
 
-    networking.firewall.allowedTCPPorts =
-      mkIf cfg.openFirewall [ cfg.zeroconfigPort ];
-    #4070, 65535, 38143 für Librespot?
-    # firewall.allowedUDPPorts = [ 5353 ]; # mdns für Librespot?
+    networking.firewall = mkIf cfg.openFirewall {
+      allowedTCPPorts = [ cfg.zeroconfigPort ]; #4070, 65535, 38143 für Librespot?
+      allowedUDPPorts = [ 5353 ]; # mdns für Librespot
+    };
 
   };
 }

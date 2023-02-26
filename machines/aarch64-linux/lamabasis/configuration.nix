@@ -10,7 +10,13 @@
 
   lgoette = {
     user.lasse.home-manager.enable = true;
-    services.home-assistant.enable = true;
+    #services.home-assistant.enable = true;
+    services.librespot = {
+      enable = true;
+      openFirewall = true;
+      deviceType = "avr";
+      name = "Lama";
+    };
   };
 
   mayniklas = {
@@ -34,6 +40,12 @@
       port = 50937;
     }];
   };
+
+  # Enable librespot 
+  # services.librespot = {
+  #   enable = true;
+  #   deviceName = "Lama2";
+  # };
 
   # Enable the Cloudflare Dyndns daemon.
   services.cloudflare-dyndns = {
