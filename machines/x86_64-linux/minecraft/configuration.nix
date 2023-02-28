@@ -101,6 +101,8 @@
       lyly97 = "947b948d-52ab-40aa-a295-76198e0b6b11";
       LukasGameTime = "20447a78-872a-461d-87d9-a015ab4af2cc";
       emofr = "ae1c886b-75ba-47c2-a00b-20246205a355";
+      UrLeastFavSimp = "4129d14f-74bb-4331-8d79-4832b0a758ba";
+      mU_ffiN = "20748e98-2b90-4f4a-aadd-338eaed5b49b";
     };
     # TODO: Add Overlay with ops option
     # ops = {
