@@ -32,11 +32,11 @@
     "adblockStevenBlack": {
       "flake": false,
       "locked": {
-        "lastModified": 1677202941,
-        "narHash": "sha256-u7mh9tmIw3dIwb5wyYqXiJxrdk+AMzl7vImxc84i7MY=",
+        "lastModified": 1678246935,
+        "narHash": "sha256-y6sPLqvGG2r1WXU/wVBDLRoCPo2Udle6cPrCiothICU=",
         "owner": "StevenBlack",
         "repo": "hosts",
-        "rev": "6d4674abda33850fb0d0b7ce436e36cdc341b506",
+        "rev": "ed825369c59a04c31f0dc4d539e07654bb7ea3ce",
         "type": "github"
       },
       "original": {
@@ -273,14 +273,15 @@
           "nixpkgs"
         ],
         "shelly-exporter": "shelly-exporter",
-        "valorant-exporter": "valorant-exporter"
+        "valorant-exporter": "valorant-exporter",
+        "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1677335658,
-        "narHash": "sha256-0GG0xawPVGbB/MqDtxJhH+N1ghJbANg8HR61acyoY3A=",
+        "lastModified": 1678547325,
+        "narHash": "sha256-GwDxxp2wwpN3u1u5VPmkW7dPsgZf6ozlYgVTIiOT3QM=",
         "owner": "mayniklas",
         "repo": "nixos",
-        "rev": "36d4472a8790e4d51bebc11b4ff45180d1dda13b",
+        "rev": "a5990ea85fb45505afcf540ec31484f518271c2a",
         "type": "github"
       },
       "original": {
@@ -395,6 +396,20 @@
     },
     "nixpkgs_3": {
       "locked": {
+        "lastModified": 1672441588,
+        "narHash": "sha256-jx5kxOyeObnVD44HRebKYL3cjWrcKhhcDmEYm0/naDY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "6a0d2701705c3cf6f42c15aa92b7885f1f8a477f",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1677179781,
         "narHash": "sha256-+peLp16ruWLuTFHo0ZUbLlS1/meS/+RsWQQ9bUAzOh8=",
         "owner": "nixos",
@@ -447,7 +462,7 @@
         "home-manager": "home-manager",
         "mayniklas": "mayniklas",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       }
     },
     "shelly-exporter": {
@@ -512,6 +527,24 @@
       "original": {
         "owner": "MayNiklas",
         "repo": "valorant-exporter",
+        "type": "github"
+      }
+    },
+    "vscode-server": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1676501444,
+        "narHash": "sha256-H+uQetkzd5GIga56HmCDwl5eihdQgeN2jVdNrkXzDyo=",
+        "owner": "msteen",
+        "repo": "nixos-vscode-server",
+        "rev": "57f1716bc625d2892579294cc207956679e3d94c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "msteen",
+        "repo": "nixos-vscode-server",
         "type": "github"
       }
     }
