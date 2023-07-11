@@ -38,12 +38,12 @@ steps:
 
 - name: build minecraft
   commands:
-  - nix build '.#nixosConfigurations.minecraft.config.system.build.toplevel' --option binary-caches "https://cache.nixos.org" --out-link result-minecraft
+  - nix build '.#nixosConfigurations.minecraft.config.system.build.toplevel' --out-link result-minecraft
   - nix path-info --closure-size -h $(readlink -f result-minecraft)
 
 - name: build lamafarm
   commands:
-  - nix build '.#nixosConfigurations.lamafarm.config.system.build.toplevel' --option binary-caches "https://cache.nixos.org" --out-link result-lamafarm
+  - nix build '.#nixosConfigurations.lamafarm.config.system.build.toplevel' --out-link result-lamafarm
   - nix path-info --closure-size -h $(readlink -f result-lamafarm)
 
 - name: upload to binary cache via s3
@@ -78,7 +78,7 @@ steps:
 
 - name: build lamabasis
   commands:
-  - nix build '.#nixosConfigurations.lamabasis.config.system.build.toplevel' --option binary-caches "https://cache.nixos.org" --out-link result-lamabasis
+  - nix build '.#nixosConfigurations.lamabasis.config.system.build.toplevel' --out-link result-lamabasis
   - nix path-info --closure-size -h $(readlink -f result-lamabasis)
 
 - name: upload to binary cache via s3
@@ -113,7 +113,7 @@ steps:
 
 - name: Build bukkit-spigot
   commands:
-  - nix build .#bukkit-spigot --option binary-caches "https://cache.nixos.org" --out-link result-bukkit-spigot
+  - nix build .#bukkit-spigot --out-link result-bukkit-spigot
   - nix path-info --closure-size -h $(readlink -f result-bukkit-spigot)
 
 - name: upload to binary cache via s3

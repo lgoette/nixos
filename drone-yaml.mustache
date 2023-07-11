@@ -40,7 +40,7 @@ steps:
 {{#machines}}
 - name: build {{name}}
   commands:
-  - nix build '.#nixosConfigurations.{{name}}.config.system.build.toplevel' --option binary-caches "https://cache.nixos.org" --out-link result-{{name}}
+  - nix build '.#nixosConfigurations.{{name}}.config.system.build.toplevel' --out-link result-{{name}}
   - nix path-info --closure-size -h $(readlink -f result-{{name}})
 
 {{/machines}}
@@ -79,7 +79,7 @@ steps:
 {{#apps}}
 - name: Build {{name}}
   commands:
-  - nix build .#{{name}} --option binary-caches "https://cache.nixos.org" --out-link result-{{name}}
+  - nix build .#{{name}} --out-link result-{{name}}
   - nix path-info --closure-size -h $(readlink -f result-{{name}})
 
 {{/apps}}
