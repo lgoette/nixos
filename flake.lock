@@ -16,11 +16,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1665473501,
-        "narHash": "sha256-/hM76t9fa/lUgEmjgSvOB+Q8yzZwbXvU4/j+bMil9yY=",
+        "lastModified": 1688055723,
+        "narHash": "sha256-8WtkSAr4qYA3o6kiOCESK3rHJmIsa6TMBrT3/Cbfvro=",
         "owner": "MayNiklas",
         "repo": "nixos-adblock-unbound",
-        "rev": "43be8f38efd94de033bd1e7c38c1f3b00a41ffbf",
+        "rev": "9356ccd526fdcf91bfee7f0ebebae831349d43cc",
         "type": "github"
       },
       "original": {
@@ -32,11 +32,11 @@
     "adblockStevenBlack": {
       "flake": false,
       "locked": {
-        "lastModified": 1685497130,
-        "narHash": "sha256-JXqpUgOBqfieSHgDmpT2i7zVSMImQKqhliGpRSneVDc=",
+        "lastModified": 1687905015,
+        "narHash": "sha256-vMryjN9p3cgqltZSOaj7m+jNC2vAWoDAflgW64TgYXA=",
         "owner": "StevenBlack",
         "repo": "hosts",
-        "rev": "8007e17d0a66bc9f43d79bb82a218f253d28797a",
+        "rev": "adbbd807d683ab3956dbf0b78b79ba22f1ea2a73",
         "type": "github"
       },
       "original": {
@@ -112,11 +112,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1685518550,
-        "narHash": "sha256-o2d0KcvaXzTrPRIo0kOLV0/QXHhDQ5DTi+OxcjO8xqY=",
+        "lastModified": 1689068808,
+        "narHash": "sha256-6ixXo3wt24N/melDWjq70UuHQLxGV8jZvooRanIHXw0=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "a1720a10a6cfe8234c0e93907ffe81be440f4cef",
+        "rev": "919d646de7be200f3bf08cb76ae1f09402b6f9b4",
         "type": "github"
       },
       "original": {
@@ -163,11 +163,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1681202837,
-        "narHash": "sha256-H+Rh19JDwRtpVPAWp64F+rlEtxUWBAQW28eAi3SRSzg=",
+        "lastModified": 1687709756,
+        "narHash": "sha256-Y5wKlQSkgEK2weWdOu4J3riRd+kV/VCgHsqLNTTWQ/0=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "cfacdce06f30d2b68473a46042957675eebb3401",
+        "rev": "dbabf0ca0c0c4bce6ea5eaf65af5cb694d2082c7",
         "type": "github"
       },
       "original": {
@@ -207,11 +207,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1685599623,
-        "narHash": "sha256-Tob4CMOVHue0D3RzguDBCtUmX5ji2PsdbQDbIOIKvsc=",
+        "lastModified": 1687871164,
+        "narHash": "sha256-bBFlPthuYX322xOlpJvkjUBz0C+MOBjZdDOOJJ+G2jU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "93db05480c0c0f30382d3e80779e8386dcb4f9dd",
+        "rev": "07c347bb50994691d7b0095f45ebd8838cf6bc38",
         "type": "github"
       },
       "original": {
@@ -287,11 +287,11 @@
         "whisper-api": "whisper-api"
       },
       "locked": {
-        "lastModified": 1686086230,
-        "narHash": "sha256-b5aT9mRLC8whuaJFfDGo42uZMRFr+TgmbMnt9V9lORo=",
+        "lastModified": 1688564985,
+        "narHash": "sha256-UG9JMyKKGxt4SnxnfNo2Qch5aXowz8nidmeyo6J53Ys=",
         "owner": "mayniklas",
         "repo": "nixos",
-        "rev": "0dac2bd09e881434dd9f04c315334605380732ab",
+        "rev": "1a130dc738c9ff58e87c15216a9d8a330385ad6c",
         "type": "github"
       },
       "original": {
@@ -328,11 +328,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1686217350,
-        "narHash": "sha256-Nb9b3m/GEK8jyFsYfUkXGsqj6rH05GgJ2QWcNNbK7dw=",
+        "lastModified": 1689060619,
+        "narHash": "sha256-vODUkZLWFVCvo1KPK3dC2CbXjxa9antEn5ozwlcTr48=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "e4b34b90f27696ec3965fa15dcbacc351293dc67",
+        "rev": "44bc025007e5fcc10dbc3d9f96dcbf06fc0e8c1c",
         "type": "github"
       },
       "original": {
@@ -392,11 +392,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1685383865,
-        "narHash": "sha256-3uQytfnotO6QJv3r04ajSXbEFMII0dUtw0uqYlZ4dbk=",
+        "lastModified": 1687898314,
+        "narHash": "sha256-B4BHon3uMXQw8ZdbwxRK1BmxVOGBV4viipKpGaIlGwk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5e871d8aa6f57cc8e0dc087d1c5013f6e212b4ce",
+        "rev": "e18dc963075ed115afb3e312b64643bf8fd4b474",
         "type": "github"
       },
       "original": {
@@ -438,11 +438,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1683408522,
-        "narHash": "sha256-9kcPh6Uxo17a3kK3XCHhcWiV1Yu1kYj22RHiymUhMkU=",
+        "lastModified": 1687898314,
+        "narHash": "sha256-B4BHon3uMXQw8ZdbwxRK1BmxVOGBV4viipKpGaIlGwk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "897876e4c484f1e8f92009fd11b7d988a121a4e7",
+        "rev": "e18dc963075ed115afb3e312b64643bf8fd4b474",
         "type": "github"
       },
       "original": {
@@ -454,11 +454,11 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1686059680,
-        "narHash": "sha256-sp0WlCIeVczzB0G8f8iyRg3IYW7KG31mI66z7HIZwrI=",
+        "lastModified": 1688939073,
+        "narHash": "sha256-jYhYjeK5s6k8QS3i+ovq9VZqBJaWbxm7awTKNhHL9d0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a558f7ac29f50c4b937fb5c102f587678ae1c9fb",
+        "rev": "8df7a67abaf8aefc8a2839e0b48f92fdcf69a38b",
         "type": "github"
       },
       "original": {
@@ -521,11 +521,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1681915207,
-        "narHash": "sha256-2ow5Zi9fujalyzTWWJcd3grFOFMRoiIFzWy3hesvXTo=",
+        "lastModified": 1687247311,
+        "narHash": "sha256-3SEkNQAYUpRukGrQ2KhXauPZYr5KaxfNLxGD0Gfe8K0=",
         "owner": "MayNiklas",
         "repo": "shelly-exporter",
-        "rev": "bf5f0dae35ae873d31a43b8d2f28c27c0f0f1848",
+        "rev": "9f7cc064d49fdc061e54a799095a876635801497",
         "type": "github"
       },
       "original": {
@@ -629,11 +629,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1685006461,
-        "narHash": "sha256-ccmPygP0EHsVmaObQTImxSQuSi+h9t/u+knAoUFN+dY=",
+        "lastModified": 1688038021,
+        "narHash": "sha256-IRBC4wC53oWJvk2gBMN+4iDmb9eIuTYi5+vSJp66SUU=",
         "owner": "MayNiklas",
         "repo": "whisper_api",
-        "rev": "cffc6ccc47cdb88e6bec4613c0f864b487bf6328",
+        "rev": "a521d0296cfbb84f82ff0804a9ff957b4b4a1a70",
         "type": "github"
       },
       "original": {

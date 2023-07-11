@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
 let cfg = config.lgoette.nginx;
-in {
+in
+{
 
   options.lgoette.nginx = {
     enable = mkEnableOption "nginx";
@@ -32,6 +33,14 @@ in {
             "/var/src/secrets/ssl/cf_workshop.lasse-goette.de.pem";
           onlySSL = true;
           root = "/var/www/workshop.lasse-goette.de";
+
+          locations."~*\.(css|png|jpg|jpeg)$" = {
+            extraConfig = ''
+              access_log off;
+              expires max;
+            '';
+          };
+
           extraConfig = ''
             # https://www.cloudflare.com/ips
 
