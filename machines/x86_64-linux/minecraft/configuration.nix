@@ -48,11 +48,11 @@
     # We are overriding the version from the repositories to use the latest version.
     package = pkgs.papermc.overrideAttrs (finalAttrs: previousAttrs:
       let
-        mcVersion = "1.19.2";
-        buildNum = "305";
+        mcVersion = "1.20.1";
+        buildNum = "98";
         jar = pkgs.fetchurl {
           url = "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
-          hash = "sha256-KDb/ZyKiRLLaix7IaBTwdbj1Awz9cSKuarCyAkJB7WA=";
+          hash = "sha256-4eqyHIj0Oi+ssHiREOHdWWlhdlcfbChDuyWIyd5Dl+o=";
         };
       in
       {
@@ -74,7 +74,7 @@
       gamemode = 0;
       max-players = 12;
       motd =
-        "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\nMap: Ich hab keine Hobbys";
+        "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\n\1.20.1 \\u00a74<3";
       white-list = true;
       entity-broadcast-range-percentage = 100;
       view-distance = 16;
@@ -97,13 +97,13 @@
       TeeJay1306 = "49da54b2-5472-4c3f-92ec-00a3bb1a7f0e";
       ImJonazz = "82bcbf74-1488-4d76-a5fb-5bd3391db937";
       ESL_Eugen = "bea7add8-c91c-4ee6-b8c2-eff5df663037";
-      aikoomi = "05a0e4cd-c4bb-4657-b484-f336751ea66b";
-      lyly97 = "947b948d-52ab-40aa-a295-76198e0b6b11";
+      #aikoomi = "05a0e4cd-c4bb-4657-b484-f336751ea66b";
+      #lyly97 = "947b948d-52ab-40aa-a295-76198e0b6b11";
       LukasGameTime = "20447a78-872a-461d-87d9-a015ab4af2cc";
-      emofr = "ae1c886b-75ba-47c2-a00b-20246205a355";
+      #emofr = "ae1c886b-75ba-47c2-a00b-20246205a355";
       UrLeastFavSimp = "4129d14f-74bb-4331-8d79-4832b0a758ba";
       mU_ffiN = "20748e98-2b90-4f4a-aadd-338eaed5b49b";
-      Kyla_ = "28bd90b2-6b45-4c13-89ec-aed3417e728e";
+      #Kyla_ = "28bd90b2-6b45-4c13-89ec-aed3417e728e";
     };
     # TODO: Add Overlay with ops option
     # ops = {
@@ -126,7 +126,7 @@
   # Ferien Zeit 10-3 
   # Normale Zeit: 10-2
   services.cron = {
-    enable = true;
+    enable = false;
     systemCronJobs = [
       "50 1 * * *     root    echo 'say Server is shutting down in 10 minutes!' > ${config.systemd.sockets.minecraft-server.socketConfig.ListenFIFO}"
       "0 2 * * *      root    ${pkgs.systemd}/bin/systemctl stop minecraft-server"
