@@ -97,13 +97,14 @@
       TeeJay1306 = "49da54b2-5472-4c3f-92ec-00a3bb1a7f0e";
       ImJonazz = "82bcbf74-1488-4d76-a5fb-5bd3391db937";
       ESL_Eugen = "bea7add8-c91c-4ee6-b8c2-eff5df663037";
-      #aikoomi = "05a0e4cd-c4bb-4657-b484-f336751ea66b";
+      aikoomi = "05a0e4cd-c4bb-4657-b484-f336751ea66b";
       #lyly97 = "947b948d-52ab-40aa-a295-76198e0b6b11";
       LukasGameTime = "20447a78-872a-461d-87d9-a015ab4af2cc";
       #emofr = "ae1c886b-75ba-47c2-a00b-20246205a355";
       UrLeastFavSimp = "4129d14f-74bb-4331-8d79-4832b0a758ba";
       mU_ffiN = "20748e98-2b90-4f4a-aadd-338eaed5b49b";
       #Kyla_ = "28bd90b2-6b45-4c13-89ec-aed3417e728e";
+      MikrogamerHD = "61699963-4d1b-49ba-b945-8c3882713880";
     };
     # TODO: Add Overlay with ops option
     # ops = {
@@ -126,7 +127,7 @@
   # Ferien Zeit 10-3 
   # Normale Zeit: 10-2
   services.cron = {
-    enable = false;
+    enable = true;
     systemCronJobs = [
       "50 1 * * *     root    echo 'say Server is shutting down in 10 minutes!' > ${config.systemd.sockets.minecraft-server.socketConfig.ListenFIFO}"
       "0 2 * * *      root    ${pkgs.systemd}/bin/systemctl stop minecraft-server"
