@@ -14,6 +14,8 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
+    vscode-server.url = "github:msteen/nixos-vscode-server";
+
     mayniklas = {
       url = "github:mayniklas/nixos";
       inputs = {
@@ -21,6 +23,7 @@
         home-manager.follows = "home-manager";
         flake-utils.follows = "flake-utils";
         nixos-hardware.follows = "nixos-hardware";
+        vscode-server.follows = "vscode-server";
       };
     };
 
@@ -75,9 +78,21 @@
 
       {
 
-        home-manager = { pkgs, ... }: {
-          imports =
-            [ ./home-manager/home.nix ./home-manager/home-desktop.nix ];
+        home-manager = { config, pkgs, lib, ...}:
+          let
+            cfg = config.mayniklas.home-manager;
+          in {
+            imports =
+              [ ./home-manager/home.nix ./home-manager/home-desktop.nix ];
+              
+            home-manager.users."lasse" = lib.mkIf cfg.enable {
+              imports = [
+                vscode-server.nixosModules.home
+              ];
+
+              # Visual Studio Code Server support
+              services.vscode-server.enable = true;
+            };
         };
 
       } // {
