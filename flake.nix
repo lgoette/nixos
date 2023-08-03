@@ -80,7 +80,7 @@
 
         home-manager = { config, pkgs, lib, ...}:
           let
-            cfg = config.mayniklas.home-manager;
+            cfg = config.lgoette.user.lasse.home-manager;
           in {
             imports =
               [ ./home-manager/home.nix ./home-manager/home-desktop.nix ];
