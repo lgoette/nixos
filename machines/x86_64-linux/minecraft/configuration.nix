@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./minecraft.nix
+    # ./minecraft.nix
     ../../../users/lasse.nix
     ../../../users/root.nix
     # home-manager.nixosModules.home-manager
