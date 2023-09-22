@@ -63,6 +63,7 @@ in {
       createHome = false;
       isSystemUser = true;
       group = "librespot";
+      extraGroups  = [ "audio" "pulse-access" ];
     };
     users.groups.librespot = { };
 
@@ -81,7 +82,7 @@ in {
         #     --enable-volume-normalisation --initial-volume ${cfg.initialVolume} --device-type ${cfg.deviceType}" --zeroconf-port ${cfg.zeroconfigPort}
         #   '';
         ExecStart = ''
-          ${pkgs.librespot}/bin/librespot -n "${cfg.name}" -b 320 --enable-volume-normalisation --initial-volume 75 --device-type ${cfg.deviceType} --zeroconf-port 54120
+          ${pkgs.librespot}/bin/librespot -n "${cfg.name}" -b 320 --enable-volume-normalisation --initial-volume 75 --device-type ${cfg.deviceType} --zeroconf-port 54120 --backend pulseaudio
         '';
         Restart = "on-failure";
         RestartSec = "5s";
@@ -90,11 +91,9 @@ in {
     };
 
     sound.enable = true;
-    # Use pipeware to emulate jack and pulseaudio
-    services.pipewire = {
+    hardware.pulseaudio = {
       enable = true;
-      jack.enable = true;
-      pulse.enable = true;
+      systemWide = true;
     };
 
     networking.firewall = mkIf cfg.openFirewall {

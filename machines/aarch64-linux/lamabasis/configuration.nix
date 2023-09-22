@@ -8,6 +8,21 @@
     # home-manager.nixosModules.home-manager
   ];
 
+
+  # Sound on Raspberry Pi
+  # boot = {
+  #   extraModprobeConfig = ''
+  #     options snd_bcm2835 enable_headphones=1
+  #   '';
+  # };
+
+  # dtparam=audio=on in /boot/config.txt ?
+
+  # hardware.raspberry-pi."4" = {
+  #   audio.enable = true;
+  # };
+
+
   lgoette = {
     user.lasse.home-manager.enable = true;
     #services.home-assistant.enable = true;
