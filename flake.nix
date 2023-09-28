@@ -78,13 +78,14 @@
 
       {
 
-        home-manager = { config, pkgs, lib, ...}:
+        home-manager = { config, pkgs, lib, ... }:
           let
             cfg = config.lgoette.user.lasse.home-manager;
-          in {
+          in
+          {
             imports =
               [ ./home-manager/home.nix ./home-manager/home-desktop.nix ];
-              
+
             home-manager.users."lasse" = lib.mkIf cfg.enable {
               imports = [
                 vscode-server.nixosModules.home
@@ -93,7 +94,7 @@
               # Visual Studio Code Server support
               services.vscode-server.enable = true;
             };
-        };
+          };
 
       } // {
 
@@ -220,6 +221,8 @@
         # allow using them from other flakes that import this one.
 
         packages = flake-utils.lib.flattenTree {
+          woodpecker-pipeline = pkgs.callPackage ./packages/woodpecker-pipeline { inputs = inputs; flake-self = self; };
+
           bukkit-spigot = pkgs.bukkit-spigot;
           minecraft-backup = pkgs.minecraft-backup;
           minecraft-controller = pkgs.minecraft-controller;
