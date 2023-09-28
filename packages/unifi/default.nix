@@ -63,8 +63,9 @@ in rec {
     sha256 = "sha256-NUGRO+f6JzWvYPwiitZsgp+LQwnGSncnost03mgNVxA=";
   };
 
+  # Changed to unifi 7.5
   unifi7 = generic {
-    version = "7.1.61";
-    sha256 = "sha256-7Ac8BjlBLCslSU6IZK0EtheKz4CtH7tcmR8J2rUGYbs=";
+    version = "7.5.176";
+    sha256 = "a6bb05ab4f7362b07be29fcc18a8f0bd97edc3bf24f706c8bdae7115d93e66dc";
   };
 }

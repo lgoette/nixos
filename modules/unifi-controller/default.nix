@@ -9,8 +9,8 @@ in {
 
     domain = mkOption {
       type = types.str;
-      default = "unifi.lounge-rocks.io";
-      example = "unifi.lounge-rocks.io";
+      default = "unifi.lasse-goette.de";
+      example = "unifi.lasse-goette.de";
       description = "(Sub-) domain for unifi.";
     };
 
@@ -31,9 +31,9 @@ in {
     services.unifi = {
       enable = true;
       # -> use our own package
-      # unifiPackage = (pkgs.callPackages ../../packages/unifi { }).unifi7;
+      unifiPackage = (pkgs.callPackages ../../packages/unifi { }).unifi7;
       # -> use newest package in NixPkgs
-      unifiPackage = pkgs.unifi;
+      # unifiPackage = pkgs.unifi;
       openFirewall = false;
     };
 
