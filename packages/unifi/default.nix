@@ -66,6 +66,7 @@ in rec {
   # Changed to unifi 7.5
   unifi7 = generic {
     version = "7.5.176";
-    sha256 = "a6bb05ab4f7362b07be29fcc18a8f0bd97edc3bf24f706c8bdae7115d93e66dc";
+    suffix = "-1136930355";
+    sha256 = "sha256-prsFq09zYrB74p/MGKjwvZftw78k9wbIva5xFdk+Ztw=";
   };
 }
