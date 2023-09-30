@@ -1,22 +1,48 @@
 {
   description = "A very basic flake";
 
+  # If not specifies, flake inputs default to the main / master branch.
+
   inputs = {
 
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    # https://github.com/nixos/nixpkgs
+    # Nix Packages collection & NixOS
+    # This is the main input of the flake and specifies the NixOS version.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # https://github.com/NixOS/nixos-hardware
+    # A collection of NixOS modules covering hardware quirks.
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # https://github.com/nix-community/home-manager
+    # Manage a user environment using Nix 
     home-manager = {
+      # Make sure the branch is correct for the version of nixpkgs you are using!
+      # For example, if you are using nixpkgs-unstable, you should use the master branch.
+      # For nixos-23.05, you should use the release-23.05 branch.
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # https://github.com/numtide/flake-utils
+    # Pure Nix flake utility functions
+    # Todo: completly get rid of those and use nixpkgs builtins
     flake-utils.url = "github:numtide/flake-utils";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    # https://github.com/nix-community/nixos-vscode-server
+    # Visual Studio Code Server support in NixOS
+    vscode-server = {
+      url = "github:msteen/nixos-vscode-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
 
-    vscode-server.url = "github:msteen/nixos-vscode-server";
-
+    # https://github.com/mayniklas/nixos
+    # @MayNiklas NixOS configuration
+    # We use a few modules from this flake as well as @MayNiklas home manager config
     mayniklas = {
       url = "github:mayniklas/nixos";
       inputs = {
