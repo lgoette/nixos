@@ -1,9 +1,10 @@
-{ pkgs, mayniklas, home-manager, ... }:
+{ self, ... }:
+{ pkgs, lib, mayniklas, home-manager, ... }:
 
 {
   imports = [
-    ../../../users/lasse.nix
-    ../../../users/root.nix
+    ../../users/lasse.nix
+    ../../users/root.nix
     ./wg0.nix
     # home-manager.nixosModules.home-manager
   ];
@@ -81,6 +82,7 @@
     size = (1024 * 2);
   }];
 
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   system.stateVersion = "22.05";
 
 }

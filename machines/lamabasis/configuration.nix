@@ -1,9 +1,10 @@
+{ self, ... }:
 { pkgs, lib, mayniklas, home-manager, ... }:
 
 {
   imports = [
-    ../../../users/lasse.nix
-    ../../../users/root.nix
+    ../../users/lasse.nix
+    ../../users/root.nix
     ./wg0.nix
     # home-manager.nixosModules.home-manager
   ];
@@ -84,6 +85,7 @@
       wget
     ];
 
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   system.stateVersion = "22.05";
 
 }

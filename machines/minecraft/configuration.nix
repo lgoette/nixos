@@ -1,10 +1,11 @@
+{ self, ... }:
 { lib, pkgs, config, mayniklas, home-manager, ... }:
 
 {
   imports = [
     # ./minecraft.nix
-    ../../../users/lasse.nix
-    ../../../users/root.nix
+    ../../users/lasse.nix
+    ../../users/root.nix
     # home-manager.nixosModules.home-manager
   ];
 
@@ -214,6 +215,7 @@
     size = (1024 * 8);
   }];
 
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   system.stateVersion = "22.05";
 
 }

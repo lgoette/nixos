@@ -43,6 +43,7 @@ writeText "pipeline" (builtins.toJSON {
                   # only build hosts for the arch we are currently building
                   if (flake-self.nixosConfigurations.${host}.pkgs.stdenv.hostPlatform.system != arch) then
                     [ ]
+                  else if ("${host}" == "lasse-laptop" || "${host}" == "pi4b-image") then [ ]
                   else [
                     {
                       name = "Build ${host}";

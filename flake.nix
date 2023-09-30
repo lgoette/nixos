@@ -12,10 +12,7 @@
 
     # https://github.com/NixOS/nixos-hardware
     # A collection of NixOS modules covering hardware quirks.
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     # https://github.com/nix-community/home-manager
     # Manage a user environment using Nix 
@@ -65,6 +62,9 @@
       # it can use the sources pinned in flake.lock
       overlays.default = final: prev: (import ./overlays inputs) final prev;
 
+      # I don't think we need this anymore
+      # It seems completly unused
+      # To verify: build with it deleted
       pi = {
         pi4b = { config, pkgs, lib, ... }: {
           imports = [
@@ -164,53 +164,22 @@
               # allows to only pass what is needed to each module.
               specialArgs = { flake-self = self; } // inputs;
 
-              system = "x86_64-linux";
-
-              modules = [
-
-                (./machines/x86_64-linux + "/${x}/configuration.nix")
-                { imports = builtins.attrValues self.nixosModules; }
+              modules = builtins.attrValues self.nixosModules ++ [
                 { nixpkgs.overlays = [ self.overlays.default mayniklas.overlays.mayniklas ]; }
-
+                (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
               ];
+
             };
           })
-          (builtins.attrNames (builtins.readDir ./machines/x86_64-linux)))
-
-      //
-
-      builtins.listToAttrs (map
-        (x: {
-          name = x;
-          value = nixpkgs.lib.nixosSystem {
-
-            # Make inputs and the flake itself accessible as module parameters.
-            # Technically, adding the inputs is redundant as they can be also
-            # accessed with flake-self.inputs.X, but adding them individually
-            # allows to only pass what is needed to each module.
-            specialArgs = { flake-self = self; } // inputs;
-
-            system = "aarch64-linux";
-
-            modules = [
-              self.pi.pi4b
-              (./machines/aarch64-linux + "/${x}/configuration.nix")
-              { imports = builtins.attrValues self.nixosModules; }
-              { nixpkgs.overlays = [ self.overlays.default mayniklas.overlays.mayniklas ]; }
-
-            ];
-          };
-        })
-        (builtins.attrNames (builtins.readDir ./machines/aarch64-linux)))
+          (builtins.attrNames (builtins.readDir ./machines)))
 
       //
 
       {
         pi4b-image = nixpkgs.lib.nixosSystem rec {
           specialArgs = { flake-self = self; } // inputs;
-          system = "aarch64-linux";
           modules = [
-            ./images/pi4b/configuration.nix
+            (import "${./.}/images/pi4b/configuration.nix" { inherit self; })
             "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
             { imports = builtins.attrValues self.nixosModules; }
             {
@@ -218,7 +187,6 @@
               nix.registry.nixpkgs.flake = nixpkgs;
               sdImage.compressImage = false;
               sdImage.imageBaseName = "pi4b-image";
-
             }
           ];
         };
@@ -248,7 +216,10 @@
         # allow using them from other flakes that import this one.
 
         packages = flake-utils.lib.flattenTree {
-          woodpecker-pipeline = pkgs.callPackage ./packages/woodpecker-pipeline { inputs = inputs; flake-self = self; };
+          woodpecker-pipeline = pkgs.callPackage ./packages/woodpecker-pipeline {
+            inputs = inputs;
+            flake-self = self;
+          };
 
           bukkit-spigot = pkgs.bukkit-spigot;
           minecraft-backup = pkgs.minecraft-backup;
@@ -258,7 +229,6 @@
           # nix build '.#pi4b-image'
           pi4b-image =
             self.nixosConfigurations.pi4b-image.config.system.build.sdImage;
-
         };
 
         apps = {

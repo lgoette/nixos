@@ -44,27 +44,6 @@
       {
         "commands":
           [
-            "nix build '.#nixosConfigurations.lasse-laptop.config.system.build.toplevel' -o 'result-lasse-laptop'",
-          ],
-        "image": "bash",
-        "name": "Build lasse-laptop",
-      },
-      {
-        "commands":
-          [
-            "nix path-info --closure-size -h $(readlink -f 'result-lasse-laptop')",
-          ],
-        "image": "bash",
-        "name": "Show lasse-laptop info",
-      },
-      {
-        "commands": ["attic push lounge-rocks:nix-cache 'result-lasse-laptop'"],
-        "image": "bash",
-        "name": "Push lasse-laptop to Attic",
-      },
-      {
-        "commands":
-          [
             "nix build '.#nixosConfigurations.minecraft.config.system.build.toplevel' -o 'result-minecraft'",
           ],
         "image": "bash",

@@ -1,3 +1,4 @@
+{ self, ... }:
 { config, pkgs, lib, ... }: {
 
   imports = [
@@ -32,6 +33,7 @@
     interfaces.eth0 = { useDHCP = true; };
   };
 
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   system.stateVersion = "22.05";
 
 }
