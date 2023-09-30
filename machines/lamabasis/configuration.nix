@@ -3,6 +3,7 @@
 
 {
   imports = [
+    self.pi.pi4b
     ../../users/lasse.nix
     ../../users/root.nix
     ./wg0.nix
