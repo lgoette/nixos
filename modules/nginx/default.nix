@@ -23,6 +23,9 @@ in
     services.nginx = {
       enable = true;
       recommendedTlsSettings = true;
+
+      serverNamesHashBucketSize = 64;
+
       virtualHosts = {
 
         "workshop.lasse-goette.de" = mkIf cfg.workshop {
