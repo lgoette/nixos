@@ -75,6 +75,7 @@
 
   networking = {
     hostName = "lamabasis";
+    usePredictableInterfaceNames = false;
     firewall.allowedTCPPorts = [ 50937 ];
   };
 
