@@ -41,5 +41,24 @@
         "image": "bash",
         "name": "Push lamabasis to Attic",
       },
+      {
+        "commands":
+          [
+            "nix build '.#nixosConfigurations.lamaoutpost.config.system.build.toplevel' -o 'result-lamaoutpost'",
+          ],
+        "image": "bash",
+        "name": "Build lamaoutpost",
+      },
+      {
+        "commands":
+          ["nix path-info --closure-size -h $(readlink -f 'result-lamaoutpost')"],
+        "image": "bash",
+        "name": "Show lamaoutpost info",
+      },
+      {
+        "commands": ["attic push lounge-rocks:nix-cache 'result-lamaoutpost'"],
+        "image": "bash",
+        "name": "Push lamaoutpost to Attic",
+      },
     ],
 }
