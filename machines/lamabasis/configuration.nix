@@ -27,7 +27,7 @@
 
   lgoette = {
     user.lasse.home-manager.enable = true;
-    #services.home-assistant.enable = true;
+    home-assistant.enable = true;
     services.librespot = {
       enable = true;
       openFirewall = true;
@@ -39,6 +39,7 @@
   mayniklas = {
     var.mainUser = "lasse";
     locale.enable = true;
+    docker = { enable = true; };
     nix-common = {
       enable = true;
       disable-cache = false;

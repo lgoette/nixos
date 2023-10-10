@@ -1,13 +1,45 @@
 { config, pkgs, lib, ... }:
 with lib;
-let cfg = config.lgoette.services.home-assistant;
+let
+  cfg =
+    config.lgoette.home-assistant;
 
 in {
-  options.lgoette.services.home-assistant = {
-    enable = mkEnableOption "Home-assitant server";
-  };
+  options.lgoette.home-assistant =
+    {
+      enable = mkEnableOption "Home-assitant server";
+
+      timezone = mkOption {
+        type = types.str;
+        default = "Europe/Berlin";
+        description = ''
+          Timzone, home assistant is using.
+        '';
+      };
+
+      path = mkOption {
+        type = types.str;
+        default = "/docker/home-assistant";
+        description = ''
+          Path for the home assistant config
+        '';
+      };
+
+    };
 
   config = mkIf cfg.enable {
+
+    # enable home assistant docker container
+    virtualisation.oci-containers.containers.home-assistant = {
+      autoStart = true;
+      image = "ghcr.io/home-assistant/home-assistant:stable";
+      environment = { TZ = "${cfg.timezone}"; };
+      ports = [ "8123:8123" ];
+      volumes =
+        [ "${cfg.path}/config:/config:rw" "/etc/localtime:/etc/localtime:ro" ];
+      extraOptions =
+        [ "--privileged" "--network=host" ]; # "--restart=unless-stopped"
+    };
 
     # Open port for mqtt
     networking.firewall = {
@@ -36,54 +68,46 @@ in {
           };
           home = {
             acl = [
-              "topic readwrite homeassistant/#"
-              "topic readwrite tasmota/discovery/#"
-              "topic write cmnd/tasmota/#"
-              "topic read stat/tasmota/#"
-              "topic read tele/tasmota/#"
+              "readwrite homeassistant/#"
+              "readwrite tasmota/discovery/#"
+              "write cmnd/tasmota/#"
+              "read stat/tasmota/#"
+              "read tele/tasmota/#"
 
-              "topic write command/lgoette/#"
-              "topic read state/lgoette/#"
-              "topic read telemetry/lgoette/#"
+              "write command/lgoette/#"
+              "read state/lgoette/#"
+              "read telemetry/lgoette/#"
 
-              "topic readwrite shellies/%c/announce"
-              "topic read shellies/%c/online"
-              "topic write shellies/%c/command"
-              "topic read shellies/%c/status"
+              "readwrite shellies/%c/announce"
+              "read shellies/%c/online"
+              "write shellies/%c/command"
+              "read shellies/%c/status"
             ];
-            hashedPasswordFile = "/var/src/secrets/mosquitto/passwd";
+            hashedPasswordFile = "/var/src/secrets/mosquitto/home_passwd";
           };
 
           device = {
             acl = [
-              "topic write homeassistant/#"
-              "topic write tasmota/discovery/#"
+              "write homeassistant/#"
+              "write tasmota/discovery/#"
 
-              "pattern read cmnd/tasmota/%c/#"
-              "pattern write stat/tasmota/%c/#"
-              "pattern write tele/tasmota/%c/#"
+              "read cmnd/tasmota/%c/#"
+              "write stat/tasmota/%c/#"
+              "write tele/tasmota/%c/#"
 
-              "pattern read command/lgoette/%c/#"
-              "pattern write state/lgoette/%c/#"
-              "pattern write telemetry/lgoette/%c/#"
+              "read command/lgoette/%c/#"
+              "write state/lgoette/%c/#"
+              "write telemetry/lgoette/%c/#"
 
-              "topic write shellies/%c/announce"
-              "topic read shellies/%c/command"
-              "topic write shellies/%c/status"
-              "topic write shellies/%c/online"
+              "write shellies/%c/announce"
+              "read shellies/%c/command"
+              "write shellies/%c/status"
+              "write shellies/%c/online"
             ];
-            hashedPasswordFile = "/var/src/secrets/mosquitto/passwd";
+            hashedPasswordFile = "/var/src/secrets/mosquitto/device_passwd";
           };
         };
       }];
-    };
-
-    # Enable home-assistant service
-    services.home-assistant = {
-      enable = true;
-      config = {
-
-      };
     };
   };
 }
