@@ -10,7 +10,6 @@
     # home-manager.nixosModules.home-manager
   ];
 
-
   # Sound on Raspberry Pi
   # boot = {
   #   extraModprobeConfig = ''
@@ -23,7 +22,6 @@
   # hardware.raspberry-pi."4" = {
   #   audio.enable = true;
   # };
-
 
   lgoette = {
     user.lasse.home-manager.enable = true;
@@ -47,6 +45,19 @@
     zsh.enable = true;
   };
 
+  users.users.leo = {
+    isNormalUser = true;
+    home = "/home/leo";
+    shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = [  ];
+  };
+
+  fileSystems."/home/leo/musik" = {
+    device = "/var/www/lamabasis.lasse-goette.de/res/music";
+    fsType = "none";
+    options = [ "bind" ];
+  };
+
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
@@ -59,11 +70,56 @@
     }];
   };
 
-  # Enable librespot 
-  # services.librespot = {
-  #   enable = true;
-  #   deviceName = "Lama2";
-  # };
+  services.nginx = {
+    enable = true;
+    virtualHosts = {
+      # TTT Loading Screen
+      "lamabasis.lasse-goette.de" = {
+        root = "/var/www/lamabasis.lasse-goette.de";
+        locations = {
+          "= /" = { return = "403"; extraConfig = "deny all;"; };
+          "/" = {
+            tryFiles = "$uri $uri.html =404";
+            extraConfig = ''
+              # https://www.cloudflare.com/ips
+
+              # IPv4
+              set_real_ip_from 173.245.48.0/20;
+              set_real_ip_from 103.21.244.0/22;
+              set_real_ip_from 103.22.200.0/22;
+              set_real_ip_from 103.31.4.0/22;
+              set_real_ip_from 141.101.64.0/18;
+              set_real_ip_from 108.162.192.0/18;
+              set_real_ip_from 190.93.240.0/20;
+              set_real_ip_from 188.114.96.0/20;
+              set_real_ip_from 197.234.240.0/22;
+              set_real_ip_from 198.41.128.0/17;
+              set_real_ip_from 162.158.0.0/15;
+              set_real_ip_from 104.16.0.0/13;
+              set_real_ip_from 104.24.0.0/14;
+              set_real_ip_from 172.64.0.0/13;
+              set_real_ip_from 131.0.72.0/22;
+
+              # IPv6
+              set_real_ip_from 2400:cb00::/32;
+              set_real_ip_from 2606:4700::/32;
+              set_real_ip_from 2803:f800::/32;
+              set_real_ip_from 2405:b500::/32;
+              set_real_ip_from 2405:8100::/32;
+              set_real_ip_from 2a06:98c0::/29;
+              set_real_ip_from 2c0f:f248::/32;
+
+              real_ip_header CF-Connecting-IP;
+              # real_ip_header X-Forwarded-For;
+
+              # Generated at Wed Oct 11 01:02:31 CEST 2023
+
+            '';
+          };
+        };
+      };
+    };
+  };
 
   # Enable the Cloudflare Dyndns daemon.
   services.cloudflare-dyndns = {
@@ -77,7 +133,7 @@
   networking = {
     hostName = "lamabasis";
     usePredictableInterfaceNames = false;
-    firewall.allowedTCPPorts = [ 50937 ];
+    firewall.allowedTCPPorts = [ 50937 80 443 ];
   };
 
   environment.systemPackages = with pkgs;

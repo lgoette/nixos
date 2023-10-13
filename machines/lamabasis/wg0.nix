@@ -12,7 +12,7 @@
 
     wireguard.interfaces.wg0 = {
 
-      ips = [ "10.11.12.7/24" ];
+      ips = [ "10.11.12.5/24" ];
       # Path to the private key file
       privateKeyFile = toString /var/src/secrets/wireguard/private;
 
@@ -30,7 +30,7 @@
 
       peers = [
 
-        # 10.11.12.5 (noch 7)
+        # 10.11.12.5
         {
           publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
           allowedIPs = [ "10.11.12.1" "10.11.12.6" "10.11.12.7" "10.11.12.8" "10.11.12.100" "10.11.12.101" "192.168.178.0/24" "10.11.12.203" ];
