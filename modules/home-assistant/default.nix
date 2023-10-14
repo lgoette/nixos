@@ -29,7 +29,7 @@ in {
     # enable home assistant docker container
     virtualisation.oci-containers.containers.home-assistant = {
       autoStart = true;
-      image = "ghcr.io/home-assistant/home-assistant:stable";
+      image = "ghcr.io/lgoette/home-assistant:main";
       # Does not work because no kvm access. Left it in for documentation
       # image = "home-assistant";
       # imageFile = pkgs.dockerTools.buildImage {
