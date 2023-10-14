@@ -29,25 +29,26 @@ in {
     # enable home assistant docker container
     virtualisation.oci-containers.containers.home-assistant = {
       autoStart = true;
-      # image = "ghcr.io/home-assistant/home-assistant:stable";
-      image = "home-assistant";
-      imageFile = pkgs.dockerTools.buildImage {
-        name = "home-assistant";
-        fromImage = "ghcr.io/home-assistant/home-assistant";
-        fromImageTag = "stable";
-        # fromImage = pkgs.dockerTools.pullImage {
-        #   imageName = "ghcr.io/home-assistant/home-assistant";
-        #   imageDigest =
-        #      "sha256:021e2afc6e573a3623dadfe7028e63b370ebc249f3217e1f8fce80ebbfe9afe5";
-        #   sha256 = "sha256-mGBzVTbvjOmroMhQbZA4vxrMK1dgwgw2wfSlabZhLBQ=";
-        #   # finalImageTag = "stable";
-        # };
-        runAsRoot = ''
-          #!/bin/sh
-          apk update;
-          apk add samba
-        '';
-      };
+      image = "ghcr.io/home-assistant/home-assistant:stable";
+      # Does not work because no kvm access. Left it in for documentation
+      # image = "home-assistant";
+      # imageFile = pkgs.dockerTools.buildImage {
+      #   name = "home-assistant";
+      #   fromImage = "ghcr.io/home-assistant/home-assistant";
+      #   fromImageTag = "stable";
+      #   # fromImage = pkgs.dockerTools.pullImage {
+      #   #   imageName = "ghcr.io/home-assistant/home-assistant";
+      #   #   imageDigest =
+      #   #      "sha256:021e2afc6e573a3623dadfe7028e63b370ebc249f3217e1f8fce80ebbfe9afe5";
+      #   #   sha256 = "sha256-mGBzVTbvjOmroMhQbZA4vxrMK1dgwgw2wfSlabZhLBQ=";
+      #   #   # finalImageTag = "stable";
+      #   # };
+      #   runAsRoot = ''
+      #     #!/bin/sh
+      #     apk update;
+      #     apk add samba
+      #   '';
+      # };
       environment = { TZ = "${cfg.timezone}"; };
       ports = [ "8123:8123" ];
       volumes =
@@ -123,11 +124,5 @@ in {
       # Expose home-assitant to the wireguard network
       interfaces.wg0.allowedTCPPorts = [ 8123 ];
     };
-
-    # Install samba for net rpc command
-    # TODO: Im container installieren und nicht auf dem System
-    # environment.systemPackages = with pkgs; [
-    #   samba
-    # ];
   };
 }
