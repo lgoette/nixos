@@ -1,3 +1,2 @@
-FROM ghcr.io/home-assistant/home-assistant:stable
-
+FROM --platform=linux/arm64 ghcr.io/home-assistant/home-assistant:stable
 RUN apk update && apk add samba
