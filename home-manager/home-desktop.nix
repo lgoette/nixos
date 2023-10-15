@@ -21,7 +21,7 @@ in
       home.packages = with pkgs; [
         # pkgs
         arduino
-        atom
+        sublime
         blender
         chromium
         discord
