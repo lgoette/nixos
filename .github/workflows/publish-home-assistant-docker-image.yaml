@@ -2,6 +2,7 @@ name: publish-home-assistant-docker-image
 
 # Configures this workflow to run every time a change is pushed to the branch called `release`.
 on:
+  workflow_dispatch:
   push:
     paths:
       - '**/home-assistant/Dockerfile'
