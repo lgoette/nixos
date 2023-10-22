@@ -58,7 +58,7 @@
         };
       in
       {
-        version = "${mcVersion}r${buildNum}";
+        version = "${mcVersion}.${buildNum}";
         installPhase = ''
           install -D ${src} $out/share/papermc/papermc.jar
           makeWrapper ${lib.getExe pkgs.jre} "$out/bin/minecraft-server" \
