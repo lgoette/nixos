@@ -66,6 +66,15 @@ in {
       listeners = [{
         # address = "192.168.176.4"; needed?
         port = 1883;
+        acl = [
+          "pattern read cmnd/tasmota/%c/#"
+          "pattern write stat/tasmota/%c/#"
+          "pattern write tele/tasmota/%c/#"
+
+          "pattern read command/lgoette/%c/#"
+          "pattern write state/lgoette/%c/#"
+          "pattern write telemetry/lgoette/%c/#"
+        ];
         users = {
           # No real authentication needed here, since the local network is
           # trusted.
