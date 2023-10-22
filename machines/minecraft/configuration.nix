@@ -61,7 +61,7 @@
         version = "${mcVersion}r${buildNum}";
         installPhase = ''
           install -D ${src} $out/share/papermc/papermc.jar
-          makeWrapper ${lib.getExe jre} "$out/bin/minecraft-server" \
+          makeWrapper ${lib.getExe pkgs.jre} "$out/bin/minecraft-server" \
             --append-flags "-jar $out/share/papermc/papermc.jar nogui"
         '';
       });
