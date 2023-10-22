@@ -52,18 +52,13 @@
       let
         mcVersion = "1.20.2";
         buildNum = "243";
+      in
+      {
+        version = "${mcVersion}.${buildNum}";
         src = pkgs.fetchurl {
           url = "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
           hash = "sha256-rJSgspLZz6LVGfeOuadCtL9Y4PKgrturfzOFzfxs540=";
         };
-      in
-      {
-        version = "${mcVersion}.${buildNum}";
-        installPhase = ''
-          install -D ${src} $out/share/papermc/papermc.jar
-          makeWrapper ${lib.getExe pkgs.jre} "$out/bin/minecraft-server" \
-            --append-flags "-jar $out/share/papermc/papermc.jar nogui"
-        '';
       });
     dataDir = "/var/lib/minecraft";
     declarative = true;
