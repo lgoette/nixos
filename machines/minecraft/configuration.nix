@@ -54,7 +54,7 @@
         buildNum = "243";
         src = pkgs.fetchurl {
           url = "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
-          hash = "sha256-4eqyHIj0Oi+ssHiREOHdWWlhdlcfbChDuyWIyd5Dl+o=";
+          hash = "sha256-rJSgspLZz6LVGfeOuadCtL9Y4PKgrturfzOFzfxs540=";
         };
       in
       {
