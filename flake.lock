@@ -32,11 +32,11 @@
     "adblockStevenBlack": {
       "flake": false,
       "locked": {
-        "lastModified": 1697218332,
-        "narHash": "sha256-vC0EJQOKdW3eYQnb4hYbNa38PcEx0E2v57nxkSoU82M=",
+        "lastModified": 1698066884,
+        "narHash": "sha256-0GcBuv9ecO3Q8/RqarWN4jK0HIbTjrSuuJ5ofi+7OXU=",
         "owner": "StevenBlack",
         "repo": "hosts",
-        "rev": "be423f999d8df73c5afbd589a2cc243a1b6b638a",
+        "rev": "05cdb4d0a2161aed9e83307c3cfe5c145460862d",
         "type": "github"
       },
       "original": {
@@ -187,11 +187,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1697964592,
-        "narHash": "sha256-fua0LKNLkYYK2Dgdm9P+VPdqrVgDXUIx+EkQAQByhuc=",
+        "lastModified": 1698479159,
+        "narHash": "sha256-rJHBDwW4LbADEfhkgGHjKGfL2dF44NrlyXdXeZrQahs=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "219d268a69512ff520fe8da1739ac22d95d52355",
+        "rev": "f92a54fef4eacdbe86b0a2054054dd58b0e2a2a4",
         "type": "github"
       },
       "original": {
@@ -251,11 +251,11 @@
         "wallpaper-generator": "wallpaper-generator"
       },
       "locked": {
-        "lastModified": 1697974226,
-        "narHash": "sha256-wCwR5mdbwwQAHVN6ecggnjrrYQql6AJKPlZCTnn8FBc=",
+        "lastModified": 1698485730,
+        "narHash": "sha256-S42rQr4gVnPSaMh9g6GGnsQO1COiu6/kGDgdjwMBt+0=",
         "owner": "mayniklas",
         "repo": "nixos",
-        "rev": "ec418fdcd6d50ae954277b5de0c56d9d1b435603",
+        "rev": "8d036d677d15a19421a036532806783ba7623582",
         "type": "github"
       },
       "original": {
@@ -266,11 +266,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1697748412,
-        "narHash": "sha256-5VSB63UE/O191cuZiGHbCJ9ipc7cGKB8cHp0cfusuyo=",
+        "lastModified": 1698053470,
+        "narHash": "sha256-sP8D/41UiwC2qn0X40oi+DfuVzNHMROqIWdSdCI/AYA=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "72d53d51704295f1645d20384cd13aecc182f624",
+        "rev": "80d98a7d55c6e27954a166cb583a41325e9512d7",
         "type": "github"
       },
       "original": {
@@ -329,11 +329,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1697723726,
-        "narHash": "sha256-SaTWPkI8a5xSHX/rrKzUe+/uVNy6zCGMXgoeMb7T9rg=",
+        "lastModified": 1698318101,
+        "narHash": "sha256-gUihHt3yPD7bVqg+k/UVHgngyaJ3DMEBchbymBMvK1E=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "7c9cc5a6e5d38010801741ac830a3f8fd667a7a0",
+        "rev": "63678e9f3d3afecfeafa0acead6239cdb447574c",
         "type": "github"
       },
       "original": {
@@ -394,11 +394,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1696841721,
-        "narHash": "sha256-LnKxzGgWkoHi66bjAJgmJ2txv/NBX9BquowNE0N2iq4=",
+        "lastModified": 1697476395,
+        "narHash": "sha256-M8wjr0IF4JS7+kOlRAn6TjbXHQf5RibOgKJiZryFItM=",
         "owner": "MayNiklas",
         "repo": "shelly-exporter",
-        "rev": "e0bada53650a07d3ecc952546470a0d52bbb8ebe",
+        "rev": "5dbc4f37d71c7b63435459772bd29fbf294e353f",
         "type": "github"
       },
       "original": {
