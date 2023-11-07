@@ -7,7 +7,20 @@
       {
         "commands":
           [
-            "crab_share --zip-single-file --expires 7d --purge $(nix build --print-out-paths --no-link '.#nixosConfigurations.lamaoutpost.config.system.build.sdImage')/sd-image/pi4b-image-*-aarch64-linux.img",
+            "nix build --print-out-paths '.#nixosConfigurations.lamaoutpost.config.system.build.sdImage'",
+          ],
+        "image": "bash",
+        "name": "build pi4b image",
+      },
+      {
+        "commands": ["nix path-info --closure-size -h $(readlink -f 'result')"],
+        "image": "bash",
+        "name": "show pi4b image info",
+      },
+      {
+        "commands":
+          [
+            "crab_share --expires 7d --purge result/sd-image/pi4b-image-*-aarch64-linux.img",
           ],
         "image": "bash",
         "name": "upload pi4b image",
