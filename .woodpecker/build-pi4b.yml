@@ -11,16 +11,15 @@
           ],
         "image": "bash",
         "name": "upload pi4b image",
-        "secrets":
+        "environment":
           [
-            "S3_URL",
-            "S3_ACCESS_KEY",
-            "S3_SECRET_KEY",
-            "S3_BUCKET",
-            "S3_EXPIRES",
-            "S3_REGION",
-            "S3_PURGE",
+            "S3_URL=https://s3.eu-central-003.backblazeb2.com",
+            "S3_BUCKET=crab-share",
+            "S3_REGION=eu-central-003",
+            "S3_EXPIRES=7d",
+            "S3_PURGE=true",
           ],
+        "secrets": ["S3_ACCESS_KEY", "S3_SECRET_KEY"],
       },
     ],
 }
