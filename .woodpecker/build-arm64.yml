@@ -51,7 +51,9 @@
       },
       {
         "commands":
-          ["nix path-info --closure-size -h $(readlink -f 'result-lamaoutpost')"],
+          [
+            "nix path-info --closure-size -h $(readlink -f 'result-lamaoutpost')",
+          ],
         "image": "bash",
         "name": "Show lamaoutpost info",
       },
@@ -59,6 +61,25 @@
         "commands": ["attic push lounge-rocks:nix-cache 'result-lamaoutpost'"],
         "image": "bash",
         "name": "Push lamaoutpost to Attic",
+      },
+      {
+        "commands":
+          [
+            "nix build '.#nixosConfigurations.pi4b.config.system.build.toplevel' -o 'result-pi4b'",
+          ],
+        "image": "bash",
+        "name": "Build pi4b",
+      },
+      {
+        "commands":
+          ["nix path-info --closure-size -h $(readlink -f 'result-pi4b')"],
+        "image": "bash",
+        "name": "Show pi4b info",
+      },
+      {
+        "commands": ["attic push lounge-rocks:nix-cache 'result-pi4b'"],
+        "image": "bash",
+        "name": "Push pi4b to Attic",
       },
     ],
 }

@@ -171,36 +171,7 @@
 
             };
           })
-          (builtins.attrNames (builtins.readDir ./machines)))
-
-      //
-
-      {
-        pi4b-image = nixpkgs.lib.nixosSystem rec {
-          specialArgs = { flake-self = self; } // inputs;
-          modules = [
-            (import "${./.}/images/pi4b/configuration.nix" { inherit self; })
-            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-            nixos-hardware.nixosModules.raspberry-pi-4
-            { imports = builtins.attrValues self.nixosModules; }
-            {
-              nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-              nix.registry.nixpkgs.flake = nixpkgs;
-              sdImage.compressImage = false;
-              sdImage.imageBaseName = "pi4b-image";
-              # this workaround is currently needed to build the sd-image
-              # basically: there currently is an issue that prevents the sd-image to be built successfully
-              # remove this once the issue is fixed!
-              nixpkgs.overlays = [
-                (final: super: {
-                  makeModulesClosure = x:
-                    super.makeModulesClosure (x // { allowMissing = true; });
-                })
-              ];
-            }
-          ];
-        };
-      };
+          (builtins.attrNames (builtins.readDir ./machines)));
 
     }
 
@@ -234,11 +205,6 @@
           bukkit-spigot = pkgs.bukkit-spigot;
           minecraft-backup = pkgs.minecraft-backup;
           minecraft-controller = pkgs.minecraft-controller;
-
-          # Generate a sd-card image for the pi
-          # nix build '.#pi4b-image'
-          pi4b-image =
-            self.nixosConfigurations.pi4b-image.config.system.build.sdImage;
         };
 
         apps = {
