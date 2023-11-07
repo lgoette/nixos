@@ -7,7 +7,7 @@
       {
         "commands":
           [
-            "crab_share --zip-single-file --expires 7d --purge $(nix build --print-out-paths --no-link '.#nixosConfigurations.pi4b.config.system.build.sdImage')/sd-image/pi4b-image-*-aarch64-linux.img",
+            "crab_share --zip-single-file --expires 7d --purge $(nix build --print-out-paths --no-link '.#nixosConfigurations.lamaoutpost.config.system.build.sdImage')/sd-image/pi4b-image-*-aarch64-linux.img",
           ],
         "image": "bash",
         "name": "upload pi4b image",
