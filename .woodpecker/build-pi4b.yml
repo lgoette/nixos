@@ -1,0 +1,26 @@
+{
+  "labels": { "backend": "local" },
+  "platform": "linux/arm64",
+  "when": { "event": "manual" },
+  "steps":
+    [
+      {
+        "commands":
+          [
+            "crab_share $(nix build --print-out-paths --no-link '.#pi4b-image')/sd-image/pi4b-image-*-aarch64-linux.img",
+          ],
+        "image": "bash",
+        "name": "upload pi4b image",
+        "secrets":
+          [
+            "S3_URL",
+            "S3_ACCESS_KEY",
+            "S3_SECRET_KEY",
+            "S3_BUCKET",
+            "S3_EXPIRES",
+            "S3_REGION",
+            "S3_PURGE",
+          ],
+      },
+    ],
+}
