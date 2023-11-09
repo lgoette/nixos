@@ -21,7 +21,7 @@
       domain = "unifi.lasse-goette.de";
     };
 
-    user.lasse.home-manager.enable = true;
+    # user.lasse.home-manager.enable = true; # Old home-manager configuration variant
 
   };
 
@@ -35,6 +35,25 @@
     };
     cloud.netcup-x86.enable = true;
     zsh.enable = true;
+  };
+
+  # Home Manager configuration
+  home-manager = {
+    # DON'T set useGlobalPackages! It's not necessary in newer
+    # home-manager versions and does not work with configs using
+    # nixpkgs.config`
+    home-manager.useUserPackages = true;
+
+    extraSpecialArgs = {
+      # Pass all flake inputs to home-manager modules aswell so we can use them
+      # there.
+      inherit flake-self;
+      # Pass system configuration (top-level "config") to home-manager modules,
+      # so we can access it's values for conditional statements
+      system-config = config;
+    };
+
+    users.lasse = flake-self.homeConfigurations.server;
   };
 
   # Enable the OpenSSH daemon.

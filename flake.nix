@@ -105,25 +105,29 @@
 
       {
 
-        home-manager = { config, pkgs, lib, ... }:
-          let
-            cfg = config.lgoette.user.lasse.home-manager;
-          in
-          {
-            imports =
-              [ ./home-manager/home.nix ./home-manager/home-desktop.nix ];
+        # home-manager = { config, pkgs, lib, ... }:
+        #   let
+        #     cfg = config.lgoette.user.lasse.home-manager;
+        #   in
+        #   {
+        #     imports =
+        #       [ ./home-manager/home.nix ./home-manager/home-desktop.nix ];
 
-            home-manager.users."lasse" = lib.mkIf cfg.enable {
-              imports = [
-                vscode-server.nixosModules.home
-              ];
+        #     home-manager.users."lasse" = lib.mkIf cfg.enable {
+        #       imports = [
+        #         vscode-server.nixosModules.home
+        #       ];
 
-              # Visual Studio Code Server support
-              services.vscode-server.enable = true;
-            };
-          };
+        #       # Visual Studio Code Server support
+        #       services.vscode-server.enable = true;
+        #     };
+        #   };
 
-      } // {
+      }
+
+      //
+
+      {
 
         # lgoette.mayniklas
         # -> imports used flake inputs
@@ -148,6 +152,52 @@
         };
 
       };
+
+      homeConfigurations = {
+        desktop = { pkgs, lib, username, ... }: {
+          imports = [
+            ./home-manager/profiles/common.nix
+            ./home-manager/profiles/desktop.nix
+          ] ++
+          (builtins.attrValues self.homeManagerModules);
+        };
+        server = { pkgs, lib, username, ... }: {
+          imports = [
+            ./home-manager/profiles/common.nix
+            ./home-manager/profiles/server.nix
+          ] ++
+          (builtins.attrValues self.homeManagerModules);
+        };
+        # nix run .#homeConfigurations.lasse@Lasse-Laptop.activationPackage
+        # home-manager switch --flake .
+        "lasse@Lasse-Laptop" =
+          let
+            system = "x86_64-linux";
+            pkgs = import nixpkgs {
+              inherit system;
+              config = { allowUnfree = true; };
+              overlays = [ ];
+            };
+          in
+          home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            modules = [
+              { }
+              ./home-manager/profiles/common.nix
+            ] ++
+            (builtins.attrValues self.homeManagerModules);
+            # Optionally use extraSpecialArgs
+            # to pass through arguments to home.nix
+            extraSpecialArgs = { } // inputs;
+          };
+      };
+
+      homeManagerModules = builtins.listToAttrs (map
+        (name: {
+          inherit name;
+          value = import (./home-manager/modules + "/${name}.nix");
+        })
+        (builtins.attrNames (builtins.readDir ./home-manager/modules)));
 
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
