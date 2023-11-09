@@ -16,8 +16,12 @@ with lib;
     home.username = "lasse";
     home.homeDirectory = "/home/lasse";
 
-    # Allow "unfree" licenced packages
-    nixpkgs.config = { allowUnfree = true; };
+    # Home-manager nixpkgs config
+    nixpkgs.config = { 
+      # Allow "unfree" licenced packages
+      allowUnfree = true; 
+      overlays = [ ];
+    };
 
     programs = {
 
