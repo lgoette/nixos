@@ -165,8 +165,13 @@
           imports = [
             ./home-manager/profiles/common.nix
             ./home-manager/profiles/server.nix
+            vscode-server.nixosModules.home
           ] ++
           (builtins.attrValues self.homeManagerModules);
+    
+          # Visual Studio Code Server support
+          services.vscode-server.enable = true;
+          
         };
         # nix run .#homeConfigurations.lasse@Lasse-Laptop.activationPackage
         # home-manager switch --flake .
