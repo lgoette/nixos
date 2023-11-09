@@ -1,5 +1,5 @@
 { self, ... }:
-{ config, pkgs, lib, nixpkgs, nixos-hardware, mayniklas, home-manager, ... }: {
+{ config, pkgs, lib, nixpkgs, nixos-hardware, mayniklas, flake-self, ... }: {
 
   ### building the image
   # nix build .#nixosConfigurations.lamaoutpost.config.system.build.sdImage
