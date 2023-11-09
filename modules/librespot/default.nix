@@ -63,7 +63,7 @@ in {
       createHome = false;
       isSystemUser = true;
       group = "librespot";
-      extraGroups  = [ "audio" "pulse-access" ];
+      extraGroups = [ "audio" "pulse-access" ];
     };
     users.groups.librespot = { };
 
