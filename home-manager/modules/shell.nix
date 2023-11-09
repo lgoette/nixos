@@ -21,6 +21,8 @@ let cfg = config.lasse.programs.shell; in
         grv() {
           git reset --soft HEAD~$1
         }
+
+        PROMPT="%B%F{green}%n@%m: %F{blue}%~/ > %f%b"
       '';
 
       history = {

@@ -1,12 +1,12 @@
-{ pkgs, lib, config, mayniklas, ... }:
+{ pkgs, lib, config, ... }: # , mayniklas
 with lib;
 {
   config = {
 
     # Home-manager nixpkgs config
-    nixpkgs.config = { 
-      overlays = [ mayniklas.overlays.mayniklas ];
-    };
+    # nixpkgs.config = { 
+    #   overlays = [ mayniklas.overlays.mayniklas ];
+    # };
 
     lasse = {
       programs.vscode.enable = true;
