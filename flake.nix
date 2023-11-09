@@ -195,7 +195,7 @@
       homeManagerModules = builtins.listToAttrs (map
         (name: {
           inherit name;
-          value = import (./home-manager/modules + "/${name}.nix");
+          value = import (./home-manager/modules + "/${name}");
         })
         (builtins.attrNames (builtins.readDir ./home-manager/modules)));
 
