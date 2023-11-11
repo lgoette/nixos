@@ -1,5 +1,5 @@
 { self, ... }:
-{ pkgs, lib, mayniklas, flake-self, ... }:
+{ pkgs, config, lib, mayniklas, flake-self, ... }:
 
 {
   imports = [
