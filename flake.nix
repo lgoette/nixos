@@ -182,16 +182,14 @@
           imports = [
             ./home-manager/profiles/common.nix
             ./home-manager/profiles/desktop.nix
-          ] ++
-          (builtins.attrValues self.homeManagerModules);
+          ] ++ (builtins.attrValues self.homeManagerModules);
         };
         server = { pkgs, lib, username, ... }: {
           imports = [
             ./home-manager/profiles/common.nix
             ./home-manager/profiles/server.nix
             vscode-server.nixosModules.home
-          ] ++
-          (builtins.attrValues self.homeManagerModules);
+          ] ++ (builtins.attrValues self.homeManagerModules);
 
           # Visual Studio Code Server support
           services.vscode-server.enable = true;
@@ -213,21 +211,33 @@
             modules = [
               { }
               ./home-manager/profiles/common.nix
-            ] ++
-            (builtins.attrValues self.homeManagerModules);
+            ] ++ (builtins.attrValues self.homeManagerModules);
             # Optionally use extraSpecialArgs
             # to pass through arguments to home.nix
             extraSpecialArgs = { } // inputs;
           };
       };
 
-      homeManagerModules = builtins.listToAttrs (map
-        (name: {
-          inherit name;
-          value = import (./home-manager/modules + "/${name}");
-        })
-        (builtins.attrNames (builtins.readDir ./home-manager/modules)));
+      homeManagerModules = builtins.listToAttrs
+        (map
+          (name: {
+            inherit name;
+            value = import (./home-manager/modules + "/${name}");
+          })
+          (builtins.attrNames (builtins.readDir ./home-manager/modules)))
+      //
+      {
 
+        nix = { pkgs, ... }: {
+          # this module is appended to the list of home-manager modules
+          # by defining it here, it's easier for us to access the flake inputs
+          nixpkgs.overlays = [
+            self.overlays.default
+            mayniklas.overlays.mayniklas
+          ];
+        };
+
+      };
     }
 
     //
@@ -252,10 +262,11 @@
         # allow using them from other flakes that import this one.
 
         packages = flake-utils.lib.flattenTree {
-          woodpecker-pipeline = pkgs.callPackage ./packages/woodpecker-pipeline {
-            inputs = inputs;
-            flake-self = self;
-          };
+          woodpecker-pipeline =
+            pkgs.callPackage ./packages/woodpecker-pipeline {
+              inputs = inputs;
+              flake-self = self;
+            };
 
           bukkit-spigot = pkgs.bukkit-spigot;
           minecraft-backup = pkgs.minecraft-backup;
