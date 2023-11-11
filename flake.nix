@@ -153,6 +153,30 @@
 
       };
 
+      # Each subdirectory in ./machines is a host. Add them all to
+      # nixosConfiguratons. Host configurations need a file called
+      # configuration.nix that will be read first
+      nixosConfigurations = builtins.listToAttrs
+        (map
+          (x: {
+            name = x;
+            value = nixpkgs.lib.nixosSystem {
+
+              # Make inputs and the flake itself accessible as module parameters.
+              # Technically, adding the inputs is redundant as they can be also
+              # accessed with flake-self.inputs.X, but adding them individually
+              # allows to only pass what is needed to each module.
+              specialArgs = { flake-self = self; } // inputs;
+
+              modules = builtins.attrValues self.nixosModules ++ [
+                { nixpkgs.overlays = [ self.overlays.default mayniklas.overlays.mayniklas ]; }
+                (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
+              ];
+
+            };
+          })
+          (builtins.attrNames (builtins.readDir ./machines)));
+
       homeConfigurations = {
         desktop = { pkgs, lib, username, ... }: {
           imports = [
@@ -168,10 +192,10 @@
             vscode-server.nixosModules.home
           ] ++
           (builtins.attrValues self.homeManagerModules);
-    
+
           # Visual Studio Code Server support
           services.vscode-server.enable = true;
-          
+
         };
         # nix run .#homeConfigurations.lasse@Lasse-Laptop.activationPackage
         # home-manager switch --flake .
@@ -203,30 +227,6 @@
           value = import (./home-manager/modules + "/${name}");
         })
         (builtins.attrNames (builtins.readDir ./home-manager/modules)));
-
-      # Each subdirectory in ./machines is a host. Add them all to
-      # nixosConfiguratons. Host configurations need a file called
-      # configuration.nix that will be read first
-      nixosConfigurations = builtins.listToAttrs
-        (map
-          (x: {
-            name = x;
-            value = nixpkgs.lib.nixosSystem {
-
-              # Make inputs and the flake itself accessible as module parameters.
-              # Technically, adding the inputs is redundant as they can be also
-              # accessed with flake-self.inputs.X, but adding them individually
-              # allows to only pass what is needed to each module.
-              specialArgs = { flake-self = self; } // inputs;
-
-              modules = builtins.attrValues self.nixosModules ++ [
-                { nixpkgs.overlays = [ self.overlays.default mayniklas.overlays.mayniklas ]; }
-                (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
-              ];
-
-            };
-          })
-          (builtins.attrNames (builtins.readDir ./machines)));
 
     }
 
