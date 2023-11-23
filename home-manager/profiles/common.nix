@@ -17,9 +17,9 @@ with lib;
     home.homeDirectory = "/home/lasse";
 
     # Home-manager nixpkgs config
-    nixpkgs.config = { 
+    nixpkgs.config = {
       # Allow "unfree" licenced packages
-      allowUnfree = true; 
+      allowUnfree = true;
       overlays = [ ];
     };
 
@@ -28,6 +28,10 @@ with lib;
       zsh = { sessionVariables = { ZDOTDIR = "/home/lasse/.config/zsh"; }; };
 
     };
+
+    home.packages = with pkgs; [
+      nix-init
+    ];
 
     # Include man-pages
     manual.manpages.enable = true;
