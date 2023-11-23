@@ -14,6 +14,7 @@ with lib;
       iperf3
       nmap
       traceroute
+      iftop
       unzip
       mcrcon
 
