@@ -209,7 +209,7 @@
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
-              { }
+              { targets.genericLinux.enable = true; }
               ./home-manager/profiles/common.nix
             ] ++ (builtins.attrValues self.homeManagerModules);
             # Optionally use extraSpecialArgs
