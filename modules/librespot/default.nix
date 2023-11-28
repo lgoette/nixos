@@ -64,6 +64,7 @@ in {
       isSystemUser = true;
       group = "librespot";
       extraGroups = [ "audio" "pulse-access" ];
+      # shell = pkgs.zsh; # Shell for debugging
     };
     users.groups.librespot = { };
 
@@ -96,7 +97,11 @@ in {
     hardware.pulseaudio = {
       enable = true;
       systemWide = true;
+      daemon.logLevel = "info";
     };
+
+    # Set permissions required by SystemWide mode
+    users.users.pulse = { homeMode = "755"; };
 
     networking.firewall = mkIf cfg.openFirewall {
       allowedTCPPorts = [ cfg.zeroconfigPort ]; #4070, 65535, 38143 für Librespot?

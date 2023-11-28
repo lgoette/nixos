@@ -71,6 +71,10 @@
     openssh.authorizedKeys.keys = [ ];
   };
 
+  # give root access to pulse (for example to use pamix)
+  # Pulse is enabled in systemwide mode in the librespot module configuration
+  users.users.root = { extraGroups = [ "audio" "pulse-access" ]; };
+
   fileSystems."/home/leo/musik" = {
     device = "/var/www/lamabasis.lasse-goette.de/res/music";
     fsType = "none";
@@ -161,6 +165,7 @@
       git
       nixfmt
       wget
+      pamix
     ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
