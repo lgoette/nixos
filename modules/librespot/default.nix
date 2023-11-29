@@ -93,14 +93,17 @@ in {
       };
     };
 
-    # sound.enable = true;
+    # enable alsa
+    sound.enable = true;
+
+    # enable pulseaudio in system-wide mode (because our user has no home directory wich is mandatory for pulses default mode)
     hardware.pulseaudio = {
       enable = true;
       systemWide = true;
       daemon.logLevel = "info";
     };
 
-    # Set permissions required by SystemWide mode
+    # Set permissions required by SystemWide mode (TODO: can be removed when https://github.com/NixOS/nixpkgs/pull/270677 is live)
     users.users.pulse = { homeMode = "755"; };
 
     networking.firewall = mkIf cfg.openFirewall {
