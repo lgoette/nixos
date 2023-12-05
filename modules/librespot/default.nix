@@ -103,9 +103,6 @@ in {
       daemon.logLevel = "info";
     };
 
-    # Set permissions required by SystemWide mode (TODO: can be removed when https://github.com/NixOS/nixpkgs/pull/270677 is live)
-    users.users.pulse = { homeMode = "755"; };
-
     networking.firewall = mkIf cfg.openFirewall {
       allowedTCPPorts = [ cfg.zeroconfigPort ]; #4070, 65535, 38143 für Librespot?
       allowedUDPPorts = [ 5353 ]; # mdns für Librespot
