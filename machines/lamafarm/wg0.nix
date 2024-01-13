@@ -12,12 +12,11 @@ in {
 
     firewall = { allowedUDPPorts = [ wg0_port ]; };
 
-    interfaces.wg0 = { mtu = 1412; };
-
     wireguard.interfaces.wg0 = {
 
       ips = [ "10.11.12.1/24" ];
       listenPort = wg0_port;
+      mtu = 1412;
       # Path to the private key file
       privateKeyFile = toString /var/src/secrets/wireguard/private;
 
