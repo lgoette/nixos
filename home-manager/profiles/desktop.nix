@@ -32,7 +32,7 @@ with lib;
       traceroute
       libreoffice
       obs-studio
-      postman
+      # postman
       remmina
       signal-desktop
       simple-scan

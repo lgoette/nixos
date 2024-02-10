@@ -36,7 +36,7 @@ in
         libreoffice
         nmap
         obs-studio
-        postman
+        # postman
         remmina
         signal-desktop
         simple-scan
