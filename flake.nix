@@ -262,6 +262,11 @@
         # allow using them from other flakes that import this one.
 
         packages = flake-utils.lib.flattenTree {
+          build_outputs = pkgs.callPackage mayniklas.packages.${system}.build_outputs.override {
+            inherit self;
+            output_path = "~/.keep-nix-outputs-lgoette";
+          };
+
           woodpecker-pipeline =
             pkgs.callPackage ./packages/woodpecker-pipeline {
               inputs = inputs;
