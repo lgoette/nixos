@@ -51,7 +51,7 @@ in {
         # 10.11.12.7
         {
           publicKey = "YjyZJW6Pefeq3XNpaqAQWzwyMCZnIMfkXJG8Kvqr+hs=";
-          allowedIPs = [ "10.11.12.7" "192.168.176.0/24" ];
+          allowedIPs = [ "10.11.12.7" ];
           # persistentKeepalive = 15;
         }
 
