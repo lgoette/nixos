@@ -14,6 +14,8 @@ let cfg = config.lasse.programs.shell; in
       dotDir = ".config/zsh";
 
       initExtra = ''
+        [[ -f ~/.profile ]] && . ~/.profile
+        
         bindkey "^[[1;5C" forward-word
         bindkey "^[[1;5D" backward-word
 
