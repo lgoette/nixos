@@ -24,6 +24,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # TODO: Das noch im home-manager verfügbar machen (Im output adden? In homemanager Module nutzen)
+    # https://github.com/pjones/plasma-manager
+    # Manage Kde Plasma configuration using Nix 
+    plasma-manager = {
+      url = "github:pjones/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     # https://github.com/numtide/flake-utils
     # Pure Nix flake utility functions
     # Todo: completly get rid of those and use nixpkgs builtins
@@ -182,6 +191,7 @@
           imports = [
             ./home-manager/profiles/common.nix
             ./home-manager/profiles/desktop.nix
+            plasma-manager.homeManagerModules.plasma-manager
           ] ++ (builtins.attrValues self.homeManagerModules);
         };
         server = { pkgs, lib, username, ... }: {
