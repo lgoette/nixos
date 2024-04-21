@@ -84,5 +84,18 @@
       "image": "bash",
       "name": "Push pi4b to Attic"
     }
+  ],
+  "when": [
+    {
+      "event": "manual"
+    },
+    {
+      "branch": "main",
+      "event": "push"
+    },
+    {
+      "branch": "update_flake_lock_action",
+      "event": "push"
+    }
   ]
 }
