@@ -174,6 +174,7 @@
             ./home-manager/profiles/common.nix
             ./home-manager/profiles/server.nix
             vscode-server.nixosModules.home
+            plasma-manager.homeManagerModules.plasma-manager
           ] ++ (builtins.attrValues self.homeManagerModules);
 
           # Visual Studio Code Server support
