@@ -6,7 +6,6 @@
     ../../users/lasse.nix
     ../../users/root.nix
     ./wg0.nix
-    # home-manager.nixosModules.home-manager
   ];
 
   lgoette = {
@@ -20,8 +19,6 @@
       enable = true;
       domain = "unifi.lasse-goette.de";
     };
-
-    # user.lasse.home-manager.enable = true; # Old home-manager configuration variant
 
   };
 

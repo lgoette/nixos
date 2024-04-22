@@ -24,7 +24,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO: Das noch im home-manager verfügbar machen (Im output adden? In homemanager Module nutzen)
     # https://github.com/pjones/plasma-manager
     # Manage Kde Plasma configuration using Nix 
     plasma-manager = {
@@ -109,30 +108,6 @@
             value = import (./modules + "/${x}");
           })
           (builtins.attrNames (builtins.readDir ./modules)))
-
-      //
-
-      {
-
-        # home-manager = { config, pkgs, lib, ... }:
-        #   let
-        #     cfg = config.lgoette.user.lasse.home-manager;
-        #   in
-        #   {
-        #     imports =
-        #       [ ./home-manager/home.nix ./home-manager/home-desktop.nix ];
-
-        #     home-manager.users."lasse" = lib.mkIf cfg.enable {
-        #       imports = [
-        #         vscode-server.nixosModules.home
-        #       ];
-
-        #       # Visual Studio Code Server support
-        #       services.vscode-server.enable = true;
-        #     };
-        #   };
-
-      }
 
       //
 

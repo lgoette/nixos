@@ -6,7 +6,6 @@
     # ./minecraft.nix
     ../../users/lasse.nix
     ../../users/root.nix
-    # home-manager.nixosModules.home-manager
   ];
 
   lgoette = {
@@ -15,7 +14,6 @@
       enableWebservice = true;
       openFirewall = true;
     };
-    # user.lasse.home-manager.enable = true; # Old home-manager configuration variant
   };
 
   mayniklas = {

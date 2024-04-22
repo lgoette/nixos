@@ -16,6 +16,8 @@ let cfg = config.lasse.programs.vscode; in
         ms-python.python
         ms-vscode-remote.remote-ssh
         ms-vscode.cpptools
+        # Todo tree
+        # Copilot
       ];
     };
   };

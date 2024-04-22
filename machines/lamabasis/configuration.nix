@@ -7,7 +7,6 @@
     ../../users/lasse.nix
     ../../users/root.nix
     ./wg0.nix
-    # home-manager.nixosModules.home-manager
   ];
 
   # Sound on Raspberry Pi
@@ -24,7 +23,6 @@
   # };
 
   lgoette = {
-    # user.lasse.home-manager.enable = true; # Old variant to use home-manager
     home-assistant.enable = true;
     services.librespot = {
       enable = true;

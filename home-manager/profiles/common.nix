@@ -31,6 +31,8 @@ with lib;
 
     home.packages = with pkgs; [
       nix-init
+      wireguard-tools
+      fd
     ];
 
     # Include man-pages

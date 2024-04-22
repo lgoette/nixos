@@ -10,40 +10,74 @@ with lib;
 
     lasse = {
       programs.vscode.enable = true;
+      programs.plasma.enable = true;
     };
 
     # Install these packages for my user
     home.packages = with pkgs; [
-      # pkgs
-      arduino
-      sublime
-      blender
-      chromium
-      discord
-      dolphin
-      element
-      firefox
-      gcc
-      gimp
+
+      # Common
+      nfs-utils
+      samba
+      pavucontrol
       gparted
+      unzip
       htop
       iperf3
       nmap
       traceroute
-      libreoffice
-      obs-studio
-      # postman
       remmina
-      signal-desktop
-      simple-scan
-      spotify
-      synology-drive-client
-      tdesktop
+      barrier
+
+
+      # Kde
+      kdePackages.dolphin
+      kdePackages.kate
+      kdePackages.ark
+      kdePackages.kdeconnect-kde
+      kdePackages.krfb
+      libsForQt5.kpurpose
+      kdePackages.kfind
+      kdePackages.calendarsupport
+      kdePackages.konsole
+
+      # Development
+      python3
+      arduino
+      # postman
+
+      # Office
+      chromium
+      firefox
       thunderbird-bin
-      unzip
+      libreoffice
+      simple-scan
+      synology-drive-client
+      obsidian
+
+      # Media
+      spotify
       vlc
       youtube-dl
-      zoom-us
+
+      # Comunication
+      signal-desktop
+      tdesktop
+      discord
+      element
+
+      # Creativity
+      blender
+      gimp
+
+      # Misc
+      cobang
+      android-tools
+      scrcpy
+
+      # Uni
+      gcc
+      conda
 
       #mayniklas
       mayniklas.drone-gen

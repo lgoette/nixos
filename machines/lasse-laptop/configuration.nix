@@ -5,14 +5,13 @@
   imports = [
     ../../users/lasse.nix
     ../../users/root.nix
-    # home-manager.nixosModules.home-manager
+    ./wg0.nix
   ];
 
   lgoette = {
     grub.enable = true;
     kde.enable = true;
     bluetooth.enable = true;
-    # user.lasse.home-manager.desktop = true; # Old home-manager configuration variant
   };
 
   mayniklas = {

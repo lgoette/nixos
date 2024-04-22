@@ -30,11 +30,6 @@
     # nixos-hardware.nixosModules.raspberry-pi-4
   ];
 
-
-  lgoette = {
-    # user.lasse.home-manager.enable = true; # Old home-manager configuration variant
-  };
-
   mayniklas = {
     var.mainUser = "lasse";
     locale.enable = true;
