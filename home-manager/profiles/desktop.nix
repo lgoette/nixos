@@ -52,6 +52,7 @@ with lib;
         pip
         requests
         numpy
+        matplotlib
         jupyter
         notebook
       ]))
