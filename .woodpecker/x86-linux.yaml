@@ -44,24 +44,24 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.lasse-laptop.config.system.build.toplevel' -o 'result-lasse-laptop'"
+        "nix build --print-out-paths '.#nixosConfigurations.Lasse-Laptop.config.system.build.toplevel' -o 'result-Lasse-Laptop'"
       ],
       "image": "bash",
-      "name": "Build lasse-laptop"
+      "name": "Build Lasse-Laptop"
     },
     {
       "commands": [
-        "nix path-info --closure-size -h $(readlink -f 'result-lasse-laptop')"
+        "nix path-info --closure-size -h $(readlink -f 'result-Lasse-Laptop')"
       ],
       "image": "bash",
-      "name": "Show lasse-laptop info"
+      "name": "Show Lasse-Laptop info"
     },
     {
       "commands": [
-        "attic push lounge-rocks:nix-cache 'result-lasse-laptop'"
+        "attic push lounge-rocks:nix-cache 'result-Lasse-Laptop'"
       ],
       "image": "bash",
-      "name": "Push lasse-laptop to Attic"
+      "name": "Push Lasse-Laptop to Attic"
     },
     {
       "commands": [
