@@ -7,8 +7,11 @@ in {
 
   config = mkIf cfg.enable {
 
-    hardware.bluetooth = { enable = true; };
+    hardware.bluetooth = {
+      enable = true;
+      # hsphfpd.enable = true;
+    };
 
-    services.blueman.enable = true;
+    # services.blueman.enable = true;
   };
 }

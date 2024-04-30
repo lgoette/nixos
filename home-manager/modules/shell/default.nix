@@ -24,7 +24,18 @@ let cfg = config.lasse.programs.shell; in
           git reset --soft HEAD~$1
         }
 
-        PROMPT="%B%F{green}%n@%m: %F{blue}%~/ > %f%b"
+        # if user is root
+        if [[ $UID == 0 || $EUID == 0 ]]; then
+          PROMPT="%B%F{red}%n@%m: %F{blue}%~ > %f%b" # TODO: Wie kann ich dem root User auch diese shell geben?
+
+        # if user is in nix-shell
+        elif [[ -n "$IN_NIX_SHELL" ]]; then
+          PROMPT="%B%F{yellow}nix-shell: %F{blue}%~ > %f%b"
+
+        # default shell
+        else
+          PROMPT="%B%F{green}%n@%m: %F{blue}%~/ > %f%b"
+        fi
       '';
 
       history = {

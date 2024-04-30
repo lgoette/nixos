@@ -12,12 +12,20 @@
 
     wireguard.interfaces.wg0 = {
       ips = [ "10.11.12.100/24" ];
+      metric = 650;
       # Path to the private key file
       privateKeyFile = toString /var/src/secrets/wireguard/private;
-      metric = 650;
+      # preSetup = ''
+      #   # Try to access the DNS for up to 300s
+      #   for i in {1..300}; do
+      #     ${pkgs.iputils}/bin/ping -c1 'lamafarm.lasse-goette.de' && break
+      #     echo "Attempt $i: DNS still not available"
+      #     sleep 1s
+      #   done
+      # ''; # TODO: Das hält den boot um 5 Minuten auf, das muss anders gemacht werden
 
       peers = [
-        
+
         # 10.11.12.100
         {
           publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
