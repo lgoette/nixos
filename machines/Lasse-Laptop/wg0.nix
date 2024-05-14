@@ -15,7 +15,13 @@
       metric = 650;
       # Path to the private key file
       privateKeyFile = toString /var/src/secrets/wireguard/private;
-      # preSetup = ''
+      preSetup =
+        let
+          script = pkgs.writeShellScriptBin "pre-script" ''
+            echo "hello world!"
+          '';
+        in
+        "${script}/bin/pre-script";
       #   # Try to access the DNS for up to 300s
       #   for i in {1..300}; do
       #     ${pkgs.iputils}/bin/ping -c1 'lamafarm.lasse-goette.de' && break
@@ -39,7 +45,8 @@
     };
   };
 
-  systemd.services."wireguard-wg0-peer-qBxrUEGSaf-P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA\\x3d" = { # TODO: Scheint noch nicht zu funktionieren (Das Script wird auch nicht so ganz angenommen)
+  systemd.services."wireguard-wg0-peer-qBxrUEGSaf-P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA\\x3d" = {
+    # TODO: Scheint noch nicht zu funktionieren (Das Script wird auch nicht so ganz angenommen)
     # after = [ "network.target" ]; # Irgendwie startet Wireguard gar nicht mehr :/
     serviceConfig.ExecStartPre = pkgs.writeScriptBin "wireguard-wg0-peer-qBxrUEGSaf-P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA" ''
       # Try to access the DNS for up to 300s
