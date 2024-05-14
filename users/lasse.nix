@@ -15,5 +15,5 @@
     };
   };
 
-  nix.allowedUsers = [ "lasse" ];
+  nix.settings.allowed-users = [ "lasse" ];
 }

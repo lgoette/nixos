@@ -10,8 +10,8 @@ in
 
     # Configure keymap in X11
     services.xserver = {
-      layout = "de";
-      xkbOptions = "eurosign:e";
+      xkb.layout = "de";
+      xkb.options = "eurosign:e";
     };
 
     # Set your time zone.

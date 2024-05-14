@@ -47,7 +47,6 @@ with lib;
 
       # Development
       arduino
-      # postman
       (python3.withPackages (ps: with ps; [
         pip
         requests
@@ -56,6 +55,7 @@ with lib;
         jupyter
         notebook
       ]))
+      # postman
 
       # Office
       chromium
@@ -92,7 +92,6 @@ with lib;
 
       # Uni
       gcc
-      conda
 
       #mayniklas
       mayniklas.drone-gen

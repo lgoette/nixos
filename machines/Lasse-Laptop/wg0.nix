@@ -38,4 +38,16 @@
 
     };
   };
+
+  systemd.services."wireguard-wg0-peer-qBxrUEGSaf-P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA\\x3d" = { # TODO: Scheint noch nicht zu funktionieren (Das Script wird auch nicht so ganz angenommen)
+    # after = [ "network.target" ]; # Irgendwie startet Wireguard gar nicht mehr :/
+    serviceConfig.ExecStartPre = pkgs.writeScriptBin "wireguard-wg0-peer-qBxrUEGSaf-P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA" ''
+      # Try to access the DNS for up to 300s
+      for i in {1..300}; do
+        ${pkgs.iputils}/bin/ping -c1 'lamafarm.lasse-goette.de' && break
+        echo "Attempt $i: DNS still not available"
+        sleep 1s
+      done
+    '';
+  };
 }

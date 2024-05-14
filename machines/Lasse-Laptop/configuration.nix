@@ -52,6 +52,9 @@
   };
   users.extraUsers.lasse.extraGroups = [ "networkmanager" "audio" ]; #TODO: move audio group to sound module - find variant for generic user
 
+  # Enable autostart
+  # xdg.autostart.enable = true; # TODO: Packages can start on startup not working
+
   environment.systemPackages = with pkgs;
     with pkgs.mayniklas; [
       psmisc

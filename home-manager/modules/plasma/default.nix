@@ -125,32 +125,30 @@ let cfg = config.lasse.programs.plasma; in
 
       configFile = {
         # Toggle scroll direction (natural scrolling)
-        "kcminputrc"."Libinput/2/7/SynPS\\/2 Synaptics TouchPad"."NaturalScroll".value = true;
+        kcminputrc."Libinput/2/7/SynPS\\/2 Synaptics TouchPad".NaturalScroll = true;
 
         # Custom buttons in window titlebar
         # left: More actions, On all desktops, Keep above other windows
-        "kwinrc"."org.kde.kdecoration2"."ButtonsOnLeft".value = "MSF";
+        kwinrc."org.kde.kdecoration2".ButtonsOnLeft = "MSF";
 
         # right: Minimize, Maximize, Close
-        "kwinrc"."org.kde.kdecoration2"."ButtonsOnRight".value = "IAX";
+        kwinrc."org.kde.kdecoration2".ButtonsOnRight = "IAX";
 
         # Set splash screen theme
-        "ksplashrc"."KSplash"."Engine".value = "none";
-        "ksplashrc"."KSplash"."Theme".value = "None";
+        ksplashrc."KSplash".Engine = "none";
+        ksplashrc."KSplash".Theme = "None";
 
         # Set the Lock Screen wallpaper
-        # TODO: This doesn't work, need to figure out how to set the lock screen wallpaper
-        # kscreenlockerrc = {
-        #   # Double-escaping is dumb but works
-        #   "Greeter"."Wallpaper"."org.kde.image"."General" =
-        #   let
-        #     image = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images/5120x2880.png";
-        #   in
-        #   {
-        #     "Image".value = image;
-        #     "PreviewImage".value = image;
-        #   };
-        # };
+        kscreenlockerrc = {
+          "Greeter/Wallpaper/org.kde.image/General" =
+          let
+            image = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images/5120x2880.png";
+          in
+          {
+            Image = image;
+            PreviewImage = image;
+          };
+        };
       };
     };
   };

@@ -8,14 +8,17 @@ in {
   config = mkIf cfg.enable {
 
     # Enable the Plasma6 (5) Desktop Environment.
+    services.displayManager = {
+      sddm.enable = true;
+      sddm.wayland.enable = true;
+      # sddm.theme = "${pkgs.sddm-chili-theme}/share/sddm/themes/chili"; # TODO: Warum funzt dat nicht?
+    };
+
     services.xserver = {
       enable = true;
-      displayManager.sddm.enable = true;
-      displayManager.sddm.wayland.enable = true;
-      # displayManager.sddm.theme = "${pkgs.sddm-chili-theme}/share/sddm/themes/chili"; # TODO: Warum funzt dat nicht?
       # desktopManager.plasma5.enable = true;
-      layout = "de";
-      xkbOptions = "eurosign:e";
+      xkb.layout = "de";
+      xkb.options = "eurosign:e";
     };
 
     services.desktopManager.plasma6 = {
