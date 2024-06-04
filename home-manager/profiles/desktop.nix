@@ -73,6 +73,7 @@ with lib;
       spotify
       vlc
       youtube-dl
+      mixxx
 
       # Comunication
       signal-desktop

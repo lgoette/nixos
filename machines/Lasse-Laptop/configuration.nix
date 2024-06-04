@@ -5,7 +5,7 @@
   imports = [
     ../../users/lasse.nix
     ../../users/root.nix
-    ./wg0.nix
+    # ./wg0.nix
   ];
 
   lgoette = {
@@ -31,6 +31,7 @@
     # home-manager versions and does not work with configs using
     # nixpkgs.config`
     useUserPackages = true;
+    backupFileExtension = "hm-backup";
 
     extraSpecialArgs = {
       # Pass all flake inputs to home-manager modules aswell so we can use them

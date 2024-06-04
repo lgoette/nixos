@@ -64,40 +64,70 @@ let cfg = config.lasse.programs.plasma; in
             }
             "org.kde.plasma.panelspacer"
             "org.kde.plasma.marginsseparator"
-            "org.kde.plasma.systemtray"
-            "org.kde.plasma.digitalclock"
+            # "org.kde.plasma.systemtray"
             # "org.kde.plasma.showdesktop"
+
+            {
+              systemTray = {
+                icons = {
+                  spacing = "medium";
+                  scaleToFit = false;
+                };
+                items = {
+                  shown = [
+                    "org.kde.plasma.battery"
+                    "org.kde.plasma.networkmanagement"
+                    "org.kde.plasma.bluetooth"
+                    "org.kde.plasma.brightness"
+                    "org.kde.plasma.volume"
+                    "org.kde.plasma.notifications"
+                    # "org.kde.plasma.clipboard"
+                  ];
+                  hidden = [
+                    "org.kde.kalendar.contact"
+                    "org.kde.plasma.clipboard"
+                    "org.kde.kscreen"
+                    "Discover Notifier_org.kde.DiscoverNotifier"
+                    "Wallet Manager"
+                    "KDE Daemon"
+                    "The KDE Crash Handler"
+                  ];
+                };
+              };
+            }
+            "org.kde.plasma.digitalclock"
+
           ];
 
           # Extra JS for configuring the system tray
-          extraSettings = (readFile (pkgs.substituteAll {
-            src = ./system-tray.js;
+          # extraSettings = (readFile (pkgs.substituteAll {
+          #   src = ./system-tray.js;
 
-            scaleIconsToFit = toString false;
-            iconSpacing = toString 1;
-            popupHeight = toString 500;
-            popupWidth = toString 432;
-            # Always shown
-            shownItems = concatStringsSep "," [
-              "org.kde.plasma.battery"
-              "org.kde.plasma.networkmanagement"
-              "org.kde.plasma.bluetooth"
-              "org.kde.plasma.brightness"
-              "org.kde.plasma.volume"
-              "org.kde.plasma.notifications"
-            ];
+          #   scaleIconsToFit = toString false;
+          #   iconSpacing = toString 1;
+          #   popupHeight = toString 500;
+          #   popupWidth = toString 432;
+          #   # Always shown
+          #   shownItems = concatStringsSep "," [
+          #     "org.kde.plasma.battery"
+          #     "org.kde.plasma.networkmanagement"
+          #     "org.kde.plasma.bluetooth"
+          #     "org.kde.plasma.brightness"
+          #     "org.kde.plasma.volume"
+          #     "org.kde.plasma.notifications"
+          #   ];
 
-            # Always Hidden
-            hiddenItems = concatStringsSep "," [
-              "org.kde.kalendar.contact"
-              "org.kde.plasma.clipboard"
-              "org.kde.kscreen"
-              "Discover Notifier_org.kde.DiscoverNotifier"
-              "Wallet Manager"
-              "KDE Daemon"
-              "The KDE Crash Handler"
-            ];
-          }));
+          #   # Always Hidden
+          #   hiddenItems = concatStringsSep "," [
+          #     "org.kde.kalendar.contact"
+          #     "org.kde.plasma.clipboard"
+          #     "org.kde.kscreen"
+          #     "Discover Notifier_org.kde.DiscoverNotifier"
+          #     "Wallet Manager"
+          #     "KDE Daemon"
+          #     "The KDE Crash Handler"
+          #   ];
+          # }));
         }
 
         # Global menu at the top
@@ -111,11 +141,11 @@ let cfg = config.lasse.programs.plasma; in
 
       ];
       # Restart plasmashell after applying panels (needed for custom popup size)
-      startup.desktopScript."apply_panels".postCommands = ''
-        echo "Restarting plasmashell..."
-        sleep 1
-        nohup plasmashell --replace &
-      '';
+      # startup.desktopScript."apply_panels".postCommands = ''
+      #   echo "Restarting plasmashell..."
+      #   sleep 1
+      #   nohup plasmashell --replace &
+      # '';
 
       hotkeys.commands."open-settings" = {
         name = "Open Settings";
