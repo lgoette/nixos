@@ -44,6 +44,7 @@ with lib;
       kdePackages.kfind
       kdePackages.calendarsupport
       kdePackages.konsole
+      kdePackages.kcalc
 
       # Development
       arduino
