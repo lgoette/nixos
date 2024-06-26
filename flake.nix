@@ -45,6 +45,10 @@
       inputs.flake-utils.follows = "flake-utils";
     };
 
+    # https://github.com/musnix/musnix/
+    # A collection of optimization options for realtime audio
+    musnix.url = "github:musnix/musnix";
+
     # https://github.com/mayniklas/nixos
     # @MayNiklas NixOS configuration
     # We use a few modules from this flake as well as @MayNiklas home manager config
