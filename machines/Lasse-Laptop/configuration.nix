@@ -45,8 +45,6 @@
     users.lasse = flake-self.homeConfigurations.desktop;
   };
 
-  services.xserver.desktopManager.xfce.enable
-
   networking = {
     hostName = "Lasse-Laptop";
     firewall = { enable = true; };
