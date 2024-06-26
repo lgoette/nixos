@@ -10,7 +10,7 @@ in {
     # Enable the Plasma6 (5) Desktop Environment.
     services.displayManager = {
       # sddm.enable = true;
-      sddm.wayland.enable = true; # TODO: Hat dat wat damit zu tun, dass Discord nicht startet?
+      sddm.wayland.enable = true;
       # sddm.theme = "${pkgs.sddm-chili-theme}/share/sddm/themes/chili"; # TODO: Warum funzt dat nicht?
     };
 
