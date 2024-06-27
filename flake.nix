@@ -173,6 +173,13 @@
             plasma-manager.homeManagerModules.plasma-manager
           ] ++ (builtins.attrValues self.homeManagerModules);
         };
+        desktop-audio = { pkgs, lib, username, ... }: {
+          imports = [
+            ./home-manager/profiles/common.nix
+            ./home-manager/profiles/desktop-audio.nix
+            plasma-manager.homeManagerModules.plasma-manager
+          ] ++ (builtins.attrValues self.homeManagerModules);
+        };
         server = { pkgs, lib, username, ... }: {
           imports = [
             ./home-manager/profiles/common.nix

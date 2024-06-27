@@ -8,8 +8,11 @@
   ];
 
   lgoette = {
-    
+    kde.enable = true;
+    sound.pro-audio.enable = true;
+    locale.enable = true;
   };
+  users.extraUsers.lasse.extraGroups = [ "audio" "jackaudio" ];
 
   mayniklas = {
     user = { root.enable = true; };
@@ -38,44 +41,35 @@
       system-config = config;
     };
 
-    users.lasse = flake-self.homeConfigurations.common;
+    users.lasse = flake-self.homeConfigurations.desktop-audio;
   };
 
   # Add lightweight desktop environment
-  services.xserver = {
-    enable = true;
-    xkb.layout = "de";
-    xkb.options = "eurosign:e";
-    desktopManager.xfce.enable = true;
-  };
-  environment.xfce.excludePackages = with pkgs.xfce; [
-    exo
-    orage
-    xfburn
-    parole
-    gigolo
-    tumbler
-    catfish
-    xfce4-weather-plugin
-    xfce4-volumed-pulse
-    xfce4-timer-plugin
-    xfce4-time-out-plugin
-    xfce4-taskmanager
-    xfce4-screenshooter
-    xfce4-screensaver
-    xfce4-pulseaudio-plugin
-    xfce4-power-manager
-    xfce4-notes-plugin
-  ];
-
-  # Prepare system for realtime audio
-  musnix = {
-    enable = true;
-    kernel.realtime = true;
-    ffado.enable = false; # Firewire drivers
-    rtcqs.enable = true; # Commandline tool for checking configuration
-  };
-  users.extraUsers.lasse.extraGroups = [ "audio" ];
+  # services.xserver = {
+  #   enable = true;
+  #   xkb.layout = "de";
+  #   xkb.options = "eurosign:e";
+  #   desktopManager.xfce.enable = true;
+  # };
+  # environment.xfce.excludePackages = with pkgs.xfce; [
+  #   exo
+  #   orage
+  #   xfburn
+  #   parole
+  #   gigolo
+  #   tumbler
+  #   catfish
+  #   xfce4-weather-plugin
+  #   xfce4-volumed-pulse
+  #   xfce4-timer-plugin
+  #   xfce4-time-out-plugin
+  #   xfce4-taskmanager
+  #   xfce4-screenshooter
+  #   xfce4-screensaver
+  #   xfce4-pulseaudio-plugin
+  #   xfce4-power-manager
+  #   xfce4-notes-plugin
+  # ];
 
   # Enable the OpenSSH daemon.
   services.openssh = {

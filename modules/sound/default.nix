@@ -3,6 +3,7 @@ with lib;
 let cfg = config.lgoette.sound;
 in {
   options.lgoette.sound = { enable = mkEnableOption "activate sound with pipewire"; };
+  options.lgoette.sound.pro-audio = { enable = mkEnableOption "activate pro audio environment with jack"; };
 
   config = mkIf cfg.enable {
     # Disabled since pipewire is used
@@ -35,5 +36,42 @@ in {
       ];
     };
 
+  };
+
+  config = mkIf cfg.pro-audio.enable {
+
+    sound.enable = false;
+    hardware.pulseaudio.enable = false;
+
+    services.jack = {
+      jackd.enable = true;
+      # support ALSA only programs via ALSA JACK PCM plugin
+      alsa.enable = false;
+      # support ALSA only programs via loopback device (supports programs like Steam)
+      loopback = {
+        enable = true;
+        # buffering parameters for dmix device to work with ALSA only semi-professional sound programs
+        #dmixConfig = ''
+        #  period_size 2048
+        #'';
+      };
+    };
+
+    # Prepare system for realtime audio
+    musnix = {
+      enable = true;
+      kernel.realtime = true;
+      ffado.enable = false; # Firewire drivers
+      rtcqs.enable = true; # Commandline tool for checking configuration
+
+      # magic to me
+      rtirq = {
+        # highList = "snd_hrtimer";
+        resetAll = 1;
+        prioLow = 0;
+        enable = true;
+        nameList = "rtc0 snd";
+      };
+    };
   };
 }
