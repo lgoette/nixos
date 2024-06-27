@@ -1,8 +1,7 @@
 { lib, pkgs, config, ... }:
 with lib;
 let cfg = config.lasse.programs.git;
-in
-{
+in {
   options.lasse.programs.git.enable = mkEnableOption "enable git";
 
   config = mkIf cfg.enable {
@@ -49,10 +48,7 @@ in
         userName = "lgoette";
       };
     };
-    home.packages = with pkgs; [
-      pre-commit
-      git-crypt
-    ];
+    home.packages = with pkgs; [ pre-commit git-crypt ];
 
   };
 }

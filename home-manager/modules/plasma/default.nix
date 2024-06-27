@@ -1,8 +1,9 @@
 { lib, pkgs, config, ... }:
 with lib;
-let cfg = config.lasse.programs.plasma; in
-{
-  options.lasse.programs.plasma.enable = mkEnableOption "enable plasma-manager for plasma desktop environment";
+let cfg = config.lasse.programs.plasma;
+in {
+  options.lasse.programs.plasma.enable =
+    mkEnableOption "enable plasma-manager for plasma desktop environment";
 
   config = mkIf cfg.enable {
 
@@ -14,7 +15,8 @@ let cfg = config.lasse.programs.plasma; in
         clickItemTo = "select";
         theme = "breeze-dark";
         lookAndFeel = "org.kde.breezedark.desktop";
-        wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images/5120x2880.png";
+        wallpaper =
+          "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images/5120x2880.png";
       };
 
       panels = [
@@ -155,7 +157,8 @@ let cfg = config.lasse.programs.plasma; in
 
       configFile = {
         # Toggle scroll direction (natural scrolling)
-        kcminputrc."Libinput/2/7/SynPS\\/2 Synaptics TouchPad".NaturalScroll = true;
+        kcminputrc."Libinput/2/7/SynPS\\/2 Synaptics TouchPad".NaturalScroll =
+          true;
 
         # Custom buttons in window titlebar
         # left: More actions, On all desktops, Keep above other windows
@@ -170,11 +173,10 @@ let cfg = config.lasse.programs.plasma; in
 
         # Set the Lock Screen wallpaper
         kscreenlockerrc = {
-          "Greeter/Wallpaper/org.kde.image/General" =
-          let
-            image = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images/5120x2880.png";
-          in
-          {
+          "Greeter/Wallpaper/org.kde.image/General" = let
+            image =
+              "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images/5120x2880.png";
+          in {
             Image = image;
             PreviewImage = image;
           };

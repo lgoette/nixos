@@ -2,11 +2,7 @@
 { pkgs, config, lib, mayniklas, flake-self, ... }:
 
 {
-  imports = [
-    ../../users/lasse.nix
-    ../../users/root.nix
-    ./wg0.nix
-  ];
+  imports = [ ../../users/lasse.nix ../../users/root.nix ./wg0.nix ];
 
   lgoette = {
     nginx = {

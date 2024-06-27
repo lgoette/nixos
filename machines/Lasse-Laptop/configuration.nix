@@ -51,7 +51,10 @@
     # Enable networkmanager
     networkmanager.enable = true;
   };
-  users.extraUsers.lasse.extraGroups = [ "networkmanager" "audio" ]; #TODO: move audio group to sound module - find variant for generic user
+  users.extraUsers.lasse.extraGroups = [
+    "networkmanager"
+    "audio"
+  ]; # TODO: move audio group to sound module - find variant for generic user
 
   # Enable autostart
   # xdg.autostart.enable = true; # TODO: Packages can start on startup not working
@@ -84,26 +87,27 @@
   # };
 
   boot = {
-    loader.systemd-boot.enable = true; # TODO: Zu grub wechseln; nur die letzten 3 nix configs in boot speichern
+    loader.systemd-boot.enable =
+      true; # TODO: Zu grub wechseln; nur die letzten 3 nix configs in boot speichern
     loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+    initrd.availableKernelModules =
+      [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-intel" ];
   };
 
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/1c9abb53-60f6-46b3-80b9-da0231a48c2e";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/1c9abb53-60f6-46b3-80b9-da0231a48c2e";
+    fsType = "ext4";
+  };
 
-  boot.initrd.luks.devices."luks-2e1a9d9e-62ac-4b6d-8421-db15361e4fc5".device = "/dev/disk/by-uuid/2e1a9d9e-62ac-4b6d-8421-db15361e4fc5";
+  boot.initrd.luks.devices."luks-2e1a9d9e-62ac-4b6d-8421-db15361e4fc5".device =
+    "/dev/disk/by-uuid/2e1a9d9e-62ac-4b6d-8421-db15361e4fc5";
 
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/5EB5-75E2";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/5EB5-75E2";
+    fsType = "vfat";
+    options = [ "fmask=0022" "dmask=0022" ];
+  };
 
   # Automatic garbage collection
   nix.settings.auto-optimise-store = true;
@@ -114,7 +118,8 @@
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.enableRedistributableFirmware = config.nixpkgs.config.allowUnfree;
 
   system.stateVersion = "22.05";

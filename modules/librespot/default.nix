@@ -104,7 +104,8 @@ in {
     };
 
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.zeroconfigPort ]; #4070, 65535, 38143 für Librespot?
+      allowedTCPPorts =
+        [ cfg.zeroconfigPort ]; # 4070, 65535, 38143 für Librespot?
       allowedUDPPorts = [ 5353 ]; # mdns für Librespot
     };
 

@@ -1,6 +1,5 @@
 { config, pkgs, lib, flake-self, system-config, ... }:
-with lib;
-{
+with lib; {
   config = {
 
     lasse = {
@@ -29,15 +28,10 @@ with lib;
 
     };
 
-    home.packages = with pkgs; [
-      nix-init
-      wireguard-tools
-      fd
-    ];
+    home.packages = with pkgs; [ nix-init wireguard-tools fd ];
 
     # Include man-pages
     manual.manpages.enable = true;
-
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage

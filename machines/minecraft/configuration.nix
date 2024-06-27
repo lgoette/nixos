@@ -69,18 +69,19 @@
       let
         mcVersion = "1.20.2";
         buildNum = "243";
-      in
-      {
+      in {
         version = "${mcVersion}.${buildNum}";
         src = pkgs.fetchurl {
-          url = "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
+          url =
+            "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
           hash = "sha256-rJSgspLZz6LVGfeOuadCtL9Y4PKgrturfzOFzfxs540=";
         };
       });
     dataDir = "/var/lib/minecraft";
     declarative = true;
     eula = true;
-    jvmOpts = "-Xms2G -Xmx6G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1";
+    jvmOpts =
+      "-Xms2G -Xmx6G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1";
     openFirewall = true;
     serverProperties = {
       enable-rcon = true;
@@ -89,7 +90,7 @@
       gamemode = 0;
       max-players = 12;
       motd =
-        "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\n\1.20.1 \\u00a74<3";
+        "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\n1.20.1 \\u00a74<3";
       white-list = true;
       entity-broadcast-range-percentage = 100;
       view-distance = 16;
@@ -150,69 +151,65 @@
     ];
   };
 
-  networking =
-    let
-      uplink_interface = "enp6s18";
-      ip = "192.168.20.75";
-      gateway = "192.168.20.1";
-    in
-    {
-      hostName = "minecraft";
+  networking = let
+    uplink_interface = "enp6s18";
+    ip = "192.168.20.75";
+    gateway = "192.168.20.1";
+  in {
+    hostName = "minecraft";
 
-      dhcpcd.enable = false;
-      enableIPv6 = false;
-      defaultGateway = "${gateway}";
-      nameservers = [ "1.1.1.1" "8.8.8.8" ];
+    dhcpcd.enable = false;
+    enableIPv6 = false;
+    defaultGateway = "${gateway}";
+    nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
-      wireguard.interfaces.wg0 = {
-        ips = [ "10.11.12.8/24" ];
-        mtu = 1412;
-        # Path to the private key file
-        privateKeyFile = "/var/src/secrets/wireguard/private";
-        peers = [{
-          publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
-          allowedIPs = [ "10.11.12.0/24" "0.0.0.0/0" ];
-          # hardcode wireguard endpoint
-          # -> wireguard can be started with no DNS available
-          endpoint = "5.45.108.206:53115";
-          persistentKeepalive = 15;
-        }];
-      };
-
-      interfaces = {
-        ${uplink_interface}.ipv4 = {
-          addresses = [
-            {
-              address = "${ip}";
-              prefixLength = 24;
-            }
-          ];
-          routes = [
-            {
-              address = "5.45.108.206";
-              prefixLength = 32;
-              via = "${gateway}";
-              options = { metric = "0"; };
-            }
-            {
-              address = "10.88.88.0";
-              prefixLength = 24;
-              via = "${gateway}";
-              options = { metric = "202"; };
-            }
-            {
-              address = "192.168.5.0";
-              prefixLength = 24;
-              via = "${gateway}";
-              options = { metric = "202"; };
-            }
-          ];
-        };
-      };
-
-      firewall.interfaces.enp6s18.allowedTCPPorts = [ 9100 ];
-
+    wireguard.interfaces.wg0 = {
+      ips = [ "10.11.12.8/24" ];
+      mtu = 1412;
+      # Path to the private key file
+      privateKeyFile = "/var/src/secrets/wireguard/private";
+      peers = [{
+        publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
+        allowedIPs = [ "10.11.12.0/24" "0.0.0.0/0" ];
+        # hardcode wireguard endpoint
+        # -> wireguard can be started with no DNS available
+        endpoint = "5.45.108.206:53115";
+        persistentKeepalive = 15;
+      }];
     };
+
+    interfaces = {
+      ${uplink_interface}.ipv4 = {
+        addresses = [{
+          address = "${ip}";
+          prefixLength = 24;
+        }];
+        routes = [
+          {
+            address = "5.45.108.206";
+            prefixLength = 32;
+            via = "${gateway}";
+            options = { metric = "0"; };
+          }
+          {
+            address = "10.88.88.0";
+            prefixLength = 24;
+            via = "${gateway}";
+            options = { metric = "202"; };
+          }
+          {
+            address = "192.168.5.0";
+            prefixLength = 24;
+            via = "${gateway}";
+            options = { metric = "202"; };
+          }
+        ];
+      };
+    };
+
+    firewall.interfaces.enp6s18.allowedTCPPorts = [ 9100 ];
+
+  };
 
   environment.systemPackages = with pkgs;
     with pkgs.mayniklas; [

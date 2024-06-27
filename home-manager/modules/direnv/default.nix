@@ -1,8 +1,7 @@
 { pkgs, lib, config, ... }:
 with lib;
 let cfg = config.lasse.programs.direnv;
-in
-{
+in {
 
   options.lasse.programs.direnv = {
     enable = mkEnableOption "activate direnv";

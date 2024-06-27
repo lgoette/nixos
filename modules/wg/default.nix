@@ -3,8 +3,7 @@ with lib;
 let
   cfg = config.lgoette.wg;
   publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
-in
-{
+in {
   options.lgoette.wg = {
     enable = mkEnableOption "activate wireguard";
     ip = mkOption {
@@ -36,14 +35,12 @@ in
 
   config = mkIf cfg.enable {
 
-    networking.interfaces.${cfg.uplink_interface}.ipv4.routes = [
-      {
-        address = "5.45.108.206";
-        prefixLength = 32;
-        via = "${cfg.gateway}";
-        options = { metric = "0"; };
-      }
-    ];
+    networking.interfaces.${cfg.uplink_interface}.ipv4.routes = [{
+      address = "5.45.108.206";
+      prefixLength = 32;
+      via = "${cfg.gateway}";
+      options = { metric = "0"; };
+    }];
 
     # hardcode wireguard endpoint
     # -> wireguard can be started before DNS is available

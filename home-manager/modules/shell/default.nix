@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 with lib;
-let cfg = config.lasse.programs.shell; in
-{
+let cfg = config.lasse.programs.shell;
+in {
   options.lasse.programs.shell.enable = mkEnableOption "enable shell with zsh";
 
   config = mkIf cfg.enable {
@@ -15,7 +15,7 @@ let cfg = config.lasse.programs.shell; in
 
       initExtra = ''
         [[ -f ~/.profile ]] && . ~/.profile
-        
+
         bindkey "^[[1;5C" forward-word
         bindkey "^[[1;5D" backward-word
 

@@ -105,65 +105,62 @@
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
-      nixosModules = builtins.listToAttrs
-        (map
-          (x: {
-            name = x;
-            value = import (./modules + "/${x}");
-          })
-          (builtins.attrNames (builtins.readDir ./modules)))
+      nixosModules = builtins.listToAttrs (map (x: {
+        name = x;
+        value = import (./modules + "/${x}");
+      }) (builtins.attrNames (builtins.readDir ./modules)))
 
-      //
+        //
 
-      {
+        {
 
-        # lgoette.mayniklas
-        # -> imports used flake inputs
-        # -> this way, they can easily be imported to different flake outputs
-        mayniklas = { ... }: {
-          imports = [
-            # https://github.com/MayNiklas/nixos/tree/main/modules
-            mayniklas.nixosModules.cloud-provider
-            mayniklas.nixosModules.docker
-            mayniklas.nixosModules.home-manager
-            mayniklas.nixosModules.iperf
-            mayniklas.nixosModules.locale
-            mayniklas.nixosModules.minecraft
-            mayniklas.nixosModules.monitoring
-            mayniklas.nixosModules.nix-common
-            mayniklas.nixosModules.openssh
-            mayniklas.nixosModules.options
-            mayniklas.nixosModules.sound
-            mayniklas.nixosModules.user
-            mayniklas.nixosModules.zsh
-          ];
+          # lgoette.mayniklas
+          # -> imports used flake inputs
+          # -> this way, they can easily be imported to different flake outputs
+          mayniklas = { ... }: {
+            imports = [
+              # https://github.com/MayNiklas/nixos/tree/main/modules
+              mayniklas.nixosModules.cloud-provider
+              mayniklas.nixosModules.docker
+              mayniklas.nixosModules.home-manager
+              mayniklas.nixosModules.iperf
+              mayniklas.nixosModules.locale
+              mayniklas.nixosModules.minecraft
+              mayniklas.nixosModules.monitoring
+              mayniklas.nixosModules.nix-common
+              mayniklas.nixosModules.openssh
+              mayniklas.nixosModules.options
+              mayniklas.nixosModules.sound
+              mayniklas.nixosModules.user
+              mayniklas.nixosModules.zsh
+            ];
+          };
+
         };
-
-      };
 
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
       # configuration.nix that will be read first
-      nixosConfigurations = builtins.listToAttrs
-        (map
-          (x: {
-            name = x;
-            value = nixpkgs.lib.nixosSystem {
+      nixosConfigurations = builtins.listToAttrs (map (x: {
+        name = x;
+        value = nixpkgs.lib.nixosSystem {
 
-              # Make inputs and the flake itself accessible as module parameters.
-              # Technically, adding the inputs is redundant as they can be also
-              # accessed with flake-self.inputs.X, but adding them individually
-              # allows to only pass what is needed to each module.
-              specialArgs = { flake-self = self; } // inputs;
+          # Make inputs and the flake itself accessible as module parameters.
+          # Technically, adding the inputs is redundant as they can be also
+          # accessed with flake-self.inputs.X, but adding them individually
+          # allows to only pass what is needed to each module.
+          specialArgs = { flake-self = self; } // inputs;
 
-              modules = builtins.attrValues self.nixosModules ++ [
-                { nixpkgs.overlays = [ self.overlays.default mayniklas.overlays.mayniklas ]; }
-                (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
-              ];
+          modules = builtins.attrValues self.nixosModules ++ [
+            {
+              nixpkgs.overlays =
+                [ self.overlays.default mayniklas.overlays.mayniklas ];
+            }
+            (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
+          ];
 
-            };
-          })
-          (builtins.attrNames (builtins.readDir ./machines)));
+        };
+      }) (builtins.attrNames (builtins.readDir ./machines)));
 
       homeConfigurations = {
         desktop = { pkgs, lib, username, ... }: {
@@ -194,44 +191,35 @@
         };
         # nix run .#homeConfigurations.lasse@Lasse-Laptop.activationPackage
         # home-manager switch --flake .
-        "lasse@Lasse-Laptop" =
-          let
-            system = "x86_64-linux";
-            pkgs = import nixpkgs {
-              inherit system;
-              config = { allowUnfree = true; };
-              overlays = [ ];
-            };
-          in
-          home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-            modules = [
-              { targets.genericLinux.enable = true; }
-              ./home-manager/profiles/common.nix
-            ] ++ (builtins.attrValues self.homeManagerModules);
-            # Optionally use extraSpecialArgs
-            # to pass through arguments to home.nix
-            extraSpecialArgs = { } // inputs;
+        "lasse@Lasse-Laptop" = let
+          system = "x86_64-linux";
+          pkgs = import nixpkgs {
+            inherit system;
+            config = { allowUnfree = true; };
+            overlays = [ ];
           };
+        in home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            { targets.genericLinux.enable = true; }
+            ./home-manager/profiles/common.nix
+          ] ++ (builtins.attrValues self.homeManagerModules);
+          # Optionally use extraSpecialArgs
+          # to pass through arguments to home.nix
+          extraSpecialArgs = { } // inputs;
+        };
       };
 
-      homeManagerModules = builtins.listToAttrs
-        (map
-          (name: {
-            inherit name;
-            value = import (./home-manager/modules + "/${name}");
-          })
-          (builtins.attrNames (builtins.readDir ./home-manager/modules)))
-      //
-      {
+      homeManagerModules = builtins.listToAttrs (map (name: {
+        inherit name;
+        value = import (./home-manager/modules + "/${name}");
+      }) (builtins.attrNames (builtins.readDir ./home-manager/modules))) // {
 
         nix = { pkgs, ... }: {
           # this module is appended to the list of home-manager modules
           # by defining it here, it's easier for us to access the flake inputs
-          nixpkgs.overlays = [
-            self.overlays.default
-            mayniklas.overlays.mayniklas
-          ];
+          nixpkgs.overlays =
+            [ self.overlays.default mayniklas.overlays.mayniklas ];
         };
 
       };
@@ -249,8 +237,7 @@
             allowUnfree = true;
           };
         };
-      in
-      rec {
+      in rec {
 
         # Use nixpkgs-fmt for `nix fmt'
         formatter = pkgs.nixpkgs-fmt;
@@ -259,10 +246,11 @@
         # allow using them from other flakes that import this one.
 
         packages = flake-utils.lib.flattenTree {
-          build_outputs = pkgs.callPackage mayniklas.packages.${system}.build_outputs.override {
-            inherit self;
-            output_path = "~/.keep-nix-outputs-lgoette";
-          };
+          build_outputs = pkgs.callPackage
+            mayniklas.packages.${system}.build_outputs.override {
+              inherit self;
+              output_path = "~/.keep-nix-outputs-lgoette";
+            };
 
           woodpecker-pipeline =
             pkgs.callPackage ./packages/woodpecker-pipeline {

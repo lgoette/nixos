@@ -2,12 +2,8 @@
 { pkgs, config, lib, mayniklas, flake-self, ... }:
 
 {
-  imports = [
-    self.pi.pi4b
-    ../../users/lasse.nix
-    ../../users/root.nix
-    ./wg0.nix
-  ];
+  imports =
+    [ self.pi.pi4b ../../users/lasse.nix ../../users/root.nix ./wg0.nix ];
 
   # Sound on Raspberry Pi
   # boot = {
@@ -98,7 +94,10 @@
       "lamabasis.lasse-goette.de" = {
         root = "/var/www/lamabasis.lasse-goette.de";
         locations = {
-          "= /" = { return = "403"; extraConfig = "deny all;"; };
+          "= /" = {
+            return = "403";
+            extraConfig = "deny all;";
+          };
           "/" = {
             tryFiles = "$uri $uri.html =404";
             extraConfig = ''

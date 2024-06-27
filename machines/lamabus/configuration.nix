@@ -2,10 +2,7 @@
 { pkgs, config, lib, mayniklas, flake-self, ... }:
 
 {
-  imports = [
-    ../../users/lasse.nix
-    ../../users/root.nix
-  ];
+  imports = [ ../../users/lasse.nix ../../users/root.nix ];
 
   lgoette = {
     kde.enable = true;

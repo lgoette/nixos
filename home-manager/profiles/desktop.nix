@@ -1,6 +1,5 @@
 { pkgs, lib, config, ... }: # , mayniklas
-with lib;
-{
+with lib; {
   config = {
 
     # Home-manager nixpkgs config
@@ -48,14 +47,8 @@ with lib;
 
       # Development
       arduino
-      (python3.withPackages (ps: with ps; [
-        pip
-        requests
-        numpy
-        matplotlib
-        jupyter
-        notebook
-      ]))
+      (python3.withPackages
+        (ps: with ps; [ pip requests numpy matplotlib jupyter notebook ]))
       # postman
 
       # Office

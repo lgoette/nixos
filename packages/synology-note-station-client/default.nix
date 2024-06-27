@@ -1,11 +1,14 @@
-{ stdenv, lib, qt5, fetchurl, autoPatchelfHook, dpkg, glibc, cpio, xar, undmg, gtk3, pango }:
+{ stdenv, lib, qt5, fetchurl, autoPatchelfHook, dpkg, glibc, cpio, xar, undmg
+, gtk3, pango }:
 let
   pname = "synology-note-station-client";
-  baseUrl = "https://global.download.synology.com/download/Utility/NoteStationClient";
+  baseUrl =
+    "https://global.download.synology.com/download/Utility/NoteStationClient";
   buildNumber = "609";
   version = "2.2.2";
   meta = with lib; {
-    description = "Desktop application to synchronize Notes and ToDo lists between the computer and the Synology Note Station server.";
+    description =
+      "Desktop application to synchronize Notes and ToDo lists between the computer and the Synology Note Station server.";
     homepage = "https://www.synology.com/en-global/dsm/feature/note_station";
     license = licenses.unfree;
     maintainers = with maintainers; [ lgoette ]; # Darf ich das?
@@ -16,8 +19,10 @@ let
     inherit pname version meta;
 
     src = fetchurl {
-      url = "${baseUrl}/${version}-${buildNumber}/Ubuntu/x86_64/synology-note-station-client-${version}-${buildNumber}.x86_64.deb";
-      sha256 = "sha256-UAO/LwqPchIMhjdQP4METjVorMJsbvIDRkp4JxtZgOs="; #Ist noch alt
+      url =
+        "${baseUrl}/${version}-${buildNumber}/Ubuntu/x86_64/synology-note-station-client-${version}-${buildNumber}.x86_64.deb";
+      sha256 =
+        "sha256-UAO/LwqPchIMhjdQP4METjVorMJsbvIDRkp4JxtZgOs="; # Ist noch alt
     };
 
     nativeBuildInputs = [ autoPatchelfHook dpkg ];
@@ -47,8 +52,10 @@ let
     inherit pname version meta;
 
     src = fetchurl {
-      url = "${baseUrl}/${version}-${buildNumber}/Mac/x86_64/synology-note-station-client-${version}-${buildNumber}-mac-x64.dmg";
-      sha256 = "15wici8ycil1mfh5cf89rfan4kb93wfkdsd4kmpvzjj4bnddwlxa"; # ist noch alt
+      url =
+        "${baseUrl}/${version}-${buildNumber}/Mac/x86_64/synology-note-station-client-${version}-${buildNumber}-mac-x64.dmg";
+      sha256 =
+        "15wici8ycil1mfh5cf89rfan4kb93wfkdsd4kmpvzjj4bnddwlxa"; # ist noch alt
     };
 
     nativeBuildInputs = [ cpio xar undmg ];
@@ -67,5 +74,4 @@ let
       cp -R 'Synology Drive Client.app' $out/Applications/
     '';
   };
-in
-if stdenv.isDarwin then darwin else linux
+in if stdenv.isDarwin then darwin else linux
