@@ -3,13 +3,8 @@ with lib;
 let cfg = config.lgoette.sound;
 in {
   options.lgoette.sound = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Activate sound with pipewire.
-      '';
-    };
+    enable = mkEnableOption "Activate sound with pipewire";
+    
     pro-audio = mkOption {
       type = types.bool;
       default = false;
