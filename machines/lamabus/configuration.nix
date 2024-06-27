@@ -6,7 +6,8 @@
 
   lgoette = {
     kde.enable = true;
-    sound.pro-audio.enable = true;
+    sound.enable = true;
+    sound.pro-audio = true;
     locale.enable = true;
   };
   users.extraUsers.lasse.extraGroups = [ "audio" "jackaudio" ];
