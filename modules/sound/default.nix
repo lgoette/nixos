@@ -25,6 +25,7 @@ in {
     sound.enable = false;
     hardware.pulseaudio.enable = false;
 
+    # Enable sound with jack
     services.jack = {
       jackd.enable = true;
       # support ALSA only programs via ALSA JACK PCM plugin
