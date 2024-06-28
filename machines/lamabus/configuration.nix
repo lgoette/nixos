@@ -1,8 +1,14 @@
 { self, ... }:
 { pkgs, config, lib, mayniklas, flake-self, ... }:
-
+let
+  primaryDisk = "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_250GB_S21PNXAGB12345";
+in
 {
-  imports = [ ../../users/lasse.nix ../../users/root.nix ];
+  imports = [
+    ../../users/lasse.nix
+    ../../users/root.nix
+    flake-self.inputs.disko.nixosModules.disko
+  ];
 
   lgoette = {
     kde.enable = true;
@@ -104,6 +110,49 @@
     device = "/var/swapfile";
     size = (1024 * 2);
   }];
+
+  # Define disk layout
+  disko.devices = {
+    disk = {
+      main = {
+        type = "disk";
+        device = primaryDisk;
+        content = {
+          type = "gpt";
+          partitions = {
+            boot = {
+              size = "1M";
+              type = "EF02"; # for grub MBR
+              priority = 1; # Needs to be first partition
+            };
+            ESP = {
+              size = "512M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+              };
+            };
+            root = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+
+  boot.loader.grub = {
+    devices = [ primaryDisk ];
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   system.stateVersion = "22.05";

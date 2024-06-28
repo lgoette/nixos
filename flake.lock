@@ -89,6 +89,26 @@
     "disko": {
       "inputs": {
         "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1719451710,
+        "narHash": "sha256-h+bFEQHQ46pBkEsOXbxmmY6QNPPGrgpDbNlHtAKG49M=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "8767dbf5d723b1b6834f4d09b217da7c31580d58",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
+    "disko_2": {
+      "inputs": {
+        "nixpkgs": [
           "mayniklas",
           "nixpkgs"
         ]
@@ -271,7 +291,7 @@
         "adblock-unbound": "adblock-unbound",
         "adblockStevenBlack": "adblockStevenBlack",
         "attic": "attic",
-        "disko": "disko",
+        "disko": "disko_2",
         "flake-utils": [
           "flake-utils"
         ],
@@ -570,6 +590,7 @@
     },
     "root": {
       "inputs": {
+        "disko": "disko",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "mayniklas": "mayniklas",
