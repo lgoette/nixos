@@ -15,14 +15,14 @@ in {
   config = mkIf cfg.enable (mkMerge [
 
     # This block is always enabled
-    { }
+    {
+      # Disabled since pipewire or jack is used
+      sound.enable = false;
+      hardware.pulseaudio.enable = false;
+    }
 
     # if pro-audio is enabled
     (mkIf cfg.pro-audio {
-
-      # Disabled since jack is used
-      sound.enable = false;
-      hardware.pulseaudio.enable = false;
 
       # Enable sound with jack
       services.jack = {
@@ -60,10 +60,6 @@ in {
 
     # if pro-audio is not enabled
     (mkIf (!cfg.pro-audio) {
-
-      # Disabled since pipewire is used
-      sound.enable = false;
-      hardware.pulseaudio.enable = false;
 
       security.rtkit.enable = true;
 
