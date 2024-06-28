@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, flake-self, ... }:
 with lib;
 let cfg = config.lgoette.sound;
 in {
@@ -13,6 +13,11 @@ in {
       '';
     };
   };
+
+  # import additional modules from flake inputs
+  imports = [
+    flake-self.inputs.musnix.nixosModules.musnix
+  ];
 
   config = mkIf cfg.enable (mkMerge [
 
