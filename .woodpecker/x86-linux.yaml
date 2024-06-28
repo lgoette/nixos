@@ -23,27 +23,6 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.lamafarm.config.system.build.toplevel' -o 'result-lamafarm'"
-      ],
-      "image": "bash",
-      "name": "Build lamafarm"
-    },
-    {
-      "commands": [
-        "nix path-info --closure-size -h $(readlink -f 'result-lamafarm')"
-      ],
-      "image": "bash",
-      "name": "Show lamafarm info"
-    },
-    {
-      "commands": [
-        "attic push lounge-rocks:nix-cache 'result-lamafarm'"
-      ],
-      "image": "bash",
-      "name": "Push lamafarm to Attic"
-    },
-    {
-      "commands": [
         "nix build --print-out-paths '.#nixosConfigurations.Lasse-Laptop.config.system.build.toplevel' -o 'result-Lasse-Laptop'"
       ],
       "image": "bash",
@@ -62,6 +41,48 @@
       ],
       "image": "bash",
       "name": "Push Lasse-Laptop to Attic"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.lamabus.config.system.build.toplevel' -o 'result-lamabus'"
+      ],
+      "image": "bash",
+      "name": "Build lamabus"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-lamabus')"
+      ],
+      "image": "bash",
+      "name": "Show lamabus info"
+    },
+    {
+      "commands": [
+        "attic push lounge-rocks:nix-cache 'result-lamabus'"
+      ],
+      "image": "bash",
+      "name": "Push lamabus to Attic"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.lamafarm.config.system.build.toplevel' -o 'result-lamafarm'"
+      ],
+      "image": "bash",
+      "name": "Build lamafarm"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-lamafarm')"
+      ],
+      "image": "bash",
+      "name": "Show lamafarm info"
+    },
+    {
+      "commands": [
+        "attic push lounge-rocks:nix-cache 'result-lamafarm'"
+      ],
+      "image": "bash",
+      "name": "Push lamafarm to Attic"
     },
     {
       "commands": [
