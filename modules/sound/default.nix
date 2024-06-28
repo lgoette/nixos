@@ -4,14 +4,7 @@ let cfg = config.lgoette.sound;
 in {
   options.lgoette.sound = {
     enable = mkEnableOption "Activate sound with pipewire";
-
-    pro-audio = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Use low latency audio setup with jack instead of pipewire and realtime kernel.
-      '';
-    };
+    pro-audio = mkEnableOption "Use low latency audio setup with jack instead of pipewire and realtime kernel.";
   };
 
   # import additional modules from flake inputs
