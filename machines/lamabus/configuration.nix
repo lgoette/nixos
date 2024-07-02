@@ -121,6 +121,7 @@ in {
       wget
       wineWowPackages.stable
       winePackages.stagingFull
+      airwave
     ];
 
   boot.initrd.availableKernelModules =
