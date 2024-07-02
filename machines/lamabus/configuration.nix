@@ -94,6 +94,12 @@ in {
     user = "lasse";
   };
 
+  security.sudo.extraRules = [
+    { users = [ "lasse" ];
+      options = [ "NOPASSWD" ];
+    }
+  ];
+
   networking = {
     hostName = "lamabus";
     firewall = {
