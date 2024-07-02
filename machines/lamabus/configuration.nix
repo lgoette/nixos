@@ -120,6 +120,7 @@ in {
       nixfmt
       wget
       wineWowPackages.stable
+      winePackages.stagingFull
     ];
 
   boot.initrd.availableKernelModules =
