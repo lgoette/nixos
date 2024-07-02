@@ -1,9 +1,9 @@
+# nix run github:numtide/nixos-anywhere -- --flake .#lamabus root@192.168.0.23
+# nix run .\#lollypops -- lamabus
 { self, ... }:
 { pkgs, config, lib, mayniklas, flake-self, ... }:
-let
-  primaryDisk = "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_250GB_S21PNXAGB12345";
-in
-{
+let primaryDisk = "/dev/disk/by-id/nvme-Samsung_SSD_980_1TB_S649NL0T853248L";
+in {
   imports = [
     ../../users/lasse.nix
     ../../users/root.nix
@@ -104,6 +104,15 @@ in
       nixfmt
       wget
     ];
+
+  lollypops.deployment = {
+    local-evaluation = true;
+    ssh = {
+      user = "root";
+      host = "192.168.0.23";
+      opts = [ "-p 50937" ];
+    };
+  };
 
   # swapfile
   swapDevices = [{

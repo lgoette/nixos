@@ -70,6 +70,13 @@
       };
     };
 
+    # https://github.com/pinpox/lollypops/
+    # NixOS Deployment Tool
+    lollypops = {
+      url = "github:pinpox/lollypops";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs = { self, ... }@inputs:
@@ -162,7 +169,8 @@
             # allows to only pass what is needed to each module.
             specialArgs = { flake-self = self; } // inputs;
 
-            modules = builtins.attrValues self.nixosModules ++ [
+            modules = builtins.attrValues self.nixosModules
+            ++ [ lollypops.nixosModules.lollypops ] ++ [
               {
                 nixpkgs.overlays =
                   [ self.overlays.default mayniklas.overlays.mayniklas ];
@@ -283,6 +291,8 @@
         };
 
         apps = {
+          lollypops =
+            lollypops.apps.${pkgs.system}.default { configFlake = self; };
           # Allow custom packages to be run using `nix run`
           bukkit-spigot =
             flake-utils.lib.mkApp { drv = packages.bukkit-spigot; };
