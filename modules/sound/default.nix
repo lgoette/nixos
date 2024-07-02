@@ -28,7 +28,7 @@ in {
       services.jack = {
         jackd.enable = true;
         # support ALSA only programs via ALSA JACK PCM plugin
-        alsa.enable = false;
+        alsa.enable = true;
         # support ALSA only programs via loopback device (supports programs like Steam)
         loopback = {
           enable = true;
@@ -58,6 +58,7 @@ in {
 
       powerManagement.cpuFreqGovernor = lib.mkDefault "performance"; # Sollte durch Musnix gesetzt worden sein
 
+      services.cron.enable = false;
     })
 
     # if pro-audio is not enabled
