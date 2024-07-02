@@ -106,7 +106,7 @@ in {
     ];
 
   lollypops.deployment = {
-    local-evaluation = true;
+    local-evaluation = false;
     ssh = {
       user = "root";
       host = "192.168.0.23";
