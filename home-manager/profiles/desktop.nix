@@ -44,6 +44,7 @@ with lib; {
       kdePackages.calendarsupport
       kdePackages.konsole
       kdePackages.kcalc
+      kdePackages.partitionmanager
 
       # Development
       arduino
