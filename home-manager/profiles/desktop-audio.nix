@@ -17,6 +17,7 @@ with lib; {
 
       # Audio
       carla
+      qjackctl
 
       # Common
       nfs-utils
