@@ -94,9 +94,13 @@ in {
     user = "lasse";
   };
 
-  security.sudo.extraRules = [
-    { users = [ "lasse" ];
-      options = [ "NOPASSWD" ];
+  security.sudo.extraRules= [
+    {  users = [ "lasse" ];
+      commands = [
+        { command = "ALL" ;
+          options= [ "NOPASSWD" ]; # "SETENV" # Adding the following could be a good idea
+        }
+      ];
     }
   ];
 
