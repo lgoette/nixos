@@ -56,8 +56,7 @@ in {
         };
       };
 
-      # Sollte durch Musnix gesetzt worden sein
-      # powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+      powerManagement.cpuFreqGovernor = lib.mkDefault "performance"; # Sollte durch Musnix gesetzt worden sein
 
     })
 

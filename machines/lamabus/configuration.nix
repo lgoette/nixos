@@ -119,6 +119,7 @@ in {
       git
       nixfmt
       wget
+      wineWowPackages.stable
     ];
 
   boot.initrd.availableKernelModules =
