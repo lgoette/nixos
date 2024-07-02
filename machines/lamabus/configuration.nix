@@ -100,6 +100,7 @@ in {
       enable = false;
       allowedTCPPorts = [ 50937 ];
     };
+    networkmanager.enable = true;
   };
 
   environment.systemPackages = with pkgs;
