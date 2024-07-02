@@ -122,6 +122,7 @@ in {
       wineWowPackages.stable
       winePackages.stagingFull
       airwave
+      jack1
     ];
 
   boot.initrd.availableKernelModules =
