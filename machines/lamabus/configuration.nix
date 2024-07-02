@@ -89,6 +89,11 @@ in {
     }];
   };
 
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "lasse";
+  };
+
   networking = {
     hostName = "lamabus";
     firewall = {
@@ -105,11 +110,15 @@ in {
       wget
     ];
 
+  boot.initrd.availableKernelModules =
+    [ "xhci_pci" "ahci" "nvme" "usbhid" "rtsx_pci_sdmmc" ];
+  boot.kernelModules = [ "kvm-intel" ];
+
   lollypops.deployment = {
     local-evaluation = false;
     ssh = {
       user = "root";
-      host = "192.168.0.23";
+      host = "192.168.0.23"; # Diese ip ist alt
       opts = [ "-p 50937" ];
     };
   };
@@ -164,6 +173,8 @@ in {
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
   system.stateVersion = "22.05";
 
 }

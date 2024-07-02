@@ -56,6 +56,9 @@ in {
         };
       };
 
+      # Sollte durch Musnix gesetzt worden sein
+      # powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+
     })
 
     # if pro-audio is not enabled
