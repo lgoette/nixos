@@ -29,9 +29,9 @@ in {
         jackd.enable = true;
         jackd.extraOptions = [
           "-dalsa" 
-          "--device" "hw:USB"
+          "--device" "hw:0"
           "--rate" "192000"
-          "--period" "32"
+          "--period" "64"
         ];
         # support ALSA only programs via ALSA JACK PCM plugin
         alsa.enable = true;
