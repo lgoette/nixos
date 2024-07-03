@@ -125,6 +125,14 @@ in {
       jack1
     ];
 
+  # Make sure focus rite scarlett 2i2 is always alsa device hw:0
+  # Interface has to be plugged in into usbc port of the intel nuc on the back
+  services.udev.extraRules = ''
+    DEVPATH=="/devices/pci0000:00/0000:00:1c.4/0000:02:00.0/0000:03:02.0/0000:3a:00.0/usb3/3-1/3-1:1.0/sound/card?"
+    ATTR{id}="SCARLETT"
+    ATTR{number}="0"
+  '';
+
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "ahci" "nvme" "usbhid" "rtsx_pci_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" "snd-seq" "snd-rawmidi" ];
