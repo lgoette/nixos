@@ -25,28 +25,24 @@ in {
     (mkIf cfg.pro-audio {
 
       # Enable sound with jack
-      # services.jack = {
-      #   jackd.enable = true;
-      #   # support ALSA only programs via ALSA JACK PCM plugin
-      #   alsa.enable = false;
-      #   # support ALSA only programs via loopback device (supports programs like Steam)
-      #   loopback = {
-      #     enable = true;
-      #     # buffering parameters for dmix device to work with ALSA only semi-professional sound programs
-      #     #dmixConfig = ''
-      #     #  period_size 2048
-      #     #'';
-      #   };
-      # };
-
-      # Enable sound with pipewire
-      services.pipewire = {
-        enable = true;
+      services.jack = {
+        jackd.enable = true;
+        jackd.extraOptions = [
+          "-dalsa" 
+          "--device" "hw:USB"
+          "--rate" "192000"
+          "--period" "32"
+        ];
+        # support ALSA only programs via ALSA JACK PCM plugin
         alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = false;
-        # If you want to use JACK applications, uncomment this
-        jack.enable = true;
+        # support ALSA only programs via loopback device (supports programs like Steam)
+        loopback = {
+          enable = false;
+          # buffering parameters for dmix device to work with ALSA only semi-professional sound programs
+          #dmixConfig = ''
+          #  period_size 2048
+          #'';
+        };
       };
 
       # Prepare system for realtime audio
