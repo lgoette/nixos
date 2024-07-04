@@ -123,6 +123,7 @@ in {
       winePackages.stagingFull
       airwave
       yabridge
+      yabridgectl
       jack1
     ];
 
