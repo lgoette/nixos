@@ -28,7 +28,7 @@ in {
       services.jack = {
         jackd.enable = true;
         jackd.extraOptions = [
-          "-dalsa" 
+          "-dalsa"
           "--device" "hw:0" # I recommend to create a udev rule to make sure interface is always alsa device hw:0
           "--rate" "192000"
           "--period" "64"
