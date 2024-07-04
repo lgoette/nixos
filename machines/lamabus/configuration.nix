@@ -122,6 +122,7 @@ in {
       wineWowPackages.stable
       winePackages.stagingFull
       airwave
+      yabridge
       jack1
     ];
 
