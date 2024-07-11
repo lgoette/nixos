@@ -121,14 +121,29 @@ in {
       wget
       wineWowPackages.stable
       winePackages.stagingFull
-      airwave
+      # airwave
+      carla
       yabridge
       yabridgectl
       jack1
     ];
 
+
+  systemd.services.carla = {
+      wantedBy = [ "jack.service" ];
+      after = [ "jack.service" ];
+      serviceConfig = {
+        User = "lasse";
+        Type = "oneshot";
+        ExecStart = ''
+          ${pkgs.carla}/bin/carla
+        '';
+      };
+    };
+
   # Make sure focus rite scarlett 2i2 is always alsa device hw:0
   # Interface has to be plugged in into usbc port of the intel nuc on the back
+  # TODO: Das funzt noch nicht
   services.udev.extraRules = ''
     DEVPATH=="/devices/pci0000:00/0000:00:1c.4/0000:02:00.0/0000:03:02.0/0000:3a:00.0/usb3/3-1/3-1:1.0/sound/card?"
     ATTR{id}="SCARLETT"
