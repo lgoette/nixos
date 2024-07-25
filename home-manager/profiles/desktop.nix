@@ -67,7 +67,7 @@ with lib; {
       # Media
       spotify
       vlc
-      youtube-dl
+      yt-dlp
       mixxx
 
       # Comunication

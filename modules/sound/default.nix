@@ -17,7 +17,6 @@ in {
     # This block is always enabled
     {
       # Disabled since pipewire or jack is used
-      sound.enable = false;
       hardware.pulseaudio.enable = false;
     }
 
