@@ -94,7 +94,7 @@ in {
     };
 
     # enable alsa
-    sound.enable = true;
+    # sound.enable = true; # sound is depricated
 
     # enable pulseaudio in system-wide mode (because our user has no home directory wich is mandatory for pulses default mode)
     hardware.pulseaudio = {
