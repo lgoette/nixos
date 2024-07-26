@@ -69,7 +69,7 @@ in
       # Media
       spotify
       vlc
-      youtube-dl
+      yt-dlp
       mixxx
 
       # Misc
