@@ -81,7 +81,7 @@ with lib; {
       gimp
 
       # Misc
-      cobang
+      # cobang
       android-tools
       scrcpy
       screenfetch
