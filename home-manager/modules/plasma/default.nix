@@ -160,6 +160,9 @@ in {
         kcminputrc."Libinput/2/7/SynPS\\/2 Synaptics TouchPad".NaturalScroll =
           true;
 
+        # Deactivate "Shake cursor to find it"
+        kwinrc."Plugins"."shakecursorEnabled" = false;
+
         # Custom buttons in window titlebar
         # left: More actions, On all desktops, Keep above other windows
         kwinrc."org.kde.kdecoration2".ButtonsOnLeft = "MSF";
