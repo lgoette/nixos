@@ -85,6 +85,8 @@
       wget
     ];
 
+  boot.initrd.systemd.enableTpm2 = false;
+
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   system.stateVersion = "22.05";
 
