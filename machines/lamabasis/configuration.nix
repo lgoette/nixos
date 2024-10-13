@@ -18,6 +18,25 @@
   #   audio.enable = true;
   # };
 
+  systemd.timers."oracle-cloud" = {
+    wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "1h";
+        OnUnitActiveSec = "1h";
+        Unit = "oracle-cloud.service";
+      };
+  };
+
+  systemd.services."oracle-cloud" = {
+    script = ''
+      exec ${/home/lasse/.oci/createInstance.sh}
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+
   lgoette = {
     home-assistant.enable = true;
     services.librespot = {
