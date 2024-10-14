@@ -29,6 +29,7 @@ in {
         SSH_KEYS_FILE="$(${pkgs.yq}/bin/yq .SSH_KEYS_FILE /var/src/secrets/oracle/config.yaml)"
         # AVAILABILITY_DOMAINS # This Variable is used below
 
+
         # Function to launch instance
         launch_instance() {
             local availability_domain=$1
@@ -39,13 +40,13 @@ in {
                 --subnet-id "$SUBNET_ID" \
                 --assign-private-dns-record true \
                 --assign-public-ip false \
-                --availability-config file:///home/lasse/.oci/availabilityConfig.json \
+                --availability-config "{\"recoveryAction\": \"RESTORE_INSTANCE\"}" \
                 --display-name "$DISPLAY_NAME" \
                 --image-id "$IMAGE_ID" \
-            --boot-volume-size-in-gbs 200 \
-                --instance-options file:///home/lasse/.oci/instanceOptions.json \
-                --shape-config file:///home/lasse/.oci/shapeConfig.json \
-            --ssh-authorized-keys-file "$SSH_KEYS_FILE" 2>&1)
+                --boot-volume-size-in-gbs 200 \
+                --instance-options "{\"areLegacyImdsEndpointsDisabled\": false}" \
+                --shape-config "{\"ocpus\": 4, \"memoryInGBs\": 24}" \
+                --ssh-authorized-keys-file "$SSH_KEYS_FILE" 2>&1)
 
             echo "$output" # Print the output (optional for debugging)
             return $? # Return the exit status
