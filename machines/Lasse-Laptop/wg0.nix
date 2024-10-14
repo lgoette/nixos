@@ -15,11 +15,13 @@
       metric = 650;
       # Path to the private key file
       privateKeyFile = toString /var/src/secrets/wireguard/private;
-      preSetup = let
-        script = pkgs.writeShellScriptBin "pre-script" ''
-          echo "hello world!"
-        '';
-      in "${script}/bin/pre-script";
+      preSetup =
+        let
+          script = pkgs.writeShellScriptBin "pre-script" ''
+            echo "hello world!"
+          '';
+        in
+        "${script}/bin/pre-script";
       #   # Try to access the DNS for up to 300s
       #   for i in {1..300}; do
       #     ${pkgs.iputils}/bin/ping -c1 'lamafarm.lasse-goette.de' && break
@@ -61,12 +63,12 @@
       # after = [ "network.target" ]; # Irgendwie startet Wireguard gar nicht mehr :/
       serviceConfig.ExecStartPre = pkgs.writeScriptBin
         "wireguard-wg0-peer-qBxrUEGSaf-P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA" ''
-          # Try to access the DNS for up to 300s
-          for i in {1..300}; do
-            ${pkgs.iputils}/bin/ping -c1 'lamafarm.lasse-goette.de' && break
-            echo "Attempt $i: DNS still not available"
-            sleep 1s
-          done
-        '';
+        # Try to access the DNS for up to 300s
+        for i in {1..300}; do
+          ${pkgs.iputils}/bin/ping -c1 'lamafarm.lasse-goette.de' && break
+          echo "Attempt $i: DNS still not available"
+          sleep 1s
+        done
+      '';
     };
 }

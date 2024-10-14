@@ -3,7 +3,8 @@ with lib;
 let
   cfg = config.lgoette.wg;
   publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
-in {
+in
+{
   options.lgoette.wg = {
     enable = mkEnableOption "activate wireguard";
     ip = mkOption {

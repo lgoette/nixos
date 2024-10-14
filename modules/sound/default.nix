@@ -28,10 +28,14 @@ in {
         jackd.enable = true;
         jackd.extraOptions = [
           "-dalsa"
-          "--device" "hw:0" # I recommend to create a udev rule to make sure interface is always alsa device hw:0
-          "--rate" "192000"
-          "--period" "64"
-          "--nperiods" "3"
+          "--device"
+          "hw:0" # I recommend to create a udev rule to make sure interface is always alsa device hw:0
+          "--rate"
+          "192000"
+          "--period"
+          "64"
+          "--nperiods"
+          "3"
         ];
         # support ALSA only programs via ALSA JACK PCM plugin
         alsa.enable = true;

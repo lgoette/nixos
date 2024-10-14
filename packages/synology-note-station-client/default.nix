@@ -1,5 +1,16 @@
-{ stdenv, lib, qt5, fetchurl, autoPatchelfHook, dpkg, glibc, cpio, xar, undmg
-, gtk3, pango }:
+{ stdenv
+, lib
+, qt5
+, fetchurl
+, autoPatchelfHook
+, dpkg
+, glibc
+, cpio
+, xar
+, undmg
+, gtk3
+, pango
+}:
 let
   pname = "synology-note-station-client";
   baseUrl =
@@ -74,4 +85,5 @@ let
       cp -R 'Synology Drive Client.app' $out/Applications/
     '';
   };
-in if stdenv.isDarwin then darwin else linux
+in
+if stdenv.isDarwin then darwin else linux

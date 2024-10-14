@@ -69,7 +69,8 @@
       let
         mcVersion = "1.20.2";
         buildNum = "243";
-      in {
+      in
+      {
         version = "${mcVersion}.${buildNum}";
         src = pkgs.fetchurl {
           url =
@@ -151,65 +152,67 @@
     ];
   };
 
-  networking = let
-    uplink_interface = "enp6s18";
-    ip = "192.168.20.75";
-    gateway = "192.168.20.1";
-  in {
-    hostName = "minecraft";
+  networking =
+    let
+      uplink_interface = "enp6s18";
+      ip = "192.168.20.75";
+      gateway = "192.168.20.1";
+    in
+    {
+      hostName = "minecraft";
 
-    dhcpcd.enable = false;
-    enableIPv6 = false;
-    defaultGateway = "${gateway}";
-    nameservers = [ "1.1.1.1" "8.8.8.8" ];
+      dhcpcd.enable = false;
+      enableIPv6 = false;
+      defaultGateway = "${gateway}";
+      nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
-    wireguard.interfaces.wg0 = {
-      ips = [ "10.11.12.8/24" ];
-      mtu = 1412;
-      # Path to the private key file
-      privateKeyFile = "/var/src/secrets/wireguard/private";
-      peers = [{
-        publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
-        allowedIPs = [ "10.11.12.0/24" "0.0.0.0/0" ];
-        # hardcode wireguard endpoint
-        # -> wireguard can be started with no DNS available
-        endpoint = "5.45.108.206:53115";
-        persistentKeepalive = 15;
-      }];
-    };
-
-    interfaces = {
-      ${uplink_interface}.ipv4 = {
-        addresses = [{
-          address = "${ip}";
-          prefixLength = 24;
+      wireguard.interfaces.wg0 = {
+        ips = [ "10.11.12.8/24" ];
+        mtu = 1412;
+        # Path to the private key file
+        privateKeyFile = "/var/src/secrets/wireguard/private";
+        peers = [{
+          publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
+          allowedIPs = [ "10.11.12.0/24" "0.0.0.0/0" ];
+          # hardcode wireguard endpoint
+          # -> wireguard can be started with no DNS available
+          endpoint = "5.45.108.206:53115";
+          persistentKeepalive = 15;
         }];
-        routes = [
-          {
-            address = "5.45.108.206";
-            prefixLength = 32;
-            via = "${gateway}";
-            options = { metric = "0"; };
-          }
-          {
-            address = "10.88.88.0";
-            prefixLength = 24;
-            via = "${gateway}";
-            options = { metric = "202"; };
-          }
-          {
-            address = "192.168.5.0";
-            prefixLength = 24;
-            via = "${gateway}";
-            options = { metric = "202"; };
-          }
-        ];
       };
+
+      interfaces = {
+        ${uplink_interface}.ipv4 = {
+          addresses = [{
+            address = "${ip}";
+            prefixLength = 24;
+          }];
+          routes = [
+            {
+              address = "5.45.108.206";
+              prefixLength = 32;
+              via = "${gateway}";
+              options = { metric = "0"; };
+            }
+            {
+              address = "10.88.88.0";
+              prefixLength = 24;
+              via = "${gateway}";
+              options = { metric = "202"; };
+            }
+            {
+              address = "192.168.5.0";
+              prefixLength = 24;
+              via = "${gateway}";
+              options = { metric = "202"; };
+            }
+          ];
+        };
+      };
+
+      firewall.interfaces.enp6s18.allowedTCPPorts = [ 9100 ];
+
     };
-
-    firewall.interfaces.enp6s18.allowedTCPPorts = [ 9100 ];
-
-  };
 
   environment.systemPackages = with pkgs;
     with pkgs.mayniklas; [

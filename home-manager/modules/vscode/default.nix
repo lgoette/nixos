@@ -13,6 +13,7 @@ in {
 
         brettm12345.nixfmt-vscode
         bbenoist.nix
+        jnoortheen.nix-ide
 
         gruntfuggly.todo-tree
         editorconfig.editorconfig

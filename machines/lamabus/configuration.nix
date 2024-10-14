@@ -94,11 +94,13 @@ in {
     user = "lasse";
   };
 
-  security.sudo.extraRules= [
-    {  users = [ "lasse" ];
+  security.sudo.extraRules = [
+    {
+      users = [ "lasse" ];
       commands = [
-        { command = "ALL" ;
-          options= [ "NOPASSWD" ]; # "SETENV" # Adding the following could be a good idea
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" ]; # "SETENV" # Adding the following could be a good idea
         }
       ];
     }
@@ -130,22 +132,22 @@ in {
 
 
   systemd.user.services.carla = {
-      wantedBy = [ "default.target" "graphical-session.target" ];
-      environment.DISPLAY = ":0";
-      environment.WAYLAND_DISPLAY = "wayland-0";
-      environment.DEBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus";
-      environment.QT_QPA_PLATFORM = "wayland";
-      environment.XDG_RUNTIME_DIR = "/run/user/1000";
-      after = [ "jack.service" ];
-      serviceConfig = {
-        # User = "lasse";
-        Type = "exec";
-        #WorkingDirectory = "/home/lasse";
-        ExecStart = ''
-          ${pkgs.carla}/bin/carla ~/.carla/default.carxp
-        '';
-      };
+    wantedBy = [ "default.target" "graphical-session.target" ];
+    environment.DISPLAY = ":0";
+    environment.WAYLAND_DISPLAY = "wayland-0";
+    environment.DEBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus";
+    environment.QT_QPA_PLATFORM = "wayland";
+    environment.XDG_RUNTIME_DIR = "/run/user/1000";
+    after = [ "jack.service" ];
+    serviceConfig = {
+      # User = "lasse";
+      Type = "exec";
+      #WorkingDirectory = "/home/lasse";
+      ExecStart = ''
+        ${pkgs.carla}/bin/carla ~/.carla/default.carxp
+      '';
     };
+  };
 
   # Make sure focus rite scarlett 2i2 is always alsa device hw:0
   # Interface has to be plugged in into usbc port of the intel nuc on the back

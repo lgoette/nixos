@@ -176,13 +176,15 @@ in {
 
         # Set the Lock Screen wallpaper
         kscreenlockerrc = {
-          "Greeter/Wallpaper/org.kde.image/General" = let
-            image =
-              "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images/5120x2880.png";
-          in {
-            Image = image;
-            PreviewImage = image;
-          };
+          "Greeter/Wallpaper/org.kde.image/General" =
+            let
+              image =
+                "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images/5120x2880.png";
+            in
+            {
+              Image = image;
+              PreviewImage = image;
+            };
         };
       };
     };

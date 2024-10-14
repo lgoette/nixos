@@ -18,6 +18,7 @@ with lib; {
     home.packages = with pkgs; [
 
       # Common
+      nil
       nfs-utils
       samba
       pavucontrol
