@@ -20,7 +20,10 @@ in {
 
     systemd.services."oracle-cloud-instance-launcher" = {
       script = ''
+        # Make shure, you have a "config" file and api-key certificate in /root/.oci/
+        # Also be aware that the oci-cli package wants a .pub filetype as an ssh key file
         # Variables defined in /var/src/secrets/oracle/config.yaml
+        
         COMPARTMENT_ID=$(${pkgs.yq}/bin/yq .COMPARTMENT_ID /var/src/secrets/oracle/config.yaml | xargs)
         SHAPE=$(${pkgs.yq}/bin/yq .SHAPE /var/src/secrets/oracle/config.yaml | xargs)
         SUBNET_ID=$(${pkgs.yq}/bin/yq .SUBNET_ID /var/src/secrets/oracle/config.yaml | xargs)
