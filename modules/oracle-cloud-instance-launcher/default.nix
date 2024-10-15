@@ -12,8 +12,8 @@ in {
     systemd.timers."oracle-cloud-instance-launcher" = {
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnBootSec = "1h";
-        OnUnitActiveSec = "1h";
+        OnBootSec = "20m";
+        OnUnitActiveSec = "20m";
         Unit = "oracle-cloud-instance-launcher.service";
       };
     };
@@ -23,7 +23,7 @@ in {
         # Make shure, you have a "config" file and api-key certificate in /root/.oci/
         # Also be aware that the oci-cli package wants a .pub filetype as an ssh key file
         # Variables defined in /var/src/secrets/oracle/config.yaml
-        
+
         COMPARTMENT_ID=$(${pkgs.yq}/bin/yq .COMPARTMENT_ID /var/src/secrets/oracle/config.yaml | xargs)
         SHAPE=$(${pkgs.yq}/bin/yq .SHAPE /var/src/secrets/oracle/config.yaml | xargs)
         SUBNET_ID=$(${pkgs.yq}/bin/yq .SUBNET_ID /var/src/secrets/oracle/config.yaml | xargs)
