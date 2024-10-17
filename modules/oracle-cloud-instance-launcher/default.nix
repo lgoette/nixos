@@ -12,8 +12,8 @@ in {
     systemd.timers."oracle-cloud-instance-launcher" = {
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnBootSec = "20m";
-        OnUnitActiveSec = "20m";
+        OnBootSec = "10m";
+        OnUnitActiveSec = "10m";
         Unit = "oracle-cloud-instance-launcher.service";
       };
     };
