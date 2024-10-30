@@ -29,11 +29,11 @@ in {
         jackd.extraOptions = [
           "-dalsa"
           "--device"
-          "hw:0" # I recommend to create a udev rule to make sure interface is always alsa device hw:0
+          "hw:SCARLETT" # Use focusrite scarlett interface id set with udev rule
           "--rate"
           "192000"
           "--period"
-          "64"
+          "1024"
           "--nperiods"
           "3"
         ];
@@ -48,6 +48,13 @@ in {
           #'';
         };
       };
+
+      # Set alsa device id of focusrite scarlett interfaces persistent to hw:SCARLETT
+      # Also Jack will be restarted if the device is plugged in
+      # This makes sure jack uses always the focusrite interface because hw:SCARLETT is set in jackd.extraOptions
+      services.udev.extraRules = ''
+        ATTRS{manufacturer}=="Focusrite", ATTRS{product}=="Scarlett*", KERNEL=="card*", SUBSYSTEM=="sound", ATTR{id}="SCARLETT", SYMLINK+="sound/scarlett", RUN+="${pkgs.systemd}/bin/systemctl restart jack.service"
+      '';
 
       # Prepare system for realtime audio
       musnix = {
