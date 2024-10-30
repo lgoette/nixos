@@ -75,7 +75,7 @@ with lib; {
       signal-desktop
       tdesktop
       discord
-      element
+      element-desktop
 
       # Creativity
       blender
