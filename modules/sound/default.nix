@@ -49,6 +49,10 @@ in {
         };
       };
 
+      # Disable pipewire because it prevents jack taking control of the soundcard
+      # If you want to use it, to have sound outside of jack applications, you should disable your interface with pavucontrol or similar
+      services.pipewire.enable = false;
+
       # Set alsa device id of focusrite scarlett interfaces persistent to hw:SCARLETT
       # Also Jack will be restarted if the device is plugged in
       # This makes sure jack uses always the focusrite interface because hw:SCARLETT is set in jackd.extraOptions
