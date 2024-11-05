@@ -138,15 +138,17 @@ in {
     environment.DEBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus";
     environment.QT_QPA_PLATFORM = "wayland";
     environment.XDG_RUNTIME_DIR = "/run/user/1000";
-    after = [ "jack.service" ];
+    after = [ "multi-user.target" "jack.service" ];
+    path = [ "${pkgs.yabridge}" ];
     serviceConfig = {
       # User = "lasse";
       Type = "exec";
       #WorkingDirectory = "/home/lasse";
-      ExecStart = ''
-        ${pkgs.carla}/bin/carla ~/.carla/default.carxp
-      '';
+      ExecStop = "${pkgs.systemd}/bin/systemctl --user stop carla";
     };
+    script = ''
+      ${pkgs.carla}/bin/carla ~/.carla/default.carxp
+    '';
   };
 
   boot.initrd.availableKernelModules =
