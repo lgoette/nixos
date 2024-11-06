@@ -130,7 +130,6 @@ in {
       jack1
     ];
 
-
   systemd.user.services.carla = {
     wantedBy = [ "default.target" "graphical-session.target" ];
     environment.DISPLAY = ":0";
@@ -138,13 +137,13 @@ in {
     environment.DEBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus";
     environment.QT_QPA_PLATFORM = "wayland";
     environment.XDG_RUNTIME_DIR = "/run/user/1000";
-    after = [ "multi-user.target" "jack.service" ];
+    after = [ "plasma-workspace-wayland.target" "jack.service" ];
     path = [ "${pkgs.yabridge}" ];
     serviceConfig = {
       # User = "lasse";
       Type = "exec";
       #WorkingDirectory = "/home/lasse";
-      ExecStop = "${pkgs.systemd}/bin/systemctl --user stop carla";
+      ExecStop = "${pkgs.killall}/bin/killall -9 -r .*winedevice.exe";
     };
     script = ''
       ${pkgs.carla}/bin/carla ~/.carla/default.carxp
