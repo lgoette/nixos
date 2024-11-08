@@ -50,7 +50,7 @@ with lib; {
       # Development
       arduino
       (python3.withPackages
-        (ps: with ps; [ pip requests numpy matplotlib jupyter notebook ]))
+        (ps: with ps; [ pip requests numpy matplotlib jupyter notebook scipy ]))
       # postman
 
       # Office
