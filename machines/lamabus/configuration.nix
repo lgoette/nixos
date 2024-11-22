@@ -150,6 +150,14 @@ in {
     '';
   };
 
+  # Disable sleep modes
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=no
+    AllowHibernation=no
+    AllowHybridSleep=no
+    AllowSuspendThenHibernate=no
+  '';
+
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "ahci" "nvme" "usbhid" "rtsx_pci_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" "snd-seq" "snd-rawmidi" ];

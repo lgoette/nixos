@@ -23,7 +23,10 @@ with lib;
     # };
 
     lasse = {
-      programs.plasma.enable = true;
+      programs.plasma = {
+        enable = true;
+        pro-audio = true;
+      };
       programs.git.enable = true;
     };
 
