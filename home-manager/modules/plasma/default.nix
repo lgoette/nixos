@@ -105,7 +105,6 @@ in {
                     "applications:carla.desktop"
                     "applications:org.rncbc.qjackctl.desktop"
                     "applications:vu.b4.alsa-scarlett-gui.desktop"
-                    "applications:code.desktop"
                   ];
                 };
               }
