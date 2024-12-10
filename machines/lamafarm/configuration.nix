@@ -88,11 +88,19 @@
       wg-friendly-peer-names
     ];
 
+  # During boot, resize the root partition to the size of the disk.
+  # This makes upgrading the size of the vDisk easier.
+  fileSystems."/".autoResize = true;
+  boot.growPartition = true;
+
   # swapfile
   swapDevices = [{
     device = "/var/swapfile";
     size = (1024 * 2);
   }];
+
+  # Use KVM / QEMU
+  services.qemuGuest.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   system.stateVersion = "22.05";
