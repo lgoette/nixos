@@ -57,6 +57,12 @@ in {
         [ "--privileged" "--network=host" ]; # "--restart=unless-stopped"
     };
 
+    # Enable esphome
+    services.esphome = {
+      enable = true;
+      openFirewall = true;
+    };
+
     # Enable mosquitto MQTT broker
     services.mosquitto = {
       enable = true;

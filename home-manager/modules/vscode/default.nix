@@ -15,6 +15,8 @@ in {
         bbenoist.nix
         jnoortheen.nix-ide
 
+        golang.go
+
         gruntfuggly.todo-tree
         editorconfig.editorconfig
         james-yu.latex-workshop
