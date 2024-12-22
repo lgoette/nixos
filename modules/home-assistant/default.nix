@@ -136,8 +136,8 @@ in {
 
       allowedTCPPorts = [ 1883 8123 ];
 
-      # Expose home-assitant to the wireguard network
-      interfaces.wg0.allowedTCPPorts = [ 8123 ];
+      # Expose home-assitant and esphome to the wireguard network
+      interfaces.wg0.allowedTCPPorts = [ 8123 6052 ];
     };
   };
 }
