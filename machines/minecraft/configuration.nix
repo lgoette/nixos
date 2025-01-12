@@ -75,7 +75,7 @@
         src = pkgs.fetchurl {
           url =
             "https://api.papermc.io/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
-          hash = "sha256-rJSgspLZz6LVGfeOuadCtL9Y4PKgrturfzOFzfxs540=";
+          hash = "sha256-33oQsflEKB3fCQdv457VZgSqSmbs1CH+6j9vC1mA0YM=";
         };
       });
     dataDir = "/var/lib/minecraft";
