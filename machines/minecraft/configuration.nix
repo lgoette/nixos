@@ -67,14 +67,14 @@
     # We are overriding the version from the repositories to use the latest version.
     package = pkgs.papermc.overrideAttrs (finalAttrs: previousAttrs:
       let
-        mcVersion = "1.20.2";
-        buildNum = "243";
+        mcVersion = "1.21.4";
+        buildNum = "100";
       in
       {
         version = "${mcVersion}.${buildNum}";
         src = pkgs.fetchurl {
           url =
-            "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
+            "https://api.papermc.io/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
           hash = "sha256-rJSgspLZz6LVGfeOuadCtL9Y4PKgrturfzOFzfxs540=";
         };
       });
