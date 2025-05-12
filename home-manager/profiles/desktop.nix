@@ -29,6 +29,7 @@ with lib; {
       nmap
       traceroute
       remmina
+      parsec-bin
       # barrier # TODO: Keyboard is us instead of de when starting input-leap
       input-leap
       yubioath-flutter
@@ -84,16 +85,18 @@ with lib; {
 
       # Misc
       # cobang
+      croc
       android-tools
       scrcpy
       screenfetch
 
       # Uni
+      pomodoro-gtk
       gcc
+      anki
 
       #mayniklas
       mayniklas.drone-gen
-      mayniklas.vs-fix
     ];
 
   };

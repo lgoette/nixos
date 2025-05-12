@@ -18,7 +18,6 @@ with lib; {
       mcrcon
 
       #mayniklas
-      mayniklas.vs-fix
     ];
 
   };

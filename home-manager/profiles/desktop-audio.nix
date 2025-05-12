@@ -80,7 +80,6 @@ with lib;
       #mayniklas
       mayniklas.drone-gen
       mayniklas.set-performance
-      mayniklas.vs-fix
     ];
     # ++ plugins;
 

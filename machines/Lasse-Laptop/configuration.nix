@@ -47,7 +47,10 @@
 
   networking = {
     hostName = "Lasse-Laptop";
-    firewall = { enable = true; };
+    firewall = { 
+      enable = true;
+      allowedTCPPorts = [ 5173 ];
+    };
     # Enable networkmanager
     networkmanager.enable = true;
   };
