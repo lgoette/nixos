@@ -23,7 +23,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.lamabasis.config.system.build.toplevel' -o 'result-lamabasis'"
+        "nix build --print-out-paths '.#nixosConfigurations.lamabasis.config.system.build.toplevel' -o 'result-lamabasis' -v"
       ],
       "image": "bash",
       "name": "Build lamabasis"
@@ -44,7 +44,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.lamaoutpost.config.system.build.toplevel' -o 'result-lamaoutpost'"
+        "nix build --print-out-paths '.#nixosConfigurations.lamaoutpost.config.system.build.toplevel' -o 'result-lamaoutpost' -v"
       ],
       "image": "bash",
       "name": "Build lamaoutpost"
@@ -65,7 +65,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.pi4b.config.system.build.toplevel' -o 'result-pi4b'"
+        "nix build --print-out-paths '.#nixosConfigurations.pi4b.config.system.build.toplevel' -o 'result-pi4b' -v"
       ],
       "image": "bash",
       "name": "Build pi4b"
