@@ -23,7 +23,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.Lasse-Laptop.config.system.build.toplevel' -o 'result-Lasse-Laptop'"
+        "nix build --print-out-paths '.#nixosConfigurations.Lasse-Laptop.config.system.build.toplevel' -o 'result-Lasse-Laptop' -v"
       ],
       "image": "bash",
       "name": "Build Lasse-Laptop"
@@ -44,7 +44,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.lamabus.config.system.build.toplevel' -o 'result-lamabus'"
+        "nix build --print-out-paths '.#nixosConfigurations.lamabus.config.system.build.toplevel' -o 'result-lamabus' -v"
       ],
       "image": "bash",
       "name": "Build lamabus"
@@ -65,7 +65,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.lamafarm.config.system.build.toplevel' -o 'result-lamafarm'"
+        "nix build --print-out-paths '.#nixosConfigurations.lamafarm.config.system.build.toplevel' -o 'result-lamafarm' -v"
       ],
       "image": "bash",
       "name": "Build lamafarm"
@@ -86,7 +86,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.minecraft.config.system.build.toplevel' -o 'result-minecraft'"
+        "nix build --print-out-paths '.#nixosConfigurations.minecraft.config.system.build.toplevel' -o 'result-minecraft' -v"
       ],
       "image": "bash",
       "name": "Build minecraft"
