@@ -34,8 +34,8 @@ in {
       # unifiPackage = (pkgs.callPackages ../../packages/unifi { }).unifi7;
 
       # -> use newest package in NixPkgs
-      unifiPackage = pkgs.unifi8;
-      mongodbPackage = pkgs.mongodb-7_0;
+      unifiPackage = pkgs.unifi;
+      mongodbPackage = pkgs.mongodb;
       openFirewall = false;
     };
 
