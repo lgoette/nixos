@@ -31,7 +31,7 @@ with lib; {
       remmina
       parsec-bin
       # barrier # TODO: Keyboard is us instead of de when starting input-leap
-      input-leap
+      # input-leap # Fails to build
       yubioath-flutter
 
       # Kde

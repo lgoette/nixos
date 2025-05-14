@@ -49,7 +49,7 @@ with lib;
       traceroute
       remmina
       # barrier # TODO: Keyboard is us instead of de when starting input-leap
-      input-leap # TODO: not working an wayland rightnow [wait for kde 6.1 (Tue 2024-06-18)] (https://invent.kde.org/plasma/xdg-desktop-portal-kde/-/issues/12; https://community.kde.org/Schedules/Plasma_6)
+      # input-leap # TODO: not working an wayland rightnow [wait for kde 6.1 (Tue 2024-06-18)] (https://invent.kde.org/plasma/xdg-desktop-portal-kde/-/issues/12; https://community.kde.org/Schedules/Plasma_6)
       yubioath-flutter
 
       # Kde
