@@ -47,7 +47,7 @@
 
   networking = {
     hostName = "Lasse-Laptop";
-    firewall = { 
+    firewall = {
       enable = true;
       allowedTCPPorts = [ 5173 ];
     };
@@ -97,6 +97,7 @@
       [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-intel" ];
     supportedFilesystems = [ "ntfs" ];
+    binfmt.emulatedSystems = [ "aarch64-linux" ]; # allows building ARM stuff
   };
 
   fileSystems."/" = {
