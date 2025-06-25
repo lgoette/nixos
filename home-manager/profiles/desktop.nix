@@ -94,7 +94,7 @@ with lib; {
       pomodoro-gtk
       gcc
       anki
-      texlivePackages.latexmk
+      texliveFull
 
       #mayniklas
       mayniklas.drone-gen
