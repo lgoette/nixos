@@ -85,6 +85,10 @@
       wget
     ];
 
+  lollypops.deployment = {
+    local-evaluation = true;
+  };
+
   boot.initrd.systemd.enableTpm2 = false;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";

@@ -78,6 +78,9 @@
   # Enable pcscd for yubikey support
   services.pcscd.enable = true;
 
+  # Trackpad, Trackpoint and mouse options
+  services.xserver.libinput.enable = true;
+
   # fileSystems."/" = {
   #  device = "/dev/disk/by-label/nixos";
   #   autoResize = true;
