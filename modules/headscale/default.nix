@@ -31,7 +31,7 @@ in {
       port = 443;
       settings = {
         server_url = "https://${cfg.domain}";
-        dns.baseDomain = "tailnet.local";
+        dns.base_domain = "tailnet.local";
       };
     };
 
