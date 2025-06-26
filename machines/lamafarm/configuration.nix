@@ -16,6 +16,11 @@
       domain = "unifi.lasse-goette.de";
     };
 
+    headscale-controller = {
+      enable = true;
+      domain = "tailscale.lasse-goette.de";
+    };
+
   };
 
   mayniklas = {
