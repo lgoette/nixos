@@ -24,6 +24,7 @@ in {
       allowedTCPPorts = [ 443 ];
     };
 
+    # Enable headscale service
     services.headscale = {
       enable = true;
       address = "0.0.0.0";
@@ -33,6 +34,7 @@ in {
       settings = { logtail.enabled = false; };
     };
 
+    # Setup NGINX to proxy requests to headscale
     nginx = {
       enable = true;
       virtualHosts = {
@@ -47,7 +49,10 @@ in {
         };
       };
     };
+
+    # Enable the headscale CLI tool
+    environment.systemPackages = [ config.services.headscale.package ];
+
   };
 
-  environment.systemPackages = [ config.services.headscale.package ];
 }
