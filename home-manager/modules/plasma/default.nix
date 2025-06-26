@@ -188,7 +188,7 @@ in {
                       "org.kde.konsole.desktop"
                       "org.kde.plasma-systemmonitor.desktop"
                       "systemsettings.desktop"
-                      "applications:com.yubico.authenticator.desktop"
+                      "applications:yubioath.desktop"
                     ];
                   };
                 };
@@ -204,8 +204,8 @@ in {
                     "applications:org.kde.konsole.desktop"
                     "applications:firefox.desktop"
                     "applications:thunderbird.desktop"
-                    "applications:signal-desktop.desktop"
-                    "applications:com.yubico.authenticator.desktop"
+                    "applications:signal.desktop"
+                    "applications:com.yubioath.desktop"
                     "applications:code.desktop"
                   ];
                 };
