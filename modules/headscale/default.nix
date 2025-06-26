@@ -17,21 +17,24 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # TCP 443 -> Headscale is served via HTTPS on port 443
+    # TCP 8443 -> Headscale is served via HTTPS on port 8080
 
     # Open firewall ports
     networking.firewall = {
-      allowedTCPPorts = [ 443 ];
+      allowedTCPPorts = [ 4443 ];
     };
 
     # Enable headscale service
     services.headscale = {
       enable = true;
       address = "0.0.0.0";
-      port = 443;
+      port = 4443;
       settings = {
         server_url = "https://${cfg.domain}";
-        dns.base_domain = "tailnet.local";
+        dns = {
+          base_domain = "tailnet.local";
+          nameservers.global = [ "1.1.1.1" "8.8.8.8"];
+        };
       };
     };
 
