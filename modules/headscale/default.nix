@@ -35,7 +35,7 @@ in {
     };
 
     # Setup NGINX to proxy requests to headscale
-    nginx = {
+    services.nginx = {
       enable = true;
       virtualHosts = {
         "${cfg.domain}" = {
