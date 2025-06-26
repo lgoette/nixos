@@ -29,7 +29,7 @@ in {
       address = "0.0.0.0";
       port = 443;
       server_url = "https://${cfg.domain}";
-      dns = { baseDomain = "tailnet.lasse-goette.de"; };
+      dns = { baseDomain = "tailnet.local"; };
       settings = { logtail.enabled = false; };
     };
 
