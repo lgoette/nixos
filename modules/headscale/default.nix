@@ -29,9 +29,10 @@ in {
       enable = true;
       address = "0.0.0.0";
       port = 443;
-      server_url = "https://${cfg.domain}";
-      dns = { baseDomain = "tailnet.local"; };
-      settings = { logtail.enabled = false; };
+      settings = {
+        server_url = "https://${cfg.domain}";
+        dns.baseDomain = "tailnet.local";
+      };
     };
 
     # Setup NGINX to proxy requests to headscale
