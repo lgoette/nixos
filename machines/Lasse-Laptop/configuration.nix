@@ -45,6 +45,16 @@
     users.lasse = flake-self.homeConfigurations.desktop;
   };
 
+  # Enable tailscale vpn
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+    extraUpFlags = [
+      "--login-server=https://tailscale.lasse-goette.de:4443/"
+      "--operator=lasse"
+    ];
+  };
+
   networking = {
     hostName = "Lasse-Laptop";
     firewall = {

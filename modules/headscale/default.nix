@@ -21,7 +21,7 @@ in {
 
     # Open firewall ports
     networking.firewall = {
-      allowedTCPPorts = [ 4443 ];
+      allowedTCPPorts = [ config.services.headscale.port ];
     };
 
     # Enable headscale service

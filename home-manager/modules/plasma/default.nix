@@ -190,7 +190,7 @@ in {
                       "org.kde.konsole.desktop"
                       "org.kde.plasma-systemmonitor.desktop"
                       "systemsettings.desktop"
-                      "applications:yubioath.desktop"
+                      "applications:com.yubico.yubioath.desktop"
                     ];
                   };
                 };
@@ -207,7 +207,7 @@ in {
                     "applications:firefox.desktop"
                     "applications:thunderbird.desktop"
                     "applications:signal.desktop"
-                    "applications:com.yubioath.desktop"
+                    "applications:com.yubico.yubioath.desktop"
                     "applications:code.desktop"
                   ];
                 };

@@ -59,6 +59,16 @@
     users.lasse = flake-self.homeConfigurations.server;
   };
 
+  # Enable tailscale vpn
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
+    extraUpFlags = [
+      "--login-server=https://tailscale.lasse-goette.de:4443/"
+      "--advertise-exit-node"
+    ];
+  };
+
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;

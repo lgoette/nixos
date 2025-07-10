@@ -33,6 +33,7 @@ with lib; {
       # barrier # TODO: Keyboard is us instead of de when starting input-leap
       # input-leap # Fails to build
       yubioath-flutter
+      tailscale-systray
 
       # Kde
       kdePackages.dolphin

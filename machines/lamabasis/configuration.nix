@@ -66,6 +66,16 @@
     openssh.authorizedKeys.keys = [ ];
   };
 
+  # Enable tailscale vpn
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
+    extraUpFlags = [
+      "--login-server=https://tailscale.lasse-goette.de:4443/"
+      "--advertise-exit-node"
+    ];
+  };
+
   # give root access to pulse (for example to use pamix)
   # Pulse is enabled in systemwide mode in the librespot module configuration
   users.users.root = { extraGroups = [ "audio" "pulse-access" ]; };
