@@ -18,7 +18,8 @@
 
     headscale-controller = {
       enable = true;
-      domain = "tailscale.lasse-goette.de";
+      headscale-domain = "headscale.lasse-goette.de";
+      headplane-domain = "tailscale.lasse-goette.de";
     };
 
   };
