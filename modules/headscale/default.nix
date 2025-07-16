@@ -38,6 +38,24 @@ in {
       };
     };
 
+    # enable headplane (headscale ui)
+    services.headplane = {
+      enable = true;
+      settings = {
+        server = {
+          host = "0.0.0.0";
+          port = 3000;
+          # cookie_secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+          cookie_secure = true;
+        };
+        headscale = {
+          url = "https://${cfg.domain}";
+
+          config_strict = true;
+        };
+      };
+    }
+
     # Setup NGINX to proxy requests to headscale
     services.nginx = {
       enable = true;
