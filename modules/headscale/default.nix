@@ -54,7 +54,7 @@ in {
           config_strict = true;
         };
       };
-    }
+    };
 
     # Setup NGINX to proxy requests to headscale
     services.nginx = {
