@@ -33,7 +33,7 @@ in {
 
     # Open firewall ports
     networking.firewall = {
-      allowedTCPPorts = [ config.services.headscale.port config.services.headplane.settings.server.port ];
+      allowedTCPPorts = [ 80 443 config.services.headscale.port config.services.headplane.settings.server.port ];
     };
 
     # Enable headscale service
