@@ -53,7 +53,9 @@ in {
     # enable headplane (headscale ui)
     services.headplane = {
       enable = true;
-      # agent = {}; # Agent später noch testen um mehr Infos über Nodes zu bekommen
+      agent = { # Agent später noch testen um mehr Infos über Nodes zu bekommen
+        enable = false;
+      };
       settings = {
         server = {
           host = "0.0.0.0";
