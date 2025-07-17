@@ -180,7 +180,7 @@
             ++ [ lollypops.nixosModules.lollypops ] ++ [
               {
                 nixpkgs.overlays =
-                  [ self.overlays.default mayniklas.overlays.mayniklas ];
+                  [ self.overlays.default mayniklas.overlays.mayniklas headplane.overlays.default ];
               }
               (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
             ];
@@ -263,7 +263,7 @@
       let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ self.overlays.default mayniklas.overlays.mayniklas ];
+          overlays = [ self.overlays.default mayniklas.overlays.mayniklas headplane.overlays.default ];
           config = {
             allowUnsupportedSystem = true;
             allowUnfree = true;

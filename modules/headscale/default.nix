@@ -8,10 +8,6 @@ in {
     flake-self.inputs.headplane.nixosModules.headplane
   ];
 
-  pkgs.overlays = [
-    flake-self.inputs.headplane.overlays.default
-  ];
-
   options.lgoette.headscale-controller = {
 
     enable = mkEnableOption "enable headscale control server";
