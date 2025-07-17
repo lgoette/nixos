@@ -60,7 +60,7 @@
     enable = true;
     useRoutingFeatures = "server";
     extraUpFlags = [
-      "--login-server=https://tailscale.lasse-goette.de:4443/"
+      "--login-server=https://headscale.lasse-goette.de:4443/"
       "--advertise-exit-node"
     ];
   };
