@@ -70,10 +70,10 @@
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "server";
-    extraUpFlags = [
-      "--login-server=https://tailscale.lasse-goette.de:4443/"
-      "--advertise-exit-node"
-    ];
+  #  extraUpFlags = [
+  #    "--login-server=https://tailscale.lasse-goette.de:4443/"
+  #    "--advertise-exit-node"
+  #  ];
   };
 
   # give root access to pulse (for example to use pamix)
@@ -175,6 +175,13 @@
       wget
       pamix
     ];
+
+  # Disable all status-leds on Pi
+  hardware.raspberry-pi."4".leds = {
+    eth.disable = true;
+    act.disable = true;
+    pwr.disable = true;
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   system.stateVersion = "22.05";

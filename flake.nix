@@ -112,7 +112,7 @@
               };
             };
           };
-          hardware = { raspberry-pi."4".poe-hat.enable = true; };
+          # hardware = { raspberry-pi."4".poe-hat.enable = true; }; # Not compatible with led configuration -> Add in machine-config
           # Assuming this is installed on top of the disk image.
           fileSystems = {
             "/" = {
