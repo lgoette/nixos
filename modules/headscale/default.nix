@@ -50,6 +50,9 @@ in {
       };
     };
 
+    # systemd.services.headplane.serviceConfig.EnvironmentFile = "/etc/headplane/env";
+    # environment.etc."headplane/env".source = "/var/src/secret/headplane/headplane_env";
+
     # enable headplane (headscale ui)
     services.headplane = {
       enable = true;
@@ -60,7 +63,8 @@ in {
         server = {
           host = "0.0.0.0";
           port = 3000;
-          # cookie_secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+          # cookie_secret = "$COOKIE_SECRET";
+          cookie_secret_path = "/var/src/secret/headplane/cookie_secret";
           cookie_secure = true;
         };
         headscale = {

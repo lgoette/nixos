@@ -59,7 +59,8 @@
     # https://github.com/tale/headplane/
     # Headscale UI
     headplane = {
-      url = "github:tale/headplane";
+      # url = "github:tale/headplane";
+      url = "github:StealthBadger747/headplane/erikp/implement-path-loading-round-2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
