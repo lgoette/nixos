@@ -64,7 +64,7 @@ in {
           host = "0.0.0.0";
           port = 3000;
           # cookie_secret = "$COOKIE_SECRET";
-          cookie_secret_path = "/var/src/secret/headplane/cookie_secret";
+          cookie_secret_path = "/var/src/secrets/headplane/cookie_secret";
           cookie_secure = true;
         };
         headscale = {
