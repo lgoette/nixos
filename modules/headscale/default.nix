@@ -19,17 +19,9 @@ in {
       description = "(Sub-) domain for headscale.";
     };
 
-    headplane-domain = mkOption {
-      type = types.str;
-      default = "tailscale.lasse-goette.de";
-      example = "headplane.example.com";
-      description = "(Sub-) domain for headplane ui.";
-    };
-
   };
 
   config = mkIf cfg.enable {
-    # TCP 8443 -> Headscale is served via HTTPS on port 8080
 
     # Open firewall ports
     networking.firewall = {
@@ -94,19 +86,26 @@ in {
         "${cfg.headscale-domain}" = {
           forceSSL = true;
           enableACME = true;
-          locations."/" = {
-            proxyPass =
-              "http://127.0.0.1:${toString config.services.headscale.port}";
-            proxyWebsockets = true;
-          };
-        };
-        "${cfg.headplane-domain}" = {
-          forceSSL = true;
-          enableACME = true;
-          locations."/" = {
-            proxyPass =
-              "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
-            proxyWebsockets = true;
+          locations = {
+            "/" = {
+              proxyPass =
+                "http://127.0.0.1:${toString config.services.headscale.port}";
+              proxyWebsockets = true;
+            };
+
+            "/admin/" = {
+              proxyPass =
+                "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
+              proxyWebsockets = true;
+
+              # Pfad anpassen, damit headplane korrekt funktioniert
+              extraConfig = ''
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+              '';
+            };
           };
         };
       };
