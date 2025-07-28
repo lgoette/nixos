@@ -50,7 +50,7 @@
     enable = true;
     useRoutingFeatures = "client";
     extraUpFlags = [
-      "--login-server=https://headscale.lasse-goette.de:4443/"
+      "--login-server=https://tailscale.lasse-goette.de/"
       "--operator=lasse"
     ];
   };
