@@ -64,7 +64,7 @@
     ];
     extraSetFlags = [
       "--advertise-exit-node"
-    ];  
+    ];
   };
 
   # Enable the OpenSSH daemon.
