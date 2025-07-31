@@ -46,11 +46,14 @@
   };
 
   # Enable tailscale vpn
+  # Start with `tailscale up --login-server=https://tailscale.lasse-goette.de/`
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client";
     extraUpFlags = [
       "--login-server=https://tailscale.lasse-goette.de/"
+    ];
+    extraSetFlags = [
       "--operator=lasse"
     ];
   };

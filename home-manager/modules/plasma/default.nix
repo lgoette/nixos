@@ -241,6 +241,7 @@ in {
                       "Wallet Manager"
                       "KDE Daemon"
                       "The KDE Crash Handler"
+                      "dev.deedles.Trayscale"
                     ];
                   };
                 };

@@ -67,13 +67,16 @@
   };
 
   # Enable tailscale vpn
+  # Start with `tailscale up "--login-server=https://tailscale.lasse-goette.de/"`
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "server";
-  #  extraUpFlags = [
-  #    "--login-server=https://tailscale.lasse-goette.de:4443/"
-  #    "--advertise-exit-node"
-  #  ];
+    extraUpFlags = [
+      "--login-server=https://tailscale.lasse-goette.de/"
+    ];
+    extraSetFlags = [
+      "--advertise-exit-node"
+    ];
   };
 
   # give root access to pulse (for example to use pamix)

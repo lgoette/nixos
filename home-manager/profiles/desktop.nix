@@ -14,6 +14,21 @@ with lib; {
       programs.git.enable = true;
     };
 
+    # Sctivate Trayscale tray icon
+    systemd.user.services.trayscale = {
+      Unit = {
+        Description = "Trayscale tray icon";
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.trayscale}/bin/trayscale --hide-window";
+        Restart = "on-failure";
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
+
     # Install these packages for my user
     home.packages = with pkgs; [
 
@@ -33,7 +48,6 @@ with lib; {
       # barrier # TODO: Keyboard is us instead of de when starting input-leap
       # input-leap # Fails to build
       yubioath-flutter
-      tailscale-systray
 
       # Kde
       kdePackages.dolphin
