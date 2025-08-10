@@ -23,6 +23,7 @@ with lib; {
       Service = {
         ExecStart = "${pkgs.trayscale}/bin/trayscale --hide-window";
         Restart = "on-failure";
+        Environment = "TRAY_DEBUG=1";
       };
       Install = {
         WantedBy = [ "default.target" ];

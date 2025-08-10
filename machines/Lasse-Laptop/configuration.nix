@@ -65,7 +65,10 @@
       allowedTCPPorts = [ 5173 ];
     };
     # Enable networkmanager
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      plugins = with pkgs; [ networkmanager-openvpn ];
+    };
   };
   users.extraUsers.lasse.extraGroups = [
     "networkmanager"
