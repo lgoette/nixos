@@ -158,6 +158,27 @@ in {
               "Timeout" = 0;
             };
           };
+          # Disable windowdecorations because wine has a bug with touchscreen input where the titlebar is creating an unwanted offset
+          kwinrulesrc = {
+            "General" = {
+              "count" = 1;
+              "rules" = "Archetype";
+            };
+            "Archetype" = {
+              "Description" = "Window settings for Neural DSP Archetype Plugins";
+              "maximizevert" = true;
+              "maximizevertrule" = 2;
+              "noborder" = true;
+              "noborderrule" = 2;
+              "position" = "-3,0";
+              "positionrule" = 2;
+              "size" = "750,550";
+              "sizerule" = 2;
+              "title" = "Archetype";
+              "titlematch" = 2;
+              "wmclassmatch" = 1;
+            };
+          };
         };
 
       };
