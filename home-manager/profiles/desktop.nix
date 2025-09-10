@@ -109,7 +109,7 @@ with lib; {
       pomodoro-gtk
       gnumake
       gcc
-      anki
+      anki-bin
       texliveFull
       libusb1
 
