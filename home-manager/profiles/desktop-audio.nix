@@ -58,7 +58,6 @@ with lib;
       kdePackages.ark
       kdePackages.kdeconnect-kde
       kdePackages.krfb
-      libsForQt5.kpurpose
       kdePackages.kde-gtk-config
       kdePackages.kfind
       kdePackages.calendarsupport

@@ -56,7 +56,6 @@ with lib; {
       kdePackages.ark
       kdePackages.kdeconnect-kde
       kdePackages.krfb
-      libsForQt5.kpurpose
       kdePackages.kde-gtk-config
       kdePackages.kfind
       kdePackages.calendarsupport
@@ -108,9 +107,11 @@ with lib; {
 
       # Uni
       pomodoro-gtk
+      gnumake
       gcc
       anki
       texliveFull
+      libusb1
 
       #mayniklas
       mayniklas.drone-gen
