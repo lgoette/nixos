@@ -46,7 +46,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.lamabus.config.system.build.toplevel' -o 'result-lamabus' -v"
+        "nix build --show-trace --print-out-paths '.#nixosConfigurations.lamabus.config.system.build.toplevel' -o 'result-lamabus' -v"
       ],
       "image": "bash",
       "name": "Build lamabus"
