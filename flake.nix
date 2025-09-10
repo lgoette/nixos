@@ -80,9 +80,12 @@
 
     # https://github.com/pinpox/lollypops/
     # NixOS Deployment Tool
+    # Old version (I change this when I have Time)
     lollypops = {
-      url = "github:pinpox/lollypops";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:pinpox/lollypops/098b95c871a8fb6f246ead8d7072ec2201d7692b";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
 
   };
