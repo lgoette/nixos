@@ -17,9 +17,11 @@
       ],
       "image": "bash",
       "name": "Setup Attic",
-      "secrets": [
-        "attic_key"
-      ]
+      "environment": {
+        "ATTIC_KEY": {
+          "from_secret": "attic_key"
+        }
+      }
     },
     {
       "commands": [
