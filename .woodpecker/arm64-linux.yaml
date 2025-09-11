@@ -15,17 +15,17 @@
       "commands": [
         "attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default"
       ],
-      "image": "bash",
-      "name": "Setup Attic",
       "environment": {
         "ATTIC_KEY": {
           "from_secret": "attic_key"
         }
-      }
+      },
+      "image": "bash",
+      "name": "Setup Attic"
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.lamabasis.config.system.build.toplevel' -o 'result-lamabasis' -v"
+        "nix build --print-out-paths '.#nixosConfigurations.lamabasis.config.system.build.toplevel' -o 'result-lamabasis'"
       ],
       "image": "bash",
       "name": "Build lamabasis"
@@ -46,7 +46,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.lamaoutpost.config.system.build.toplevel' -o 'result-lamaoutpost' -v"
+        "nix build --print-out-paths '.#nixosConfigurations.lamaoutpost.config.system.build.toplevel' -o 'result-lamaoutpost'"
       ],
       "image": "bash",
       "name": "Build lamaoutpost"
@@ -67,7 +67,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.pi4b.config.system.build.toplevel' -o 'result-pi4b' -v"
+        "nix build --print-out-paths '.#nixosConfigurations.pi4b.config.system.build.toplevel' -o 'result-pi4b'"
       ],
       "image": "bash",
       "name": "Build pi4b"

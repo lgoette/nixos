@@ -15,17 +15,17 @@
       "commands": [
         "attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default"
       ],
-      "image": "bash",
-      "name": "Setup Attic",
       "environment": {
         "ATTIC_KEY": {
           "from_secret": "attic_key"
         }
-      }
+      },
+      "image": "bash",
+      "name": "Setup Attic"
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.Lasse-Laptop.config.system.build.toplevel' -o 'result-Lasse-Laptop' -v"
+        "nix build --print-out-paths '.#nixosConfigurations.Lasse-Laptop.config.system.build.toplevel' -o 'result-Lasse-Laptop'"
       ],
       "image": "bash",
       "name": "Build Lasse-Laptop"
@@ -46,7 +46,7 @@
     },
     {
       "commands": [
-        "nix build --show-trace --print-out-paths '.#nixosConfigurations.lamabus.config.system.build.toplevel' -o 'result-lamabus' -v"
+        "nix build --print-out-paths '.#nixosConfigurations.lamabus.config.system.build.toplevel' -o 'result-lamabus'"
       ],
       "image": "bash",
       "name": "Build lamabus"
@@ -67,7 +67,7 @@
     },
     {
       "commands": [
-        "nix build --show-trace --print-out-paths '.#nixosConfigurations.lamafarm.config.system.build.toplevel' -o 'result-lamafarm' -v"
+        "nix build --print-out-paths '.#nixosConfigurations.lamafarm.config.system.build.toplevel' -o 'result-lamafarm'"
       ],
       "image": "bash",
       "name": "Build lamafarm"
@@ -88,7 +88,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.minecraft.config.system.build.toplevel' -o 'result-minecraft' -v"
+        "nix build --print-out-paths '.#nixosConfigurations.minecraft.config.system.build.toplevel' -o 'result-minecraft'"
       ],
       "image": "bash",
       "name": "Build minecraft"
