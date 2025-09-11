@@ -67,7 +67,7 @@
     },
     {
       "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.lamafarm.config.system.build.toplevel' -o 'result-lamafarm' -v"
+        "nix build --show-trace --print-out-paths '.#nixosConfigurations.lamafarm.config.system.build.toplevel' -o 'result-lamafarm' -v"
       ],
       "image": "bash",
       "name": "Build lamafarm"
