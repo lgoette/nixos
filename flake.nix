@@ -10,6 +10,8 @@
     # This is the main input of the flake and specifies the NixOS version.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+
     # https://github.com/NixOS/nixos-hardware
     # A collection of NixOS modules covering hardware quirks.
     nixos-hardware.url = "github:NixOS/nixos-hardware";
