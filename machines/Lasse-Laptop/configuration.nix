@@ -63,6 +63,7 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [ 5173 ];
+      allowedUDPPorts = [ 7255 ]; # Open Port for IDN-Hello (Uni-Project)
     };
     # Enable networkmanager
     networkmanager = {

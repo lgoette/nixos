@@ -63,7 +63,6 @@
     headplane = {
       # url = "github:tale/headplane";
       url = "github:StealthBadger747/headplane/erikp/implement-path-loading-round-2";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # https://github.com/mayniklas/nixos
