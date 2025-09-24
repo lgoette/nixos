@@ -61,7 +61,8 @@
     # https://github.com/tale/headplane/
     # Headscale UI
     headplane = {
-      url = "github:tale/headplane/next";
+      # url = "github:tale/headplane/next";
+      url = "github:tale/headplane";
     };
 
     # https://github.com/mayniklas/nixos
