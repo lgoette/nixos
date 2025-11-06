@@ -69,6 +69,7 @@
     ];
     extraSetFlags = [
       "--advertise-exit-node"
+      "--accept-routes"
     ];
   };
 

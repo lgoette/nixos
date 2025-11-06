@@ -48,23 +48,24 @@ in {
     # enable headplane (headscale ui)
     services.headplane = {
       enable = true;
-      agent = { # Agent später noch testen um mehr Infos über Nodes zu bekommen
+      integration.agent = { # Agent später noch testen um mehr Infos über Nodes zu bekommen
         enable = false;
       };
       settings = {
         server = {
           host = "0.0.0.0";
           port = 3000;
-          # cookie_secret = "$COOKIE_SECRET";
           cookie_secret_path = "/var/src/secrets/headplane/cookie_secret";
-          cookie_secure = true;
+          # cookie_secret = "$COOKIE_SECRET"; # Depricated
+          # cookie_secure = true; # Depricated
         };
         headscale = {
           url = "https://${cfg.headscale-domain}";
           # config_path = ; # Hier kann man wohl irgendwie ne Headscale Konfiguration erstellen und so? Is das wichtig? https://github.com/tale/headplane/blob/main/docs/Nix.md
           config_strict = true;
         };
-        integration.proc.enabled = true;
+        # integration.proc.enabled = true; # Depricated
+
         # TODO: Host ocid issuer and set ocid settings here:
         # oidc = {
         #   issuer = "https://oidc.example.com";

@@ -28,7 +28,7 @@ with lib; {
 
     };
 
-    home.packages = with pkgs; [ nix-init wireguard-tools fd ];
+    home.packages = with pkgs; [ nix-init wireguard-tools fd parallel-disk-usage ];
 
     # Include man-pages
     manual.manpages.enable = true;

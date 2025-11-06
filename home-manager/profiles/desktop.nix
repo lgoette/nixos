@@ -81,6 +81,7 @@ with lib; {
       hunspell
       hunspellDicts.en_US
       hunspellDicts.de_DE
+      obsidian
 
       # Media
       spotify
