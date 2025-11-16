@@ -91,7 +91,7 @@ with lib; {
 
       # Comunication
       signal-desktop
-      tdesktop
+      telegram-desktop
       discord
       element-desktop
 
