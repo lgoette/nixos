@@ -61,9 +61,9 @@ in {
           # config_path = ; # Hier kann man wohl irgendwie ne Headscale Konfiguration erstellen und so? Is das wichtig? https://github.com/tale/headplane/blob/main/docs/Nix.md
           config_strict = true;
         };
-        integration.agent = { # Agent später noch testen um mehr Infos über Nodes zu bekommen
-          enabled = false;
-        };
+        # integration.agent = { # Agent später noch testen um mehr Infos über Nodes zu bekommen
+        #   enabled = false;
+        # };
         # integration.proc.enabled = true; # Depricated
 
         # TODO: Host ocid issuer and set ocid settings here:
