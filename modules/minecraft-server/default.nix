@@ -4,6 +4,8 @@ with lib;
 
 let cfg = config.lgoette.services.minecraft-server;
 in {
+  imports = [ nix-minecraft.nixosModules.minecraft-servers ];
+
   options = {
     lgoette.services.minecraft-server = {
 
