@@ -48,9 +48,6 @@ in {
     # enable headplane (headscale ui)
     services.headplane = {
       enable = true;
-      integration.agent = { # Agent später noch testen um mehr Infos über Nodes zu bekommen
-        enabled = false;
-      };
       settings = {
         server = {
           host = "0.0.0.0";
@@ -63,6 +60,9 @@ in {
           url = "https://${cfg.headscale-domain}";
           # config_path = ; # Hier kann man wohl irgendwie ne Headscale Konfiguration erstellen und so? Is das wichtig? https://github.com/tale/headplane/blob/main/docs/Nix.md
           config_strict = true;
+        };
+        integration.agent = { # Agent später noch testen um mehr Infos über Nodes zu bekommen
+          enabled = false;
         };
         # integration.proc.enabled = true; # Depricated
 
