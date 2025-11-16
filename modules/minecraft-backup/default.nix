@@ -26,15 +26,21 @@ in {
     };
   };
 
-  config = mkIf (cfg.enable && config.services.minecraft-server.enable) {
+  config = mkIf (cfg.enable && (config.services.minecraft-server.enable || config.services.minecraft-servers.enable)) {
 
-    systemd.services.minecraft-backup = {
+    systemd.services.minecraft-backup = let
+      serverDataDir = if config.services.minecraft-server.enable
+              then config.services.minecraft-server.dataDir
+              else if config.services.minecraft-servers.enable
+              then config.services.minecraft-servers.dataDir
+              else throw "Minecraft backup enabled but no Minecraft server found!";
+    in {
       serviceConfig = {
-        User = "root";
-        Type = "oneshot";
-        ExecStart = ''
-          ${pkgs.minecraft-backup}/bin/minecraft-backup ${cfg.dataDir} ${config.services.minecraft-server.dataDir}
-        '';
+      User = "root";
+      Type = "oneshot";
+      ExecStart = ''
+        ${pkgs.minecraft-backup}/bin/minecraft-backup ${cfg.dataDir} ${serverDataDir}
+      '';
       };
     };
 

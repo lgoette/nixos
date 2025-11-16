@@ -2,294 +2,44 @@
 
 with lib;
 
-let
-  cfg = config.mayniklas.minecraft-server;
-
-  # We don't allow eula=false anyways
-  eulaFile = builtins.toFile "eula.txt" ''
-    # eula.txt managed by NixOS Configuration
-    eula=true
-  '';
-
-  whitelistFile = pkgs.writeText "whitelist.json" (builtins.toJSON
-    (mapAttrsToList
-      (n: v: {
-        name = n;
-        uuid = v;
-      })
-      cfg.whitelist));
-
-  opsFile = pkgs.writeText "ops.json" (builtins.toJSON (mapAttrsToList
-    (n: v: {
-      name = n;
-      uuid = v.uuid;
-      level = v.level;
-      bypassesPlayerLimit = v.bypassesPlayerLimit;
-    })
-    cfg.ops));
-
-  cfgToString = v: if builtins.isBool v then boolToString v else toString v;
-
-  serverPropertiesFile = pkgs.writeText "server.properties" (''
-    # server.properties managed by NixOS configuration
-  '' + concatStringsSep "\n"
-    (mapAttrsToList (n: v: "${n}=${cfgToString v}") cfg.serverProperties));
-
-  # To be able to open the firewall, we need to read out port values in the
-  # server properties, but fall back to the defaults when those don't exist.
-  # These defaults are from https://minecraft.gamepedia.com/Server.properties#Java_Edition_3
-  defaultServerPort = 25565;
-
-  serverPort = cfg.serverProperties.server-port or defaultServerPort;
-
-  rconPort =
-    if cfg.serverProperties.enable-rcon or false then
-      cfg.serverProperties."rcon.port" or 25575
-    else
-      null;
-
-  queryPort =
-    if cfg.serverProperties.enable-query or false then
-      cfg.serverProperties."query.port" or 25565
-    else
-      null;
-
-in
-{
+let cfg = config.lgoette.services.minecraft-server;
+in {
   options = {
-    mayniklas.minecraft-server = {
+    lgoette.services.minecraft-server = {
 
-      enable = mkOption {
-        type = types.bool;
-        default = false;
-        description = ''
+      enable = mkEnableOption
+        ''
           If enabled, start a Minecraft Server. The server
           data will be loaded from and saved to
           <option>services.minecraft-server.dataDir</option>.
         '';
-      };
-
-      declarative = mkOption {
-        type = types.bool;
-        default = false;
-        description = ''
-          Whether to use a declarative Minecraft server configuration.
-          Only if set to <literal>true</literal>, the options
-          <option>services.minecraft-server.whitelist</option> and
-          <option>services.minecraft-server.serverProperties</option> will be
-          applied.
-        '';
-      };
-
-      eula = mkOption {
-        type = types.bool;
-        default = false;
-        description = ''
-          Whether you agree to
-          <link xlink:href="https://account.mojang.com/documents/minecraft_eula">
-          Mojangs EULA</link>. This option must be set to
-          <literal>true</literal> to run Minecraft server.
-        '';
-      };
-
-      dataDir = mkOption {
-        type = types.path;
-        default = "/var/lib/minecraft";
-        description = ''
-          Directory to store Minecraft database and other state/data files.
-        '';
-      };
-
-      openFirewall = mkOption {
-        type = types.bool;
-        default = false;
-        description = ''
-          Whether to open ports in the firewall for the server.
-        '';
-      };
-
-      whitelist = mkOption {
-        type =
-          let
-            minecraftUUID = types.strMatching
-              "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" // {
-              description = "Minecraft UUID";
-            };
-          in
-          types.attrsOf minecraftUUID;
-        default = { };
-        description = ''
-          Whitelisted players, only has an effect when
-          <option>services.minecraft-server.declarative</option> is
-          <literal>true</literal> and the whitelist is enabled
-          via <option>services.minecraft-server.serverProperties</option> by
-          setting <literal>white-list</literal> to <literal>true</literal>.
-          This is a mapping from Minecraft usernames to UUIDs.
-          You can use <link xlink:href="https://mcuuid.net/"/> to get a
-          Minecraft UUID for a username.
-        '';
-        example = literalExample ''
-          {
-            username1 = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
-            username2 = "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy";
-          };
-        '';
-      };
-
-      ops = mkOption {
-        type =
-          let
-            minecraftOperator = (types.submodule ({ name, ... }: {
-              options = {
-                uuid = mkOption {
-                  type = types.strMatching
-                    "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
-                  description = "Minecraft UUID";
-                };
-                level = mkOption {
-                  type = types.int;
-                  description = "Operator Level";
-                };
-                bypassesPlayerLimit = mkOption {
-                  type = types.bool;
-                  default = false;
-                  description = "Player can join even if playerlimit is reached";
-                };
-              };
-            }));
-          in
-          types.attrsOf minecraftOperator;
-        default = { };
-        description = ''
-          players with ops, only has an effect when
-          <option>services.minecraft-server.declarative</option> is
-          <literal>true</literal>
-          This is a mapping from Minecraft usernames to UUIDs.
-          You can use <link xlink:href="https://mcuuid.net/"/> to get a
-          Minecraft UUID for a username.
-        '';
-        example = literalExample ''
-          {
-            username1 = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
-            username2 = "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy";
-          };
-        '';
-      };
-
-      serverProperties = mkOption {
-        type = with types; attrsOf (oneOf [ bool int str ]);
-        default = { };
-        example = literalExample ''
-          {
-            server-port = 25565;
-            difficulty = 3;
-            gamemode = 1;
-            max-players = 5;
-            motd = "NixOS Minecraft server!";
-            white-list = true;
-            enable-rcon = true;
-            "rcon.password" = "minecraft";
-          }
-        '';
-        description = ''
-          Minecraft server properties for the server.properties file. Only has
-          an effect when <option>services.minecraft-server.declarative</option>
-          is set to <literal>true</literal>. See
-          <link xlink:href="https://minecraft.gamepedia.com/Server.properties#Java_Edition_3"/>
-          for documentation on these values.
-        '';
-      };
-
-      package = mkOption {
-        type = types.package;
-        default = pkgs.papermc;
-        example = literalExample "pkgs.minecraft-server_1_12_2";
-        description = "Version of minecraft-server to run.";
-      };
-
-      jvmOpts = mkOption {
-        type = types.separatedString " ";
-        default = "-Xmx2048M -Xms2048M";
-        # Example options from https://minecraft.gamepedia.com/Tutorials/Server_startup_script
-        example = "-Xmx2048M -Xms4092M -XX:+UseG1GC -XX:+CMSIncrementalPacing "
-          + "-XX:+CMSClassUnloadingEnabled -XX:ParallelGCThreads=2 "
-          + "-XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10";
-        description = "JVM options for the Minecraft server.";
-      };
     };
   };
 
   config = mkIf cfg.enable {
+    nixpkgs.overlays = [ nix-minecraft.overlay ];
 
-    users.users.minecraft = {
-      description = "Minecraft server service user";
-      home = cfg.dataDir;
-      createHome = true;
-      isSystemUser = true;
-      group = "minecraft";
-    };
-    users.groups.minecraft = { };
+    services.minecraft-servers = {
+      enable = true;
+      eula = true;
+      dataDir = "/var/lib/minecraft-servers";
 
-    systemd.services.minecraft-server = {
-      description = "Minecraft Server Service";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      servers = {
+        vanilla = {
+          enable = true;
+          package = pkgs.paperServers.paper-1_21_10;
+          openFirewall = true;
+          autoStart = true;
+          jvmOpts = "-Xms2G -Xmx6G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1";
 
-      serviceConfig = {
-        ExecStart = "${cfg.package}/bin/minecraft-server ${cfg.jvmOpts}";
-        Restart = "on-failure";
-        RestartSec = "5s";
-        User = "minecraft";
-        WorkingDirectory = cfg.dataDir;
+          symlinks = {
+            "plugins/bluemap-5.13-paper.jar" = pkgs.fetchurl {
+              url = "https://cdn.modrinth.com/data/swbUV1cr/versions/KDFOHrSO/bluemap-5.13-paper.jar";
+              sha512 = "858805ca7187216b82817fb3e697a9d5bfb8d215f399dee653f9152bea4b6292d1d271c6287195cafa53cdec774e964e8a6d6a7ed018e397e72525d102c4dc0c";
+            };
+          };
+        };
       };
-
-      preStart = ''
-        ln -sf ${eulaFile} eula.txt
-      '' + (if cfg.declarative then ''
-
-        if [ -e .declarative ]; then
-
-          # Was declarative before, no need to back up anything
-          ln -sf ${whitelistFile} whitelist.json
-          ln -sf ${opsFile} ops.json
-          cp -f ${serverPropertiesFile} server.properties
-
-        else
-
-          # Declarative for the first time, backup stateful files
-          ln -sb --suffix=.stateful ${whitelistFile} whitelist.json
-          ln -sb --suffix=.stateful ${opsFile} ops.json
-          cp -b --suffix=.stateful ${serverPropertiesFile} server.properties
-
-          # server.properties must have write permissions, because every time
-          # the server starts it first parses the file and then regenerates it..
-          chmod +w server.properties
-          echo "Autogenerated file that signifies that this server configuration is managed declaratively by NixOS" \
-            > .declarative
-
-        fi
-      '' else ''
-        if [ -e .declarative ]; then
-          rm .declarative
-        fi
-      '');
     };
 
-    networking.firewall = mkIf cfg.openFirewall (if cfg.declarative then {
-      allowedUDPPorts = [ serverPort ];
-      allowedTCPPorts = [ serverPort ] ++ optional (queryPort != null) queryPort
-        ++ optional (rconPort != null) rconPort;
-    } else {
-      allowedUDPPorts = [ defaultServerPort ];
-      allowedTCPPorts = [ defaultServerPort ];
-    });
-
-    assertions = [{
-      assertion = cfg.eula;
-      message = "You must agree to Mojangs EULA to run minecraft-server."
-        + " Read https://account.mojang.com/documents/minecraft_eula and"
-        + " set `services.minecraft-server.eula` to `true` if you agree.";
-    }];
-
-  };
 }

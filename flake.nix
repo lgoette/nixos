@@ -41,6 +41,11 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # https://github.com/numtide/flake-utils
     # Pure Nix flake utility functions
     # Todo: completly get rid of those and use nixpkgs builtins

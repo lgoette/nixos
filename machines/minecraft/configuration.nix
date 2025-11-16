@@ -8,23 +8,22 @@
     ../../users/root.nix
   ];
 
+  users.users.lasse.extraGroups = [ "minecraft" ];
+
   lgoette = {
-    services.minecraft-backup = {
-      enable = true;
-      enableWebservice = true;
-      openFirewall = true;
+    services = {
+      minecraft-server.enable = true;
+      minecraft-backup = {
+        enable = true;
+        enableWebservice = true;
+        openFirewall = true;
+      };
     };
   };
 
   mayniklas = {
-    user = {
-      root.enable = true;
-      nik = { enable = true; };
-    };
-    home-manager.enable = true;
     var.mainUser = "lasse";
     locale.enable = true;
-    openssh.enable = true;
     metrics = {
       node = {
         enable = true;
@@ -59,7 +58,7 @@
   };
 
   services.minecraft-server = {
-    enable = true;
+    enable = false;
     # For performance reasons, we choose to use the papermc fork
     # of minecraft-server.
     # The newest version of papermc can be found here:
@@ -144,7 +143,7 @@
   # Ferien Zeit 10-3 
   # Normale Zeit: 10-2
   services.cron = {
-    enable = true;
+    enable = false;
     systemCronJobs = [
       "50 1 * * *     root    echo 'say Server is shutting down in 10 minutes!' > ${config.systemd.sockets.minecraft-server.socketConfig.ListenFIFO}"
       "0 2 * * *      root    ${pkgs.systemd}/bin/systemctl stop minecraft-server"
@@ -152,11 +151,23 @@
     ];
   };
 
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    passwordAuthentication = false;
+    startWhenNeeded = true;
+    kbdInteractiveAuthentication = false;
+    listenAddresses = [{
+      addr = "0.0.0.0";
+      port = 50937;
+    }];
+  };
+
   networking =
     let
-      uplink_interface = "enp6s18";
-      ip = "192.168.20.75";
-      gateway = "192.168.20.1";
+      uplink_interface = "enp6s18"; # TODO: An meinen Proxmox Server anpassen
+      ip = "192.168.176.174";
+      gateway = "192.168.176.1";
     in
     {
       hostName = "minecraft";
