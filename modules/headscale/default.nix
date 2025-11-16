@@ -49,7 +49,7 @@ in {
     services.headplane = {
       enable = true;
       integration.agent = { # Agent später noch testen um mehr Infos über Nodes zu bekommen
-        enable = false;
+        enabled = false;
       };
       settings = {
         server = {
