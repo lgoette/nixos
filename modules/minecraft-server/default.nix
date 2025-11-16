@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, nix-minecraft, pkgs, ... }:
 
 with lib;
 
