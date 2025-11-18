@@ -13,6 +13,7 @@
     kde.enable = true;
     bluetooth.enable = true;
     sound.enable = true;
+    tor-client.enable = true;
     locale.enable = true;
   };
 
