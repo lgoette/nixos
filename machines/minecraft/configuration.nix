@@ -233,22 +233,23 @@
       wget
     ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/8e9e31bd-1dde-4208-bef1-fceeb2f6feb0";
-    fsType = "ext4";
-    autoResize = true;
-  };
+  # Already defined in mayniklas module
+  # fileSystems."/" = {
+  #   device = "/dev/disk/by-uuid/8e9e31bd-1dde-4208-bef1-fceeb2f6feb0";
+  #   fsType = "ext4";
+  #   autoResize = true;
+  # };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/269B-4682";
-    fsType = "vfat";
-    options = [ "fmask=0022" "dmask=0022" ];
-  };
+  # fileSystems."/boot" = {
+  #   device = "/dev/disk/by-uuid/269B-4682";
+  #   fsType = "vfat";
+  #   options = [ "fmask=0022" "dmask=0022" ];
+  # };
 
-  boot.initrd.availableKernelModules = [ "ata_piix" "vhci_hcd" "virtio_scsi" "sd_mod" "sr_mod" ];
-  # During boot, resize the root partition to the size of the disk.
-  # This makes upgrading the size of the vDisk easier.
-  boot.growPartition = true;
+  # boot.initrd.availableKernelModules = [ "ata_piix" "vhci_hcd" "virtio_scsi" "sd_mod" "sr_mod" ];
+  # # During boot, resize the root partition to the size of the disk.
+  # # This makes upgrading the size of the vDisk easier.
+  # boot.growPartition = true;
 
   # swapfile empty because minecraft uses fixed ram
   swapDevices = [];
