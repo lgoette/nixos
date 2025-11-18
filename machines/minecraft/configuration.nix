@@ -165,7 +165,7 @@
 
   networking =
     let
-      uplink_interface = "enp0s18";
+      uplink_interface = "ens18";
       ip = "192.168.176.174";
       gateway = "192.168.176.1";
     in
