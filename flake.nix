@@ -81,6 +81,7 @@
         flake-utils.follows = "flake-utils";
         nixos-hardware.follows = "nixos-hardware";
         vscode-server.follows = "vscode-server";
+        disko.follows = "disko";
       };
     };
 
