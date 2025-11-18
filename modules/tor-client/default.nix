@@ -4,10 +4,10 @@
   ...
 }:
 let
-  cfg = config.paul.tor-client;
+  cfg = config.lgoette.tor-client;
 in
 {
-  options.paul.tor-client = {
+  options.lgoette.tor-client = {
     enable = lib.mkEnableOption "enable tor client options";
   };
 
