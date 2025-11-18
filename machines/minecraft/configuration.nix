@@ -183,7 +183,7 @@
         }];
       };
 
-      firewall.interfaces.enp6s18.allowedTCPPorts = [ 50937 9100 ];
+      firewall.allowedTCPPorts = [ 50937 9100 ];
 
     };
 
