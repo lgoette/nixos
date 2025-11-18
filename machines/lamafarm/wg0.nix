@@ -57,7 +57,7 @@ in {
 
         # 10.11.12.8
         {
-          publicKey = "5KIvDXqEpt/bDd0pao0CrnaZTeZtYBtGq//bSjHScDY=";
+          publicKey = "piLYob/5MSuLR2ZEr2kNHu54YRr3jvDbNd0koT4XFHQ=";
           allowedIPs = [ "10.11.12.8" ];
           # persistentKeepalive = 15;
         }
