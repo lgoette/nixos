@@ -154,6 +154,7 @@
         mayniklas = { ... }: {
           imports = [
             # https://github.com/MayNiklas/nixos/tree/main/modules
+            mayniklas.nixosModules.cloud-provider-default
             mayniklas.nixosModules.cloud-provider
             mayniklas.nixosModules.docker
             mayniklas.nixosModules.home-manager
