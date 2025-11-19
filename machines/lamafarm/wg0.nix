@@ -20,17 +20,18 @@ in {
       # Path to the private key file
       privateKeyFile = toString /var/src/secrets/wireguard/private;
 
-      postSetup = ''
-        ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.252.227.28 -p tcp --dport 25565 -j DNAT --to-destination 10.11.12.8
-        ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.252.227.28 -p udp --dport 25565 -j DNAT --to-destination 10.11.12.8
-        ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.252.227.28 -p tcp --dport 25564 -j DNAT --to-destination 10.11.12.8:22
-      '';
+      # Minecraft server port forwarding via wireguard interface (no port needs to be opened on the host firewall)
+      # postSetup = ''
+      #   ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.252.227.28 -p tcp --dport 25565 -j DNAT --to-destination 10.11.12.8
+      #   ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.252.227.28 -p udp --dport 25565 -j DNAT --to-destination 10.11.12.8
+      #   ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.252.227.28 -p tcp --dport 25564 -j DNAT --to-destination 10.11.12.8:22
+      # '';
 
-      postShutdown = ''
-        ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.252.227.28 -p tcp --dport 25565 -j DNAT --to-destination 10.11.12.8
-        ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.252.227.28 -p udp --dport 25565 -j DNAT --to-destination 10.11.12.8
-        ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.252.227.28 -p tcp --dport 25564 -j DNAT --to-destination 10.11.12.8:22
-      '';
+      # postShutdown = ''
+      #   ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.252.227.28 -p tcp --dport 25565 -j DNAT --to-destination 10.11.12.8
+      #   ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.252.227.28 -p udp --dport 25565 -j DNAT --to-destination 10.11.12.8
+      #   ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.252.227.28 -p tcp --dport 25564 -j DNAT --to-destination 10.11.12.8:22
+      # '';
 
       peers = [
 
