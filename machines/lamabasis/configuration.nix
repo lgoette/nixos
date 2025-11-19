@@ -1,16 +1,14 @@
-{ self, ... }:
 {
   pkgs,
   config,
   lib,
-  mayniklas,
   flake-self,
   ...
 }:
 
 {
   imports = [
-    self.pi.pi4b
+    flake-self.pi.pi4b
     ../../users/lasse.nix
     ../../users/root.nix
     ./wg0.nix
@@ -69,7 +67,7 @@
       system-config = config;
     };
 
-    users.lasse = flake-self.homeConfigurations.server;
+    users.lasse = flake-self.homeProfiles.server;
   };
 
   users.users.leo = {
@@ -194,15 +192,12 @@
     ];
   };
 
-  environment.systemPackages =
-    with pkgs;
-    with pkgs.mayniklas;
-    [
-      bash-completion
-      git
-      wget
-      pamix
-    ];
+  environment.systemPackages = with pkgs; [
+    bash-completion
+    git
+    wget
+    pamix
+  ];
 
   # Disable all status-leds on Pi
   hardware.raspberry-pi."4".leds = {

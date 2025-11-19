@@ -1,9 +1,8 @@
 {
   pkgs,
   lib,
-  config,
   ...
-}: # , mayniklas
+}:
 with lib;
 # let
 #   plugins = with pkgs; [
@@ -21,11 +20,6 @@ with lib;
 # in
 {
   config = {
-
-    # Home-manager nixpkgs config
-    # nixpkgs.config = {
-    #   overlays = [ mayniklas.overlays.mayniklas ];
-    # };
 
     lasse = {
       programs.plasma = {
@@ -80,10 +74,6 @@ with lib;
 
       # Misc
       screenfetch
-
-      #mayniklas
-      mayniklas.drone-gen
-      mayniklas.set-performance
     ];
     # ++ plugins;
 

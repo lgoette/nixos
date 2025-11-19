@@ -1,11 +1,8 @@
-{ self, ... }:
 {
   config,
   pkgs,
   lib,
   nixpkgs,
-  nixos-hardware,
-  mayniklas,
   flake-self,
   ...
 }:
@@ -30,7 +27,7 @@
   ###
 
   imports = [
-    self.pi.pi4b
+    flake-self.pi.pi4b
     ../../users/lasse.nix
     ../../users/root.nix
     ./wg0.nix
@@ -65,7 +62,7 @@
       system-config = config;
     };
 
-    users.lasse = flake-self.homeConfigurations.server;
+    users.lasse = flake-self.homeProfiles.server;
   };
 
   # Enable tailscale vpn
@@ -102,14 +99,11 @@
     firewall.allowedTCPPorts = [ 50937 ];
   };
 
-  environment.systemPackages =
-    with pkgs;
-    with pkgs.mayniklas;
-    [
-      bash-completion
-      git
-      wget
-    ];
+  environment.systemPackages = with pkgs; [
+    bash-completion
+    git
+    wget
+  ];
 
   lollypops.deployment = {
     local-evaluation = true;

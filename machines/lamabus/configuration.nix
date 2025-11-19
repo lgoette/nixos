@@ -1,11 +1,9 @@
 # nix run github:numtide/nixos-anywhere -- --flake .#lamabus root@192.168.0.23
 # nix run .\#lollypops -- lamabus
-{ self, ... }:
 {
   pkgs,
   config,
   lib,
-  mayniklas,
   flake-self,
   ...
 }:
@@ -61,7 +59,7 @@ in
       system-config = config;
     };
 
-    users.lasse = flake-self.homeConfigurations.desktop-audio;
+    users.lasse = flake-self.homeProfiles.desktop-audio;
   };
 
   # Add lightweight desktop environment
@@ -131,21 +129,18 @@ in
     networkmanager.enable = true;
   };
 
-  environment.systemPackages =
-    with pkgs;
-    with pkgs.mayniklas;
-    [
-      bash-completion
-      git
-      wget
-      wineWowPackages.stable
-      winePackages.stagingFull
-      # airwave
-      carla
-      yabridge
-      yabridgectl
-      jack1
-    ];
+  environment.systemPackages = with pkgs; [
+    bash-completion
+    git
+    wget
+    wineWowPackages.stable
+    winePackages.stagingFull
+    # airwave
+    carla
+    yabridge
+    yabridgectl
+    jack1
+  ];
 
   systemd.user.services.carla = {
     wantedBy = [

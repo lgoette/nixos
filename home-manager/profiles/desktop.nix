@@ -1,18 +1,11 @@
 {
   pkgs,
   lib,
-  config,
   ...
-}: # , mayniklas
+}:
 with lib;
 {
   config = {
-
-    # Home-manager nixpkgs config
-    # nixpkgs.config = {
-    #   overlays = [ mayniklas.overlays.mayniklas ];
-    # };
-
     lasse = {
       programs.vscode.enable = true;
       programs.plasma.enable = true;
@@ -129,9 +122,6 @@ with lib;
       anki-bin
       texliveFull
       libusb1
-
-      #mayniklas
-      mayniklas.drone-gen
     ];
 
   };

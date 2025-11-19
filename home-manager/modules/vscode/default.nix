@@ -18,8 +18,6 @@ in
       package = pkgs.vscode;
       extensions = with pkgs.vscode-extensions; [
 
-        brettm12345.nixfmt-vscode
-        bbenoist.nix
         jnoortheen.nix-ide
 
         golang.go
@@ -44,5 +42,9 @@ in
         # tonybaloney.vscode-pets
       ];
     };
+
+    home.packages = with pkgs; [
+      nixd
+    ];
   };
 }
