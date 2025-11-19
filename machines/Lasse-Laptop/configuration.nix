@@ -94,7 +94,6 @@
       psmisc
       bash-completion
       git
-      nixfmt
       wget
 
       # For sddm Theme

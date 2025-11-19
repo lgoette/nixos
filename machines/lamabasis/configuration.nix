@@ -200,7 +200,6 @@
     [
       bash-completion
       git
-      nixfmt
       wget
       pamix
     ];

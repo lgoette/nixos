@@ -41,6 +41,7 @@ with lib;
 
       # Common
       nil
+      nixfmt
       nfs-utils
       samba
       pavucontrol

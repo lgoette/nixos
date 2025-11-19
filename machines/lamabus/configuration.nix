@@ -137,7 +137,6 @@ in
     [
       bash-completion
       git
-      nixfmt
       wget
       wineWowPackages.stable
       winePackages.stagingFull

@@ -55,7 +55,6 @@
   environment.systemPackages = with pkgs; [
     bash-completion
     git
-    nixfmt
     wget
   ];
 

@@ -120,7 +120,6 @@
     [
       bash-completion
       git
-      nixfmt
       wget
       wg-friendly-peer-names
     ];

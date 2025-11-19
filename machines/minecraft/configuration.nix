@@ -225,7 +225,6 @@
     [
       bash-completion
       git
-      nixfmt
       wget
     ];
 

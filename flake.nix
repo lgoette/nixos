@@ -343,8 +343,7 @@
           in
           rec {
 
-            # Use nixpkgs-fmt for `nix fmt'
-            formatter = pkgs.nixfmt;
+            formatter = pkgs.nixfmt-tree;
 
             # Custom packages added via the overlay are selectively exposed here, to
             # allow using them from other flakes that import this one.
