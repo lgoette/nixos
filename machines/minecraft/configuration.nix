@@ -164,17 +164,18 @@
     }];
   };
 
-  networking =
-    let
-      uplink_interface = "ens18";
-      ip = "192.168.176.178";
-      gateway = "192.168.176.1";
-    in
-    {
+  # Enable the Cloudflare Dyndns daemon.
+  services.cloudflare-dyndns = {
+    enable = true;
+    proxied = false;
+    ipv4 = true;
+    domains = [ "lamacraft.lasse-goette.de" ];
+    apiTokenFile = toString /var/src/secrets/cloudflare/token;
+  };
+
+  networking = {
       hostName = "minecraft";
-      dhcpcd.enable = false;
       enableIPv6 = false;
-      defaultGateway = "${gateway}";
       nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
       wireguard.interfaces.wg0 = {
@@ -184,7 +185,7 @@
         privateKeyFile = "/var/src/secrets/wireguard/private";
         peers = [{
           publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
-          allowedIPs = [ "10.11.12.1/32" "10.11.12.0/24" "0.0.0.0/0" ];
+          allowedIPs = [ "10.11.12.1/32" "10.11.12.0/24" ];
           # hardcode wireguard endpoint
           # -> wireguard can be started with no DNS available
           endpoint = "5.252.227.28:53115";
@@ -192,33 +193,10 @@
         }];
       };
 
-      interfaces = {
-        ${uplink_interface}.ipv4 = {
-          addresses = [{
-            address = "${ip}";
-            prefixLength = 24;
-          }];
-          routes = [
-            {
-              address = "5.252.227.28";
-              prefixLength = 32;
-              via = "${gateway}";
-              options = { metric = "0"; };
-            }
-            {
-              address = "192.168.176.0";
-              prefixLength = 24;
-              via = "${gateway}";
-              options = { metric = "202"; };
-            }
-          ];
-        };
+    firewall.allowedTCPPorts = [ 25565 50937 9100 ];
+    firewall.allowedUDPPorts = [ 25565 ];
 
-      };
-
-        firewall.allowedTCPPorts = [ 50937 9100 ];
-
-    };
+  };
 
   environment.systemPackages = with pkgs;
     with pkgs.mayniklas; [
