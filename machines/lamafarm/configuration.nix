@@ -1,8 +1,19 @@
 { self, ... }:
-{ pkgs, config, lib, mayniklas, flake-self, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  mayniklas,
+  flake-self,
+  ...
+}:
 
 {
-  imports = [ ../../users/lasse.nix ../../users/root.nix ./wg0.nix ];
+  imports = [
+    ../../users/lasse.nix
+    ../../users/root.nix
+    ./wg0.nix
+  ];
 
   lgoette = {
     nginx = {
@@ -24,7 +35,9 @@
   };
 
   mayniklas = {
-    user = { root.enable = true; };
+    user = {
+      root.enable = true;
+    };
     var.mainUser = "lasse";
     locale.enable = true;
     nix-common = {
@@ -73,10 +86,12 @@
     passwordAuthentication = false;
     startWhenNeeded = true;
     kbdInteractiveAuthentication = false;
-    listenAddresses = [{
-      addr = "0.0.0.0";
-      port = 50937;
-    }];
+    listenAddresses = [
+      {
+        addr = "0.0.0.0";
+        port = 50937;
+      }
+    ];
   };
 
   networking = {
@@ -90,15 +105,19 @@
       rulesetFile = ./ruleset.nft;
     };
     interfaces.ens3 = {
-      ipv6.addresses = [{
-        address = "2a03:4000:6:2587::";
-        prefixLength = 64;
-      }];
+      ipv6.addresses = [
+        {
+          address = "2a03:4000:6:2587::";
+          prefixLength = 64;
+        }
+      ];
     };
   };
 
-  environment.systemPackages = with pkgs;
-    with pkgs.mayniklas; [
+  environment.systemPackages =
+    with pkgs;
+    with pkgs.mayniklas;
+    [
       bash-completion
       git
       nixfmt
@@ -112,10 +131,12 @@
   boot.growPartition = true;
 
   # swapfile
-  swapDevices = [{
-    device = "/var/swapfile";
-    size = (1024 * 2);
-  }];
+  swapDevices = [
+    {
+      device = "/var/swapfile";
+      size = (1024 * 2);
+    }
+  ];
 
   # Use KVM / QEMU
   services.qemuGuest.enable = true;

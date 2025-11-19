@@ -1,9 +1,18 @@
 # nix run github:numtide/nixos-anywhere -- --flake .#lamabus root@192.168.0.23
 # nix run .\#lollypops -- lamabus
 { self, ... }:
-{ pkgs, config, lib, mayniklas, flake-self, ... }:
-let primaryDisk = "/dev/disk/by-id/nvme-Samsung_SSD_980_1TB_S649NL0T853248L";
-in {
+{
+  pkgs,
+  config,
+  lib,
+  mayniklas,
+  flake-self,
+  ...
+}:
+let
+  primaryDisk = "/dev/disk/by-id/nvme-Samsung_SSD_980_1TB_S649NL0T853248L";
+in
+{
   imports = [
     ../../users/lasse.nix
     ../../users/root.nix
@@ -18,10 +27,15 @@ in {
     };
     locale.enable = true;
   };
-  users.extraUsers.lasse.extraGroups = [ "audio" "jackaudio" ];
+  users.extraUsers.lasse.extraGroups = [
+    "audio"
+    "jackaudio"
+  ];
 
   mayniklas = {
-    user = { root.enable = true; };
+    user = {
+      root.enable = true;
+    };
     var.mainUser = "lasse";
     locale.enable = true;
     nix-common = {
@@ -83,10 +97,12 @@ in {
     passwordAuthentication = false;
     startWhenNeeded = true;
     kbdInteractiveAuthentication = false;
-    listenAddresses = [{
-      addr = "0.0.0.0";
-      port = 50937;
-    }];
+    listenAddresses = [
+      {
+        addr = "0.0.0.0";
+        port = 50937;
+      }
+    ];
   };
 
   services.displayManager.autoLogin = {
@@ -115,8 +131,10 @@ in {
     networkmanager.enable = true;
   };
 
-  environment.systemPackages = with pkgs;
-    with pkgs.mayniklas; [
+  environment.systemPackages =
+    with pkgs;
+    with pkgs.mayniklas;
+    [
       bash-completion
       git
       nixfmt
@@ -131,13 +149,19 @@ in {
     ];
 
   systemd.user.services.carla = {
-    wantedBy = [ "default.target" "graphical-session.target" ];
+    wantedBy = [
+      "default.target"
+      "graphical-session.target"
+    ];
     environment.DISPLAY = ":0";
     environment.WAYLAND_DISPLAY = "wayland-0";
     environment.DEBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus";
     environment.QT_QPA_PLATFORM = "wayland";
     environment.XDG_RUNTIME_DIR = "/run/user/1000";
-    after = [ "plasma-workspace-wayland.target" "jack.service" ];
+    after = [
+      "plasma-workspace-wayland.target"
+      "jack.service"
+    ];
     path = [ "${pkgs.yabridge}" ];
     serviceConfig = {
       # User = "lasse";
@@ -158,9 +182,18 @@ in {
     AllowSuspendThenHibernate=no
   '';
 
-  boot.initrd.availableKernelModules =
-    [ "xhci_pci" "ahci" "nvme" "usbhid" "rtsx_pci_sdmmc" ];
-  boot.kernelModules = [ "kvm-intel" "snd-seq" "snd-rawmidi" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "nvme"
+    "usbhid"
+    "rtsx_pci_sdmmc"
+  ];
+  boot.kernelModules = [
+    "kvm-intel"
+    "snd-seq"
+    "snd-rawmidi"
+  ];
 
   lollypops.deployment = {
     local-evaluation = false;
@@ -172,10 +205,12 @@ in {
   };
 
   # swapfile
-  swapDevices = [{
-    device = "/var/swapfile";
-    size = (1024 * 2);
-  }];
+  swapDevices = [
+    {
+      device = "/var/swapfile";
+      size = (1024 * 2);
+    }
+  ];
 
   # Define disk layout
   disko.devices = {
@@ -221,8 +256,7 @@ in {
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.enableRedistributableFirmware = config.nixpkgs.config.allowUnfree;
   system.stateVersion = "22.05";
 

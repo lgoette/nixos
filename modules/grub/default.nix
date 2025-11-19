@@ -1,9 +1,18 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.lgoette.grub;
-in {
+let
+  cfg = config.lgoette.grub;
+in
+{
 
-  options.lgoette.grub = { enable = mkEnableOption "activate grub"; };
+  options.lgoette.grub = {
+    enable = mkEnableOption "activate grub";
+  };
 
   config = mkIf cfg.enable {
 

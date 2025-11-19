@@ -1,8 +1,15 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 with lib;
-let cfg = config.lgoette.oracle-cloud-instance-launcher;
-in {
+let
+  cfg = config.lgoette.oracle-cloud-instance-launcher;
+in
+{
   options.lgoette.oracle-cloud-instance-launcher = {
     enable = mkEnableOption "Enable oracle-cloud script that launches an instance automatically if possible.";
   };

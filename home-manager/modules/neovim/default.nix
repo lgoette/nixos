@@ -1,7 +1,14 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.lasse.programs.neovim;
-in {
+let
+  cfg = config.lasse.programs.neovim;
+in
+{
   options.lasse.programs.neovim.enable = mkEnableOption "enable neovim";
 
   config = mkIf cfg.enable {

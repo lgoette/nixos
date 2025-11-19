@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.lgoette.wg;
@@ -36,12 +41,16 @@ in
 
   config = mkIf cfg.enable {
 
-    networking.interfaces.${cfg.uplink_interface}.ipv4.routes = [{
-      address = "5.45.108.206";
-      prefixLength = 32;
-      via = "${cfg.gateway}";
-      options = { metric = "0"; };
-    }];
+    networking.interfaces.${cfg.uplink_interface}.ipv4.routes = [
+      {
+        address = "5.45.108.206";
+        prefixLength = 32;
+        via = "${cfg.gateway}";
+        options = {
+          metric = "0";
+        };
+      }
+    ];
 
     # hardcode wireguard endpoint
     # -> wireguard can be started before DNS is available
@@ -49,7 +58,9 @@ in
       5.45.108.206 lamafarm.lasse-goette.de
     '';
 
-    networking.interfaces.wg0 = { mtu = 1412; };
+    networking.interfaces.wg0 = {
+      mtu = 1412;
+    };
 
     networking.wireguard.interfaces.wg0 = {
 
@@ -58,12 +69,14 @@ in
       # Path to the private key file
       privateKeyFile = "/var/src/secrets/wireguard/private";
 
-      peers = [{
-        inherit publicKey; # set publicKey to the publicKey we've defined above
-        allowedIPs = cfg.allowedIPs;
-        endpoint = "lamafarm.lasse-goette.de:53115";
-        persistentKeepalive = 15;
-      }];
+      peers = [
+        {
+          inherit publicKey; # set publicKey to the publicKey we've defined above
+          allowedIPs = cfg.allowedIPs;
+          endpoint = "lamafarm.lasse-goette.de:53115";
+          persistentKeepalive = 15;
+        }
+      ];
     };
 
   };

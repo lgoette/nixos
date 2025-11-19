@@ -1,5 +1,12 @@
 { self, ... }:
-{ lib, pkgs, config, mayniklas, flake-self, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  mayniklas,
+  flake-self,
+  ...
+}:
 
 {
   imports = [
@@ -141,7 +148,7 @@
   # };
 
   # TODO: Anpassen auf nix-minecraft (minecraft-servers)
-  # Ferien Zeit 10-3 
+  # Ferien Zeit 10-3
   # Normale Zeit: 10-2
   # services.cron = {
   #   enable = false;
@@ -158,10 +165,12 @@
     passwordAuthentication = false;
     startWhenNeeded = true;
     kbdInteractiveAuthentication = false;
-    listenAddresses = [{
-      addr = "0.0.0.0";
-      port = 50937;
-    }];
+    listenAddresses = [
+      {
+        addr = "0.0.0.0";
+        port = 50937;
+      }
+    ];
   };
 
   # Enable the Cloudflare Dyndns daemon.
@@ -174,32 +183,46 @@
   };
 
   networking = {
-      hostName = "minecraft";
-      enableIPv6 = false;
-      nameservers = [ "1.1.1.1" "8.8.8.8" ];
+    hostName = "minecraft";
+    enableIPv6 = false;
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
 
-      wireguard.interfaces.wg0 = {
-        ips = [ "10.11.12.8/24" ];
-        mtu = 1412;
-        # Path to the private key file
-        privateKeyFile = "/var/src/secrets/wireguard/private";
-        peers = [{
+    wireguard.interfaces.wg0 = {
+      ips = [ "10.11.12.8/24" ];
+      mtu = 1412;
+      # Path to the private key file
+      privateKeyFile = "/var/src/secrets/wireguard/private";
+      peers = [
+        {
           publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
-          allowedIPs = [ "10.11.12.1/32" "10.11.12.0/24" ];
+          allowedIPs = [
+            "10.11.12.1/32"
+            "10.11.12.0/24"
+          ];
           # hardcode wireguard endpoint
           # -> wireguard can be started with no DNS available
           endpoint = "5.252.227.28:53115";
           persistentKeepalive = 15;
-        }];
-      };
+        }
+      ];
+    };
 
-    firewall.allowedTCPPorts = [ 25565 50937 9100 ];
+    firewall.allowedTCPPorts = [
+      25565
+      50937
+      9100
+    ];
     firewall.allowedUDPPorts = [ 25565 ];
 
   };
 
-  environment.systemPackages = with pkgs;
-    with pkgs.mayniklas; [
+  environment.systemPackages =
+    with pkgs;
+    with pkgs.mayniklas;
+    [
       bash-completion
       git
       nixfmt
@@ -207,7 +230,7 @@
     ];
 
   # swapfile empty because minecraft uses fixed ram
-  swapDevices = [];
+  swapDevices = [ ];
 
   # Use KVM / QEMU
   services.qemuGuest.enable = true;

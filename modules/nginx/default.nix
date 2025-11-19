@@ -1,7 +1,14 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.lgoette.nginx;
-in {
+let
+  cfg = config.lgoette.nginx;
+in
+{
 
   options.lgoette.nginx = {
     enable = mkEnableOption "nginx";
@@ -16,7 +23,12 @@ in {
     # accept LE TOS
     security.acme.acceptTerms = true;
 
-    networking.firewall = { allowedTCPPorts = [ 80 443 ]; };
+    networking.firewall = {
+      allowedTCPPorts = [
+        80
+        443
+      ];
+    };
 
     # Enable a small Nginx Server
     services.nginx = {
@@ -29,10 +41,8 @@ in {
 
         "workshop.lasse-goette.de" = mkIf cfg.workshop {
           # enableACME = true; # -> get a LE certificate
-          sslCertificateKey =
-            "/var/src/secrets/ssl/cf_workshop.lasse-goette.de.key";
-          sslCertificate =
-            "/var/src/secrets/ssl/cf_workshop.lasse-goette.de.pem";
+          sslCertificateKey = "/var/src/secrets/ssl/cf_workshop.lasse-goette.de.key";
+          sslCertificate = "/var/src/secrets/ssl/cf_workshop.lasse-goette.de.pem";
           onlySSL = true;
           root = "/var/www/workshop.lasse-goette.de";
 

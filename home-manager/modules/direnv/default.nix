@@ -1,7 +1,14 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.lasse.programs.direnv;
-in {
+let
+  cfg = config.lasse.programs.direnv;
+in
+{
 
   options.lasse.programs.direnv = {
     enable = mkEnableOption "activate direnv";
@@ -17,8 +24,12 @@ in {
         nix-direnv.enable = true;
       };
 
-      git = { ignores = [ ".direnv/" ]; };
-      vscode = { extensions = with pkgs.vscode-extensions; [ mkhl.direnv ]; };
+      git = {
+        ignores = [ ".direnv/" ];
+      };
+      vscode = {
+        extensions = with pkgs.vscode-extensions; [ mkhl.direnv ];
+      };
     };
 
   };

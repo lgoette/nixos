@@ -1,6 +1,13 @@
-{ config, lib, pkgs, ... }:
-let wg0_port = 53115;
-in {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  wg0_port = 53115;
+in
+{
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
@@ -10,7 +17,9 @@ in {
 
   networking = {
 
-    firewall = { allowedUDPPorts = [ wg0_port ]; };
+    firewall = {
+      allowedUDPPorts = [ wg0_port ];
+    };
 
     wireguard.interfaces.wg0 = {
 
@@ -38,14 +47,20 @@ in {
         # 10.11.12.5
         {
           publicKey = "CQ0eGmaUXekRdYxA45pbmzkcCb5w5Rf9fKV4VkwcBmo=";
-          allowedIPs = [ "10.11.12.5" "192.168.176.0/24" ];
+          allowedIPs = [
+            "10.11.12.5"
+            "192.168.176.0/24"
+          ];
           # persistentKeepalive = 15;
         }
 
         # 10.11.12.6
         {
           publicKey = "fjL1uv+PF1ajKzJt0CDh9LCofPYAtGdqVOWRbC62eC4=";
-          allowedIPs = [ "10.11.12.6" "192.168.178.0/24" ];
+          allowedIPs = [
+            "10.11.12.6"
+            "192.168.178.0/24"
+          ];
           # persistentKeepalive = 15;
         }
 
@@ -77,7 +92,7 @@ in {
           # persistentKeepalive = 15;
         }
 
-        # 10.11.12.102                                                                             
+        # 10.11.12.102
         {
           publicKey = "sISbItjlwv9VCe5ZmOFa8irsMmiDgj7cy+aC+Do7mRQ=";
           allowedIPs = [ "10.11.12.102" ];
@@ -94,7 +109,10 @@ in {
         # 10.11.12.204
         {
           publicKey = "tP8n9Ux+wb+Z3laLvGQ0Y6n68aw/wggvA2VoVyf8HE8=";
-          allowedIPs = [ "10.11.12.204" "192.168.78.0/24" ];
+          allowedIPs = [
+            "10.11.12.204"
+            "192.168.78.0/24"
+          ];
           # persistentKeepalive = 15;
         }
 

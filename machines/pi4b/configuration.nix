@@ -1,5 +1,13 @@
 { self, ... }:
-{ config, pkgs, lib, nixpkgs, nixos-hardware, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  nixpkgs,
+  nixos-hardware,
+  ...
+}:
+{
 
   ### building the image
   # nix build .#nixosConfigurations.pi4b.config.system.build.sdImage
@@ -9,8 +17,7 @@
   # remove this once the issue is fixed!
   nixpkgs.overlays = [
     (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
+      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
     })
   ];
 
@@ -45,11 +52,18 @@
     kbdInteractiveAuthentication = false;
   };
 
-  environment.systemPackages = with pkgs; [ bash-completion git nixfmt wget ];
+  environment.systemPackages = with pkgs; [
+    bash-completion
+    git
+    nixfmt
+    wget
+  ];
 
   networking = {
     hostName = "pi4b";
-    interfaces.eth0 = { useDHCP = true; };
+    interfaces.eth0 = {
+      useDHCP = true;
+    };
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";

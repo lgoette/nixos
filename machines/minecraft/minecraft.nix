@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-let cfg = config.services.minecraft-server;
-in {
+let
+  cfg = config.services.minecraft-server;
+in
+{
 
   # define new options here
   options = { };

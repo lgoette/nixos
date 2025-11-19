@@ -1,8 +1,16 @@
-{ config, pkgs, lib, flake-self, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  flake-self,
+  ...
+}:
 with lib;
-let cfg = config.lgoette.headscale-controller;
+let
+  cfg = config.lgoette.headscale-controller;
 
-in {
+in
+{
 
   imports = [
     flake-self.inputs.headplane.nixosModules.headplane
@@ -25,7 +33,12 @@ in {
 
     # Open firewall ports
     networking.firewall = {
-      allowedTCPPorts = [ 80 443 config.services.headscale.port config.services.headplane.settings.server.port ];
+      allowedTCPPorts = [
+        80
+        443
+        config.services.headscale.port
+        config.services.headplane.settings.server.port
+      ];
     };
 
     # Enable headscale service
@@ -37,7 +50,10 @@ in {
         server_url = "https://${cfg.headscale-domain}";
         dns = {
           base_domain = "tailnet.local";
-          nameservers.global = [ "1.1.1.1" "8.8.8.8"];
+          nameservers.global = [
+            "1.1.1.1"
+            "8.8.8.8"
+          ];
         };
       };
     };
@@ -89,14 +105,12 @@ in {
           enableACME = true;
           locations = {
             "/" = {
-              proxyPass =
-                "http://127.0.0.1:${toString config.services.headscale.port}";
+              proxyPass = "http://127.0.0.1:${toString config.services.headscale.port}";
               proxyWebsockets = true;
             };
 
             "/admin/" = {
-              proxyPass =
-                "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
+              proxyPass = "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
               proxyWebsockets = true;
 
               # Pfad anpassen, damit headplane korrekt funktioniert

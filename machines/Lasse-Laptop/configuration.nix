@@ -1,5 +1,12 @@
 { self, ... }:
-{ pkgs, config, lib, mayniklas, flake-self, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  mayniklas,
+  flake-self,
+  ...
+}:
 
 {
   imports = [
@@ -80,8 +87,10 @@
   # Enable autostart
   # xdg.autostart.enable = true; # TODO: Packages can start on startup not working
 
-  environment.systemPackages = with pkgs;
-    with pkgs.mayniklas; [
+  environment.systemPackages =
+    with pkgs;
+    with pkgs.mayniklas;
+    [
       psmisc
       bash-completion
       git
@@ -111,11 +120,14 @@
   # };
 
   boot = {
-    loader.systemd-boot.enable =
-      true; # TODO: Zu grub wechseln; nur die letzten 3 nix configs in boot speichern
+    loader.systemd-boot.enable = true; # TODO: Zu grub wechseln; nur die letzten 3 nix configs in boot speichern
     loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules =
-      [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "nvme"
+      "usb_storage"
+      "sd_mod"
+    ];
     kernelModules = [ "kvm-intel" ];
     supportedFilesystems = [ "ntfs" ];
     binfmt.emulatedSystems = [ "aarch64-linux" ]; # allows building ARM stuff
@@ -132,7 +144,10 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/5EB5-75E2";
     fsType = "vfat";
-    options = [ "fmask=0022" "dmask=0022" ];
+    options = [
+      "fmask=0022"
+      "dmask=0022"
+    ];
   };
 
   # Automatic garbage collection
@@ -144,8 +159,7 @@
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.enableRedistributableFirmware = config.nixpkgs.config.allowUnfree;
 
   system.stateVersion = "22.05";

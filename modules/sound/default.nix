@@ -1,7 +1,15 @@
-{ lib, pkgs, config, flake-self, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  flake-self,
+  ...
+}:
 with lib;
-let cfg = config.lgoette.sound;
-in {
+let
+  cfg = config.lgoette.sound;
+in
+{
   options.lgoette.sound = {
     enable = mkEnableOption "Activate sound with pipewire";
     pro-audio = mkEnableOption "Use low latency audio setup with jack instead of pipewire and realtime kernel.";
@@ -100,9 +108,7 @@ in {
         wireplumber.configPackages = [
           #TODO: Wireplumber profileswitching bug not fixed yet: https://gitlab.freedesktop.org/pipewire/wireplumber/-/issues/617
           # Should be fixed by May 8, 2024
-          (pkgs.writeTextDir
-            "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua"
-            "	bluez_monitor.properties = {\n		[\"bluez5.enable-sbc-xq\"] = true,\n		[\"bluez5.enable-msbc\"] = true,\n		[\"bluez5.enable-hw-volume\"] = true,\n		[\"bluez5.headset-roles\"] = \"[ hsp_hs hsp_ag hfp_hf hfp_ag ]\"\n	}\n")
+          (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" "	bluez_monitor.properties = {\n		[\"bluez5.enable-sbc-xq\"] = true,\n		[\"bluez5.enable-msbc\"] = true,\n		[\"bluez5.enable-hw-volume\"] = true,\n		[\"bluez5.headset-roles\"] = \"[ hsp_hs hsp_ag hfp_hf hfp_ag ]\"\n	}\n")
         ];
       };
 

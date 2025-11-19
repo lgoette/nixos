@@ -1,7 +1,14 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.lasse.programs.vscode;
-in {
+let
+  cfg = config.lasse.programs.vscode;
+in
+{
   options.lasse.programs.vscode.enable = mkEnableOption "enable vscode";
 
   config = mkIf cfg.enable {

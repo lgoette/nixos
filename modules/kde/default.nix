@@ -1,9 +1,18 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.lgoette.kde;
-in {
+let
+  cfg = config.lgoette.kde;
+in
+{
 
-  options.lgoette.kde = { enable = mkEnableOption "activate kde"; };
+  options.lgoette.kde = {
+    enable = mkEnableOption "activate kde";
+  };
 
   config = mkIf cfg.enable {
 
@@ -21,7 +30,9 @@ in {
       xkb.options = "eurosign:e";
     };
 
-    services.desktopManager.plasma6 = { enable = true; };
+    services.desktopManager.plasma6 = {
+      enable = true;
+    };
 
     environment.plasma6.excludePackages = with pkgs.kdePackages; [
       elisa

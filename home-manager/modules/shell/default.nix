@@ -1,7 +1,14 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.lasse.programs.shell;
-in {
+let
+  cfg = config.lasse.programs.shell;
+in
+{
   options.lasse.programs.shell.enable = mkEnableOption "enable shell with zsh";
 
   config = mkIf cfg.enable {
@@ -60,8 +67,7 @@ in {
 
       shellAliases = rec {
         # nix
-        nixos-rebuild =
-          "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo";
+        nixos-rebuild = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo";
 
         lolly = "${pkgs.nix}/bin/nix run .\#lollypops --";
       };
@@ -82,7 +88,9 @@ in {
 
     programs.bat = {
       enable = true;
-      config = { theme = "base16"; };
+      config = {
+        theme = "base16";
+      };
     };
   };
 }

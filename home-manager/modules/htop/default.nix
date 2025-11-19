@@ -1,7 +1,14 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.lasse.programs.htop;
-in {
+let
+  cfg = config.lasse.programs.htop;
+in
+{
   options.lasse.programs.htop.enable = mkEnableOption "enable htop";
 
   config = mkIf cfg.enable {

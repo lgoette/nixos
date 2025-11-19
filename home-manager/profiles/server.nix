@@ -1,9 +1,15 @@
-{ pkgs, lib, config, ... }: # , mayniklas
-with lib; {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: # , mayniklas
+with lib;
+{
   config = {
 
     # Home-manager nixpkgs config
-    # nixpkgs.config = { 
+    # nixpkgs.config = {
     #   overlays = [ mayniklas.overlays.mayniklas ];
     # };
 

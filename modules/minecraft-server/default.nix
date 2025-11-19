@@ -1,20 +1,27 @@
-{ config, lib, nix-minecraft, pkgs, ... }:
+{
+  config,
+  lib,
+  nix-minecraft,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.lgoette.services.minecraft-server;
-in {
+let
+  cfg = config.lgoette.services.minecraft-server;
+in
+{
   imports = [ nix-minecraft.nixosModules.minecraft-servers ];
 
   options = {
     lgoette.services.minecraft-server = {
 
-      enable = mkEnableOption
-        ''
-          If enabled, start a Minecraft Server. The server
-          data will be loaded from and saved to
-          <option>services.minecraft-server.dataDir</option>.
-        '';
+      enable = mkEnableOption ''
+        If enabled, start a Minecraft Server. The server
+        data will be loaded from and saved to
+        <option>services.minecraft-server.dataDir</option>.
+      '';
     };
   };
 

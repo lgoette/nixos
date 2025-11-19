@@ -1,9 +1,15 @@
-{ pkgs, lib, config, ... }: # , mayniklas
-with lib; {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: # , mayniklas
+with lib;
+{
   config = {
 
     # Home-manager nixpkgs config
-    # nixpkgs.config = { 
+    # nixpkgs.config = {
     #   overlays = [ mayniklas.overlays.mayniklas ];
     # };
 
@@ -65,8 +71,17 @@ with lib; {
 
       # Development
       arduino
-      (python3.withPackages
-        (ps: with ps; [ pip requests numpy matplotlib jupyter notebook scipy ]))
+      (python3.withPackages (
+        ps: with ps; [
+          pip
+          requests
+          numpy
+          matplotlib
+          jupyter
+          notebook
+          scipy
+        ]
+      ))
       # postman
       go
 

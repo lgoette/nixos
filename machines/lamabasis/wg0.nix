@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
@@ -8,7 +14,9 @@
 
   networking = {
 
-    interfaces.wg0 = { mtu = 1412; };
+    interfaces.wg0 = {
+      mtu = 1412;
+    };
 
     wireguard.interfaces.wg0 = {
 

@@ -1,14 +1,20 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.lgoette.services.librespot;
+let
+  cfg = config.lgoette.services.librespot;
 
-in {
+in
+{
   options = {
     lgoette.services.librespot = {
-      enable = mkEnableOption
-        "If enabled, a librespot instance will be launched with the name <option>services.librespot.name</option>";
+      enable = mkEnableOption "If enabled, a librespot instance will be launched with the name <option>services.librespot.name</option>";
 
       name = mkOption {
         type = types.str;
@@ -63,7 +69,10 @@ in {
       createHome = false;
       isSystemUser = true;
       group = "librespot";
-      extraGroups = [ "audio" "pulse-access" ];
+      extraGroups = [
+        "audio"
+        "pulse-access"
+      ];
       # shell = pkgs.zsh; # Shell for debugging
     };
     users.groups.librespot = { };
@@ -77,7 +86,7 @@ in {
         # ExecStart = ''
         #   ${pkgs.librespot} -n \"${cfg.name}\" -b ${cfg.bitrate}
         # '' + (if cfg.enableCache then ''
-        #   -c ./cache 
+        #   -c ./cache
         # '' else
         #   "") + ''
         #     --enable-volume-normalisation --initial-volume ${cfg.initialVolume} --device-type ${cfg.deviceType}" --zeroconf-port ${cfg.zeroconfigPort}
@@ -104,8 +113,7 @@ in {
     };
 
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts =
-        [ cfg.zeroconfigPort ]; # 4070, 65535, 38143 für Librespot?
+      allowedTCPPorts = [ cfg.zeroconfigPort ]; # 4070, 65535, 38143 für Librespot?
       allowedUDPPorts = [ 5353 ]; # mdns für Librespot
     };
 

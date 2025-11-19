@@ -1,5 +1,15 @@
 { self, ... }:
-{ config, pkgs, lib, nixpkgs, nixos-hardware, mayniklas, flake-self, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  nixpkgs,
+  nixos-hardware,
+  mayniklas,
+  flake-self,
+  ...
+}:
+{
 
   ### building the image
   # nix build .#nixosConfigurations.lamaoutpost.config.system.build.sdImage
@@ -9,8 +19,7 @@
   # remove this once the issue is fixed!
   nixpkgs.overlays = [
     (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
+      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
     })
   ];
 
@@ -79,10 +88,12 @@
     passwordAuthentication = false;
     startWhenNeeded = true;
     kbdInteractiveAuthentication = false;
-    listenAddresses = [{
-      addr = "0.0.0.0";
-      port = 50937;
-    }];
+    listenAddresses = [
+      {
+        addr = "0.0.0.0";
+        port = 50937;
+      }
+    ];
   };
 
   networking = {
@@ -91,8 +102,10 @@
     firewall.allowedTCPPorts = [ 50937 ];
   };
 
-  environment.systemPackages = with pkgs;
-    with pkgs.mayniklas; [
+  environment.systemPackages =
+    with pkgs;
+    with pkgs.mayniklas;
+    [
       bash-completion
       git
       nixfmt

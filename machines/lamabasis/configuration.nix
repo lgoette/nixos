@@ -1,9 +1,20 @@
 { self, ... }:
-{ pkgs, config, lib, mayniklas, flake-self, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  mayniklas,
+  flake-self,
+  ...
+}:
 
 {
-  imports =
-    [ self.pi.pi4b ../../users/lasse.nix ../../users/root.nix ./wg0.nix ];
+  imports = [
+    self.pi.pi4b
+    ../../users/lasse.nix
+    ../../users/root.nix
+    ./wg0.nix
+  ];
 
   # Sound on Raspberry Pi
   # boot = {
@@ -32,7 +43,9 @@
   mayniklas = {
     var.mainUser = "lasse";
     locale.enable = true;
-    docker = { enable = true; };
+    docker = {
+      enable = true;
+    };
     nix-common = {
       enable = true;
       disable-cache = false;
@@ -81,7 +94,12 @@
 
   # give root access to pulse (for example to use pamix)
   # Pulse is enabled in systemwide mode in the librespot module configuration
-  users.users.root = { extraGroups = [ "audio" "pulse-access" ]; };
+  users.users.root = {
+    extraGroups = [
+      "audio"
+      "pulse-access"
+    ];
+  };
 
   fileSystems."/home/leo/musik" = {
     device = "/var/www/lamabasis.lasse-goette.de/res/music";
@@ -95,10 +113,12 @@
     passwordAuthentication = false;
     startWhenNeeded = true;
     kbdInteractiveAuthentication = false;
-    listenAddresses = [{
-      addr = "0.0.0.0";
-      port = 50937;
-    }];
+    listenAddresses = [
+      {
+        addr = "0.0.0.0";
+        port = 50937;
+      }
+    ];
   };
 
   services.nginx = {
@@ -167,11 +187,17 @@
   networking = {
     hostName = "lamabasis";
     usePredictableInterfaceNames = false;
-    firewall.allowedTCPPorts = [ 50937 80 443 ];
+    firewall.allowedTCPPorts = [
+      50937
+      80
+      443
+    ];
   };
 
-  environment.systemPackages = with pkgs;
-    with pkgs.mayniklas; [
+  environment.systemPackages =
+    with pkgs;
+    with pkgs.mayniklas;
+    [
       bash-completion
       git
       nixfmt

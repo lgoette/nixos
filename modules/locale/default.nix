@@ -1,9 +1,18 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.lgoette.locale;
-in {
+let
+  cfg = config.lgoette.locale;
+in
+{
 
-  options.lgoette.locale = { enable = mkEnableOption "activate locale"; };
+  options.lgoette.locale = {
+    enable = mkEnableOption "activate locale";
+  };
 
   config = mkIf cfg.enable {
 
@@ -21,7 +30,10 @@ in {
 
     # Select internationalisation properties.
     i18n.defaultLocale = "en_US.UTF-8";
-    i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" "de_DE.UTF-8/UTF-8" ];
+    i18n.supportedLocales = [
+      "en_US.UTF-8/UTF-8"
+      "de_DE.UTF-8/UTF-8"
+    ];
     i18n.extraLocaleSettings = {
       LC_ADDRESS = "de_DE.UTF-8";
       LC_IDENTIFICATION = "de_DE.UTF-8";

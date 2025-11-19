@@ -1,8 +1,15 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.lgoette.home-assistant;
+let
+  cfg = config.lgoette.home-assistant;
 
-in {
+in
+{
   options.lgoette.home-assistant = {
     enable = mkEnableOption "Home-assitant server";
 
@@ -49,12 +56,18 @@ in {
       #     apk add samba
       #   '';
       # };
-      environment = { TZ = "${cfg.timezone}"; };
+      environment = {
+        TZ = "${cfg.timezone}";
+      };
       ports = [ "8123:8123" ];
-      volumes =
-        [ "${cfg.path}/config:/config:rw" "/etc/localtime:/etc/localtime:ro" ];
-      extraOptions =
-        [ "--privileged" "--network=host" ]; # "--restart=unless-stopped"
+      volumes = [
+        "${cfg.path}/config:/config:rw"
+        "/etc/localtime:/etc/localtime:ro"
+      ];
+      extraOptions = [
+        "--privileged"
+        "--network=host"
+      ]; # "--restart=unless-stopped"
     };
 
     # Enable esphome
@@ -71,72 +84,77 @@ in {
 
       # Mosquitto is only listening on the local IP, traffic from outside is not
       # allowed.
-      listeners = [{
-        # address = "192.168.176.4"; needed?
-        port = 1883;
-        acl = [
-          "pattern read cmnd/tasmota/%c/#"
-          "pattern write stat/tasmota/%c/#"
-          "pattern write tele/tasmota/%c/#"
+      listeners = [
+        {
+          # address = "192.168.176.4"; needed?
+          port = 1883;
+          acl = [
+            "pattern read cmnd/tasmota/%c/#"
+            "pattern write stat/tasmota/%c/#"
+            "pattern write tele/tasmota/%c/#"
 
-          "pattern read command/lgoette/%c/#"
-          "pattern write state/lgoette/%c/#"
-          "pattern write telemetry/lgoette/%c/#"
-        ];
-        users = {
-          # No real authentication needed here, since the local network is
-          # trusted.
-          mosquitto = {
-            acl = [ "readwrite #" ];
-            password = "mosquitto"; # move to secrets
+            "pattern read command/lgoette/%c/#"
+            "pattern write state/lgoette/%c/#"
+            "pattern write telemetry/lgoette/%c/#"
+          ];
+          users = {
+            # No real authentication needed here, since the local network is
+            # trusted.
+            mosquitto = {
+              acl = [ "readwrite #" ];
+              password = "mosquitto"; # move to secrets
+            };
+            home = {
+              acl = [
+                "readwrite homeassistant/#"
+                "readwrite tasmota/discovery/#"
+                "write cmnd/tasmota/#"
+                "read stat/tasmota/#"
+                "read tele/tasmota/#"
+
+                "write command/lgoette/#"
+                "read state/lgoette/#"
+                "read telemetry/lgoette/#"
+
+                "readwrite shellies/%c/announce"
+                "read shellies/%c/online"
+                "write shellies/%c/command"
+                "read shellies/%c/status"
+              ];
+              hashedPasswordFile = "/var/src/secrets/mosquitto/home_passwd";
+            };
+
+            device = {
+              acl = [
+                "write homeassistant/#"
+                "write tasmota/discovery/#"
+
+                "read cmnd/tasmota/%c/#"
+                "write stat/tasmota/%c/#"
+                "write tele/tasmota/%c/#"
+
+                "read command/lgoette/%c/#"
+                "write state/lgoette/%c/#"
+                "write telemetry/lgoette/%c/#"
+
+                "write shellies/%c/announce"
+                "read shellies/%c/command"
+                "write shellies/%c/status"
+                "write shellies/%c/online"
+              ];
+              hashedPasswordFile = "/var/src/secrets/mosquitto/device_passwd";
+            };
           };
-          home = {
-            acl = [
-              "readwrite homeassistant/#"
-              "readwrite tasmota/discovery/#"
-              "write cmnd/tasmota/#"
-              "read stat/tasmota/#"
-              "read tele/tasmota/#"
-
-              "write command/lgoette/#"
-              "read state/lgoette/#"
-              "read telemetry/lgoette/#"
-
-              "readwrite shellies/%c/announce"
-              "read shellies/%c/online"
-              "write shellies/%c/command"
-              "read shellies/%c/status"
-            ];
-            hashedPasswordFile = "/var/src/secrets/mosquitto/home_passwd";
-          };
-
-          device = {
-            acl = [
-              "write homeassistant/#"
-              "write tasmota/discovery/#"
-
-              "read cmnd/tasmota/%c/#"
-              "write stat/tasmota/%c/#"
-              "write tele/tasmota/%c/#"
-
-              "read command/lgoette/%c/#"
-              "write state/lgoette/%c/#"
-              "write telemetry/lgoette/%c/#"
-
-              "write shellies/%c/announce"
-              "read shellies/%c/command"
-              "write shellies/%c/status"
-              "write shellies/%c/online"
-            ];
-            hashedPasswordFile = "/var/src/secrets/mosquitto/device_passwd";
-          };
-        };
-      }];
+        }
+      ];
     };
     # Open port for mqtt
     networking.firewall = {
 
-      allowedTCPPorts = [ 1883 8123 ];
+      allowedTCPPorts = [
+        1883
+        8123
+      ];
 
       # Expose home-assitant to the wireguard network
       interfaces.wg0.allowedTCPPorts = [ 8123 ];

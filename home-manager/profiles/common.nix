@@ -1,5 +1,13 @@
-{ config, pkgs, lib, flake-self, system-config, ... }:
-with lib; {
+{
+  config,
+  pkgs,
+  lib,
+  flake-self,
+  system-config,
+  ...
+}:
+with lib;
+{
   config = {
 
     lasse = {
@@ -24,11 +32,20 @@ with lib; {
 
     programs = {
 
-      zsh = { sessionVariables = { ZDOTDIR = "/home/lasse/.config/zsh"; }; };
+      zsh = {
+        sessionVariables = {
+          ZDOTDIR = "/home/lasse/.config/zsh";
+        };
+      };
 
     };
 
-    home.packages = with pkgs; [ nix-init wireguard-tools fd parallel-disk-usage ];
+    home.packages = with pkgs; [
+      nix-init
+      wireguard-tools
+      fd
+      parallel-disk-usage
+    ];
 
     # Include man-pages
     manual.manpages.enable = true;

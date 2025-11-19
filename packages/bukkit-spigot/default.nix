@@ -1,4 +1,10 @@
-{ lib, stdenv, fetchurl, nixosTests, jre_headless }:
+{
+  lib,
+  stdenv,
+  fetchurl,
+  nixosTests,
+  jre_headless,
+}:
 stdenv.mkDerivation rec {
   version = "1.19.2";
   pname = "bukkit-spigot";
@@ -25,8 +31,7 @@ stdenv.mkDerivation rec {
   phases = "installPhase";
 
   meta = with lib; {
-    description =
-      "Bukkit is a free, open-source, software that provides the means to extend the popular Minecraft multiplayer server.";
+    description = "Bukkit is a free, open-source, software that provides the means to extend the popular Minecraft multiplayer server.";
     homepage = "https://getbukkit.org";
     license = licenses.unfreeRedistributable;
     platforms = platforms.unix;
