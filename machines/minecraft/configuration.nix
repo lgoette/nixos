@@ -175,7 +175,7 @@
         privateKeyFile = "/var/src/secrets/wireguard/private";
         peers = [{
           publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
-          allowedIPs = [ "10.11.12.0/24" "0.0.0.0/0" ];
+          allowedIPs = [ "10.11.12.0/24" ];
           # hardcode wireguard endpoint
           # -> wireguard can be started with no DNS available
           endpoint = "5.252.227.28:53115";
