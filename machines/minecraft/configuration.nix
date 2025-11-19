@@ -178,7 +178,7 @@
           allowedIPs = [ "10.11.12.0/24" "0.0.0.0/0" ];
           # hardcode wireguard endpoint
           # -> wireguard can be started with no DNS available
-          endpoint = "5.45.108.206:53115";
+          endpoint = "5.252.227.28:53115";
           persistentKeepalive = 15;
         }];
       };
