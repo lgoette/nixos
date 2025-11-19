@@ -16,10 +16,10 @@
       domain = "unifi.lasse-goette.de";
     };
 
-    headscale-controller = {
-      enable = true;
-      headscale-domain = "tailscale.lasse-goette.de";
-    };
+    # headscale-controller = {
+    #   enable = true;
+    #   headscale-domain = "tailscale.lasse-goette.de";
+    # };
 
   };
 
