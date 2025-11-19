@@ -31,10 +31,10 @@ in {
     services.unifi = {
       enable = true;
       # -> use our own package
-      # unifiPackage = (pkgs.callPackages ../../packages/unifi { }).unifi7;
+      unifiPackage = (pkgs.callPackages ../../packages/unifi { }).unifi7;
 
       # -> use newest package in NixPkgs
-      unifiPackage = pkgs.unifi;
+      # unifiPackage = pkgs.unifi;
       mongodbPackage = pkgs.mongodb;
       openFirewall = false;
     };
