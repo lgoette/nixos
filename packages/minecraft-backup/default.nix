@@ -15,7 +15,7 @@ stdenv.mkDerivation {
         mc_dir=$2
 
         if systemctl is-active --quiet minecraft-server.service; then
-          ${pkgs.systemd}/bin/systemctl stop minecraft-server
+          ${pkgs.systemd}/bin/systemctl stop minecraft-server # TODO: Anpassen auf nix-minecraft (minecraft-servers)
           if [[ $? == 0 ]]; then
             sleep 60
             ${pkgs.zip}/bin/zip -r $backup_dir/minecraft.zip $mc_dir

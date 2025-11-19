@@ -13,11 +13,11 @@
   lgoette = {
     services = {
       minecraft-server.enable = true;
-      minecraft-backup = {
-        enable = true;
-        enableWebservice = true;
-        openFirewall = true;
-      };
+      # minecraft-backup = {
+      #   enable = true;
+      #   enableWebservice = true;
+      #   openFirewall = true;
+      # };
     };
   };
 
@@ -140,6 +140,7 @@
   #   # };
   # };
 
+  # TODO: Anpassen auf nix-minecraft (minecraft-servers)
   # Ferien Zeit 10-3 
   # Normale Zeit: 10-2
   # services.cron = {
