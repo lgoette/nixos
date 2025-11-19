@@ -5,7 +5,7 @@ define WAN_IFC      = ens3
 define VPN_IFC      = wg0
 define VPN_NET = { 10.11.12.0/24 }
 
-define WAN_IP = 5.45.108.206
+define WAN_IP = 5.252.227.28
 
 table inet filter {
     # Block all incomming connections traffic except SSH and "ping".
