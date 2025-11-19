@@ -21,15 +21,15 @@ in {
       privateKeyFile = toString /var/src/secrets/wireguard/private;
 
       postSetup = ''
-        ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.45.108.206 -p tcp --dport 25565 -j DNAT --to-destination 10.11.12.8
-        ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.45.108.206 -p udp --dport 25565 -j DNAT --to-destination 10.11.12.8
-        ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.45.108.206 -p tcp --dport 25564 -j DNAT --to-destination 10.11.12.8:22
+        ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.252.227.28 -p tcp --dport 25565 -j DNAT --to-destination 10.11.12.8
+        ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.252.227.28 -p udp --dport 25565 -j DNAT --to-destination 10.11.12.8
+        ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 5.252.227.28 -p tcp --dport 25564 -j DNAT --to-destination 10.11.12.8:22
       '';
 
       postShutdown = ''
-        ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.45.108.206 -p tcp --dport 25565 -j DNAT --to-destination 10.11.12.8
-        ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.45.108.206 -p udp --dport 25565 -j DNAT --to-destination 10.11.12.8
-        ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.45.108.206 -p tcp --dport 25564 -j DNAT --to-destination 10.11.12.8:22
+        ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.252.227.28 -p tcp --dport 25565 -j DNAT --to-destination 10.11.12.8
+        ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.252.227.28 -p udp --dport 25565 -j DNAT --to-destination 10.11.12.8
+        ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 5.252.227.28 -p tcp --dport 25564 -j DNAT --to-destination 10.11.12.8:22
       '';
 
       peers = [
