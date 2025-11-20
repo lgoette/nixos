@@ -1,12 +1,10 @@
-{ self, ... }:
 {
   config,
   pkgs,
   lib,
   nixpkgs,
-  nixos-hardware,
-  mayniklas,
   flake-self,
+  nixos-hardware,
   ...
 }:
 {
@@ -30,7 +28,7 @@
   ###
 
   imports = [
-    self.pi.pi4b
+    nixos-hardware.nixosModules.raspberry-pi-4
     ../../users/lasse.nix
     ../../users/root.nix
     ./wg0.nix
@@ -63,9 +61,10 @@
       # Pass system configuration (top-level "config") to home-manager modules,
       # so we can access it's values for conditional statements
       system-config = config;
-    };
+    }
+    // flake-self.inputs;
 
-    users.lasse = flake-self.homeConfigurations.server;
+    users.lasse = flake-self.homeProfiles.server;
   };
 
   # Enable tailscale vpn
@@ -102,22 +101,30 @@
     firewall.allowedTCPPorts = [ 50937 ];
   };
 
-  environment.systemPackages =
-    with pkgs;
-    with pkgs.mayniklas;
-    [
-      bash-completion
-      git
-      wget
-    ];
+  environment.systemPackages = with pkgs; [
+    bash-completion
+    git
+    wget
+  ];
 
-  lollypops.deployment = {
-    local-evaluation = true;
-  };
+  # lollypops.deployment = {
+  #   local-evaluation = true;
+  # };
+
+  clan.core.networking.targetHost = "10.11.12.6:50937";
+  clan.core.networking.buildHost = "lasse@10.11.12.7:50937";
+  clan.core.enableRecommendedDefaults = false; # incompatible with some wireguard options
 
   boot.initrd.systemd.enableTpm2 = false;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   system.stateVersion = "22.05";
 
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/NIXOS_SD";
+      fsType = "ext4";
+      options = [ "noatime" ];
+    };
+  };
 }

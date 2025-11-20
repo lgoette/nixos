@@ -1,9 +1,7 @@
 {
-  config,
   pkgs,
   lib,
   flake-self,
-  system-config,
   ...
 }:
 with lib;
@@ -24,10 +22,14 @@ with lib;
     home.homeDirectory = "/home/lasse";
 
     # Home-manager nixpkgs config
-    nixpkgs.config = {
-      # Allow "unfree" licenced packages
-      allowUnfree = true;
-      overlays = [ ];
+    nixpkgs = {
+      config = {
+        # Allow "unfree" licenced packages
+        allowUnfree = true;
+      };
+      overlays = [
+        flake-self.overlays.default
+      ];
     };
 
     programs = {

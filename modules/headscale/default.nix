@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  flake-self,
+  headplane,
   ...
 }:
 with lib;
@@ -13,7 +13,7 @@ in
 {
 
   imports = [
-    flake-self.inputs.headplane.nixosModules.headplane
+    headplane.nixosModules.headplane
   ];
 
   options.lgoette.headscale-controller = {
@@ -30,6 +30,10 @@ in
   };
 
   config = mkIf cfg.enable {
+
+    nixpkgs.overlays = [
+      headplane.overlays.default
+    ];
 
     # Open firewall ports
     networking.firewall = {

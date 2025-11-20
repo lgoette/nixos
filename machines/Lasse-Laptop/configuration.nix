@@ -1,9 +1,7 @@
-{ self, ... }:
 {
   pkgs,
   config,
   lib,
-  mayniklas,
   flake-self,
   ...
 }:
@@ -48,9 +46,10 @@
       # Pass system configuration (top-level "config") to home-manager modules,
       # so we can access it's values for conditional statements
       system-config = config;
-    };
+    }
+    // flake-self.inputs;
 
-    users.lasse = flake-self.homeConfigurations.desktop;
+    users.lasse = flake-self.homeProfiles.desktop;
   };
 
   # Enable tailscale vpn
@@ -87,19 +86,16 @@
   # Enable autostart
   # xdg.autostart.enable = true; # TODO: Packages can start on startup not working
 
-  environment.systemPackages =
-    with pkgs;
-    with pkgs.mayniklas;
-    [
-      psmisc
-      bash-completion
-      git
-      wget
+  environment.systemPackages = with pkgs; [
+    psmisc
+    bash-completion
+    git
+    wget
 
-      # For sddm Theme
-      # libsForQt5.qt5.qtquickcontrols2
-      # libsForQt5.qt5.qtgraphicaleffects
-    ];
+    # For sddm Theme
+    # libsForQt5.qt5.qtquickcontrols2
+    # libsForQt5.qt5.qtgraphicaleffects
+  ];
 
   # Enable pcscd for yubikey support
   services.pcscd.enable = true;

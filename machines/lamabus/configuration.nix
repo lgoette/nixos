@@ -1,11 +1,8 @@
 # nix run github:numtide/nixos-anywhere -- --flake .#lamabus root@192.168.0.23
-# nix run .\#lollypops -- lamabus
-{ self, ... }:
 {
   pkgs,
   config,
   lib,
-  mayniklas,
   flake-self,
   ...
 }:
@@ -59,9 +56,10 @@ in
       # Pass system configuration (top-level "config") to home-manager modules,
       # so we can access it's values for conditional statements
       system-config = config;
-    };
+    }
+    // flake-self.inputs;
 
-    users.lasse = flake-self.homeConfigurations.desktop-audio;
+    users.lasse = flake-self.homeProfiles.desktop-audio;
   };
 
   # Add lightweight desktop environment
@@ -131,21 +129,18 @@ in
     networkmanager.enable = true;
   };
 
-  environment.systemPackages =
-    with pkgs;
-    with pkgs.mayniklas;
-    [
-      bash-completion
-      git
-      wget
-      wineWowPackages.stable
-      winePackages.stagingFull
-      # airwave
-      carla
-      yabridge
-      yabridgectl
-      jack1
-    ];
+  environment.systemPackages = with pkgs; [
+    bash-completion
+    git
+    wget
+    wineWowPackages.stable
+    winePackages.stagingFull
+    # airwave
+    carla
+    yabridge
+    yabridgectl
+    jack1
+  ];
 
   systemd.user.services.carla = {
     wantedBy = [
@@ -194,14 +189,14 @@ in
     "snd-rawmidi"
   ];
 
-  lollypops.deployment = {
-    local-evaluation = false;
-    ssh = {
-      user = "root";
-      host = "192.168.0.23"; # Diese ip ist alt
-      opts = [ "-p 50937" ];
-    };
-  };
+  # lollypops.deployment = {
+  #   local-evaluation = false;
+  #   ssh = {
+  #     user = "root";
+  #     host = "192.168.0.23"; # Diese ip ist alt
+  #     opts = [ "-p 50937" ];
+  #   };
+  # };
 
   # swapfile
   swapDevices = [

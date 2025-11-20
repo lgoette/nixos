@@ -26,6 +26,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Manage networks of machines
+    # https://clan.lol
+    clan-core = {
+      url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
+      # Don't do this if your machines are on nixpkgs stable.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # https://github.com/nix-community/disko
     # Format disks with nix-config
     disko = {
@@ -55,7 +63,6 @@
     # Visual Studio Code Server support in NixOS
     vscode-server = {
       url = "github:msteen/nixos-vscode-server";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
 
@@ -68,6 +75,7 @@
     headplane = {
       # url = "github:tale/headplane/next";
       url = "github:tale/headplane";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # https://github.com/mayniklas/nixos
@@ -84,64 +92,81 @@
         disko.follows = "disko";
       };
     };
-
-    # https://github.com/pinpox/lollypops/
-    # NixOS Deployment Tool
-    # Old version (I change this when I have Time)
-    lollypops = {
-      url = "github:pinpox/lollypops/098b95c871a8fb6f246ead8d7072ec2201d7692b";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-
   };
 
   outputs =
     { self, ... }@inputs:
     with inputs;
+    let
+      lib = nixpkgs.lib;
+
+      supportedSystems = [
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
+
+      forAllSystems = lib.genAttrs supportedSystems;
+
+      nixpkgsFor = forAllSystems (
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ ];
+        }
+      );
+
+      # use this to automatically import packages from ./packages
+      flakePkgs =
+        pkgs:
+        (builtins.listToAttrs (
+          map (name: {
+            inherit name;
+            value = pkgs.callPackage (./packages + "/${name}") { flake-self = self; };
+          }) (builtins.attrNames (builtins.readDir ./packages))
+        ));
+
+      clan = clan-core.lib.clan {
+        inherit self; # this needs to point at the repository root
+
+        # Make inputs and the flake itself accessible as module parameters.
+        # Technically, adding the inputs is redundant as they can be also
+        # accessed with flake-self.inputs.X, but adding them individually
+        # allows to only pass what is needed to each module.
+        specialArgs = {
+          flake-self = self;
+        }
+        // inputs;
+
+        inventory = {
+
+          meta.name = "lasse-clan";
+
+          instances = {
+            importer-modules-dir = {
+              module = {
+                name = "importer";
+                input = "clan-core";
+              };
+              roles.default.tags."all" = { };
+              roles.default.extraModules = (builtins.attrValues self.nixosModules) ++ [
+                {
+                  nixpkgs.overlays = [
+                    self.overlays.default
+                  ];
+                }
+              ];
+            };
+          };
+        };
+
+      };
+    in
     {
 
       # Expose overlay to flake outputs, to allow using it from other flakes.
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
-      overlays.default = final: prev: (import ./overlays inputs) final prev;
-
-      # I don't think we need this anymore
-      # It seems completly unused
-      # To verify: build with it deleted
-      pi = {
-        pi4b =
-          {
-            config,
-            pkgs,
-            lib,
-            ...
-          }:
-          {
-            imports = [
-              # https://github.com/NixOS/nixos-hardware/tree/master/raspberry-pi/4
-              nixos-hardware.nixosModules.raspberry-pi-4
-            ];
-            networking = {
-              wireguard.interfaces = {
-                wg0 = {
-                  privateKeyFile = toString /var/src/secrets/wireguard/private;
-                  generatePrivateKeyFile = true;
-                };
-              };
-            };
-            # hardware = { raspberry-pi."4".poe-hat.enable = true; }; # Not compatible with led configuration -> Add in machine-config
-            # Assuming this is installed on top of the disk image.
-            fileSystems = {
-              "/" = {
-                device = "/dev/disk/by-label/NIXOS_SD";
-                fsType = "ext4";
-                options = [ "noatime" ];
-              };
-            };
-          };
-      };
+      overlays.default = import ./overlays inputs;
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
@@ -152,225 +177,141 @@
             value = import (./modules + "/${x}");
           }) (builtins.attrNames (builtins.readDir ./modules))
         )
-
-        //
-
-          {
-
-            # lgoette.mayniklas
-            # -> imports used flake inputs
-            # -> this way, they can easily be imported to different flake outputs
-            mayniklas =
-              { ... }:
-              {
-                imports = [
-                  # https://github.com/MayNiklas/nixos/tree/main/modules
-                  mayniklas.nixosModules.cloud-provider-default
-                  mayniklas.nixosModules.cloud-provider
-                  mayniklas.nixosModules.docker
-                  mayniklas.nixosModules.home-manager
-                  mayniklas.nixosModules.iperf
-                  mayniklas.nixosModules.locale
-                  mayniklas.nixosModules.minecraft
-                  mayniklas.nixosModules.monitoring
-                  mayniklas.nixosModules.nix-common
-                  mayniklas.nixosModules.openssh
-                  mayniklas.nixosModules.options
-                  mayniklas.nixosModules.sound
-                  mayniklas.nixosModules.user
-                  mayniklas.nixosModules.zsh
-                ];
-              };
-
-          };
-
-      # Each subdirectory in ./machines is a host. Add them all to
-      # nixosConfiguratons. Host configurations need a file called
-      # configuration.nix that will be read first
-      nixosConfigurations = builtins.listToAttrs (
-        map (x: {
-          name = x;
-          value = nixpkgs.lib.nixosSystem {
-
-            # Make inputs and the flake itself accessible as module parameters.
-            # Technically, adding the inputs is redundant as they can be also
-            # accessed with flake-self.inputs.X, but adding them individually
-            # allows to only pass what is needed to each module.
-            specialArgs = {
-              flake-self = self;
-            }
-            // inputs;
-
-            modules =
-              builtins.attrValues self.nixosModules
-              ++ [ lollypops.nixosModules.lollypops ]
-              ++ [
-                {
-                  nixpkgs.overlays = [
-                    self.overlays.default
-                    mayniklas.overlays.mayniklas
-                    headplane.overlays.default
-                  ];
-                }
-                (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
-              ];
-
-          };
-        }) (builtins.attrNames (builtins.readDir ./machines))
-      );
-
-      homeConfigurations = {
-        desktop =
-          {
-            pkgs,
-            lib,
-            username,
-            ...
-          }:
-          {
-            imports = [
-              ./home-manager/profiles/common.nix
-              ./home-manager/profiles/desktop.nix
-              plasma-manager.homeManagerModules.plasma-manager
-            ]
-            ++ (builtins.attrValues self.homeManagerModules);
-          };
-        desktop-audio =
-          {
-            pkgs,
-            lib,
-            username,
-            ...
-          }:
-          {
-            imports = [
-              ./home-manager/profiles/common.nix
-              ./home-manager/profiles/desktop-audio.nix
-              plasma-manager.homeManagerModules.plasma-manager
-            ]
-            ++ (builtins.attrValues self.homeManagerModules);
-          };
-        server =
-          {
-            pkgs,
-            lib,
-            username,
-            ...
-          }:
-          {
-            imports = [
-              ./home-manager/profiles/common.nix
-              ./home-manager/profiles/server.nix
-              vscode-server.nixosModules.home
-              plasma-manager.homeManagerModules.plasma-manager
-            ]
-            ++ (builtins.attrValues self.homeManagerModules);
-
-            # Visual Studio Code Server support
-            services.vscode-server.enable = true;
-
-          };
-        # nix run .#homeConfigurations.lasse@Lasse-Laptop.activationPackage
-        # home-manager switch --flake .
-        "lasse@Lasse-Laptop" =
-          let
-            system = "x86_64-linux";
-            pkgs = import nixpkgs {
-              inherit system;
-              config = {
-                allowUnfree = true;
-              };
-              overlays = [ ];
-            };
-          in
-          home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-            modules = [
-              { targets.genericLinux.enable = true; }
-              ./home-manager/profiles/common.nix
-            ]
-            ++ (builtins.attrValues self.homeManagerModules);
-            # Optionally use extraSpecialArgs
-            # to pass through arguments to home.nix
-            extraSpecialArgs = { } // inputs;
-          };
-      };
-
-      homeManagerModules =
-        builtins.listToAttrs (
-          map (name: {
-            inherit name;
-            value = import (./home-manager/modules + "/${name}");
-          }) (builtins.attrNames (builtins.readDir ./home-manager/modules))
-        )
         // {
 
-          nix =
-            { pkgs, ... }:
+          # lgoette.mayniklas
+          # -> imports used flake inputs
+          # -> this way, they can easily be imported to different flake outputs
+          mayniklas =
+            { ... }:
             {
-              # this module is appended to the list of home-manager modules
-              # by defining it here, it's easier for us to access the flake inputs
-              nixpkgs.overlays = [
-                self.overlays.default
-                mayniklas.overlays.mayniklas
+              imports = [
+                # https://github.com/MayNiklas/nixos/tree/main/modules
+                mayniklas.nixosModules.cloud-provider-default
+                mayniklas.nixosModules.cloud-provider
+                mayniklas.nixosModules.docker
+                mayniklas.nixosModules.home-manager
+                mayniklas.nixosModules.iperf
+                mayniklas.nixosModules.locale
+                mayniklas.nixosModules.minecraft
+                mayniklas.nixosModules.monitoring
+                mayniklas.nixosModules.nix-common
+                mayniklas.nixosModules.openssh
+                mayniklas.nixosModules.options
+                mayniklas.nixosModules.sound
+                mayniklas.nixosModules.user
+                mayniklas.nixosModules.zsh
               ];
             };
 
         };
+
+      # Each subdirectory in ./machines is a host. Add them all to
+      # nixosConfiguratons. Host configurations need a file called
+      # configuration.nix that will be read first
+      inherit (clan.config) nixosConfigurations clanInternals;
+      clan = clan.config;
+
+      homeConfigurations = forAllSystems (
+        system:
+        (lib.concatMapAttrs (
+          profileName: profile:
+          let
+            configForUser =
+              username:
+              home-manager.lib.homeManagerConfiguration {
+                pkgs = nixpkgsFor.${system};
+                modules = [
+                  profile
+                  {
+                    home.username = lib.mkDefault username;
+                    home.homeDirectory = lib.mkDefault (if username == "root" then "/root" else "/home/${username}");
+                  }
+                ];
+                extraSpecialArgs = {
+                  flake-self = self;
+                  system-config = builtins.warn ''
+                    system-config is being accessed from standalone home-manager.
+                    This will fall back to an empty attribute set.
+                  '' { };
+                }
+                // inputs;
+              };
+          in
+          {
+            # defition of usernames
+            "${profileName}" = configForUser "lasse";
+            "${profileName}-root" = configForUser "root";
+          }
+        ) self.homeProfiles)
+      );
+
+      homeProfiles = builtins.listToAttrs (
+        map (filename: {
+          name = builtins.substring 0 ((builtins.stringLength filename) - 4) filename;
+          value = {
+            imports = [
+              ./home-manager/profiles/common.nix
+              (./home-manager/profiles + "/${filename}")
+            ]
+            ++ (builtins.attrValues self.homeModules);
+          };
+        }) (builtins.attrNames (builtins.readDir ./home-manager/profiles))
+      );
+
+      homeModules = builtins.listToAttrs (
+        map (name: {
+          inherit name;
+          value = import (./home-manager/modules + "/${name}");
+        }) (builtins.attrNames (builtins.readDir ./home-manager/modules))
+      );
     }
 
     //
 
-      (flake-utils.lib.eachSystem [
-        "aarch64-linux"
-        "x86_64-linux"
-      ])
-        (
-          system:
-          let
-            pkgs = import nixpkgs {
-              inherit system;
-              overlays = [
-                self.overlays.default
-                mayniklas.overlays.mayniklas
-                headplane.overlays.default
+      (flake-utils.lib.eachSystem supportedSystems) (
+        system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ ];
+            config = {
+              allowUnsupportedSystem = true;
+              allowUnfree = true;
+            };
+          };
+        in
+        {
+
+          formatter = pkgs.nixfmt-tree;
+
+          # Custom packages added via the overlay are selectively exposed here, to
+          # allow using them from other flakes that import this one.
+
+          packages = flake-utils.lib.flattenTree {
+            build_outputs = pkgs.callPackage mayniklas.packages.${system}.build_outputs.override {
+              inherit self;
+              output_path = "~/.keep-nix-outputs-lgoette";
+            };
+
+            woodpecker-pipeline = pkgs.callPackage ./packages/woodpecker-pipeline {
+              inputs = inputs;
+              flake-self = self;
+            };
+          };
+
+          devShells = with nixpkgsFor.${system}; {
+            default = pkgs.mkShell {
+              packages = [
+                clan-core.packages.${system}.clan-cli
+                (pkgs.writeShellScriptBin "rebuild" "${pkgs.nixos-rebuild}/bin/nixos-rebuild --sudo switch --flake . $@")
+                (pkgs.writeShellScriptBin "rollout" "${
+                  clan-core.packages.${system}.clan-cli
+                }/bin/clan machines update $@")
               ];
-              config = {
-                allowUnsupportedSystem = true;
-                allowUnfree = true;
-              };
             };
-          in
-          rec {
+          };
 
-            formatter = pkgs.nixfmt-tree;
-
-            # Custom packages added via the overlay are selectively exposed here, to
-            # allow using them from other flakes that import this one.
-
-            packages = flake-utils.lib.flattenTree {
-              build_outputs = pkgs.callPackage mayniklas.packages.${system}.build_outputs.override {
-                inherit self;
-                output_path = "~/.keep-nix-outputs-lgoette";
-              };
-
-              woodpecker-pipeline = pkgs.callPackage ./packages/woodpecker-pipeline {
-                inputs = inputs;
-                flake-self = self;
-              };
-
-              bukkit-spigot = pkgs.bukkit-spigot;
-              minecraft-backup = pkgs.minecraft-backup;
-              minecraft-controller = pkgs.minecraft-controller;
-            };
-
-            apps = {
-              lollypops = lollypops.apps.${pkgs.system}.default { configFlake = self; };
-              # Allow custom packages to be run using `nix run`
-              bukkit-spigot = flake-utils.lib.mkApp { drv = packages.bukkit-spigot; };
-              minecraft-backup = flake-utils.lib.mkApp { drv = packages.minecraft-backup; };
-              minecraft-controller = flake-utils.lib.mkApp { drv = packages.minecraft-controller; };
-            };
-          }
-        );
+        }
+      );
 }

@@ -1,9 +1,7 @@
-{ self, ... }:
 {
   pkgs,
   config,
   lib,
-  mayniklas,
   flake-self,
   ...
 }:
@@ -62,9 +60,10 @@
       # Pass system configuration (top-level "config") to home-manager modules,
       # so we can access it's values for conditional statements
       system-config = config;
-    };
+    }
+    // flake-self.inputs;
 
-    users.lasse = flake-self.homeConfigurations.server;
+    users.lasse = flake-self.homeProfiles.server;
   };
 
   # Enable tailscale vpn
@@ -114,15 +113,12 @@
     };
   };
 
-  environment.systemPackages =
-    with pkgs;
-    with pkgs.mayniklas;
-    [
-      bash-completion
-      git
-      wget
-      wg-friendly-peer-names
-    ];
+  environment.systemPackages = with pkgs; [
+    bash-completion
+    git
+    wget
+    wg-friendly-peer-names
+  ];
 
   # During boot, resize the root partition to the size of the disk.
   # This makes upgrading the size of the vDisk easier.
@@ -139,6 +135,8 @@
 
   # Use KVM / QEMU
   services.qemuGuest.enable = true;
+
+  clan.core.enableRecommendedDefaults = false; # incompatible with some wireguard options
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   system.stateVersion = "22.05";

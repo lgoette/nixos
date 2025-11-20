@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  plasma-manager,
   ...
 }:
 with lib;
@@ -9,6 +10,8 @@ let
   cfg = config.lasse.programs.plasma;
 in
 {
+  imports = [ plasma-manager.homeManagerModules.plasma-manager ];
+
   options.lasse.programs.plasma = {
     enable = mkEnableOption "enable plasma-manager for plasma desktop environment";
     pro-audio = mkEnableOption "enable plasma-manager for plasma desktop environment with pro-audio focus";

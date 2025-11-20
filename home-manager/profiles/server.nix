@@ -1,18 +1,14 @@
 {
   pkgs,
   lib,
-  config,
+  vscode-server,
   ...
-}: # , mayniklas
+}:
 with lib;
 {
+  imports = [ vscode-server.nixosModules.home ];
+
   config = {
-
-    # Home-manager nixpkgs config
-    # nixpkgs.config = {
-    #   overlays = [ mayniklas.overlays.mayniklas ];
-    # };
-
     # Install these packages for my user
     home.packages = with pkgs; [
       #pkgs
@@ -22,9 +18,8 @@ with lib;
       iftop
       unzip
       mcrcon
-
-      #mayniklas
     ];
 
+    services.vscode-server.enable = true;
   };
 }

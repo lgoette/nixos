@@ -23,6 +23,7 @@
       ips = [ "10.11.12.5/24" ];
       # Path to the private key file
       privateKeyFile = toString /var/src/secrets/wireguard/private;
+      generatePrivateKeyFile = true;
 
       postSetup = ''
         ${pkgs.iptables}/bin/iptables -A FORWARD -i wg0 -j ACCEPT

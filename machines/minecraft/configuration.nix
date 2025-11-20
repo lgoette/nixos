@@ -1,9 +1,7 @@
-{ self, ... }:
 {
   lib,
   pkgs,
   config,
-  mayniklas,
   flake-self,
   ...
 }:
@@ -59,9 +57,10 @@
       # Pass system configuration (top-level "config") to home-manager modules,
       # so we can access it's values for conditional statements
       system-config = config;
-    };
+    }
+    // flake-self.inputs;
 
-    users.lasse = flake-self.homeConfigurations.server;
+    users.lasse = flake-self.homeProfiles.server;
   };
 
   # services.minecraft-server = {
@@ -219,14 +218,11 @@
 
   };
 
-  environment.systemPackages =
-    with pkgs;
-    with pkgs.mayniklas;
-    [
-      bash-completion
-      git
-      wget
-    ];
+  environment.systemPackages = with pkgs; [
+    bash-completion
+    git
+    wget
+  ];
 
   # swapfile empty because minecraft uses fixed ram
   swapDevices = [ ];
