@@ -1,5 +1,4 @@
 # nix run github:numtide/nixos-anywhere -- --flake .#lamabus root@192.168.0.23
-# nix run .\#lollypops -- lamabus
 {
   pkgs,
   config,
@@ -57,7 +56,8 @@ in
       # Pass system configuration (top-level "config") to home-manager modules,
       # so we can access it's values for conditional statements
       system-config = config;
-    };
+    }
+    // flake-self.inputs;
 
     users.lasse = flake-self.homeProfiles.desktop-audio;
   };
@@ -189,14 +189,14 @@ in
     "snd-rawmidi"
   ];
 
-  lollypops.deployment = {
-    local-evaluation = false;
-    ssh = {
-      user = "root";
-      host = "192.168.0.23"; # Diese ip ist alt
-      opts = [ "-p 50937" ];
-    };
-  };
+  # lollypops.deployment = {
+  #   local-evaluation = false;
+  #   ssh = {
+  #     user = "root";
+  #     host = "192.168.0.23"; # Diese ip ist alt
+  #     opts = [ "-p 50937" ];
+  #   };
+  # };
 
   # swapfile
   swapDevices = [

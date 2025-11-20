@@ -68,8 +68,6 @@ in
       shellAliases = rec {
         # nix
         nixos-rebuild = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo";
-
-        lolly = "${pkgs.nix}/bin/nix run .\#lollypops --";
       };
     };
 

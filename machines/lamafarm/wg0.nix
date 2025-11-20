@@ -28,6 +28,7 @@ in
       mtu = 1412;
       # Path to the private key file
       privateKeyFile = toString /var/src/secrets/wireguard/private;
+      generatePrivateKeyFile = true;
 
       # Minecraft server port forwarding via wireguard interface (no port needs to be opened on the host firewall)
       # postSetup = ''
@@ -66,7 +67,7 @@ in
 
         # 10.11.12.7
         {
-          publicKey = "YjyZJW6Pefeq3XNpaqAQWzwyMCZnIMfkXJG8Kvqr+hs=";
+          publicKey = "BhB16enX+GWBjX9NKj1+sScpTylm106SAfbw2wJ/pHg=";
           allowedIPs = [ "10.11.12.7" ];
           # persistentKeepalive = 15;
         }

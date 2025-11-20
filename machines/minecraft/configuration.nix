@@ -57,7 +57,8 @@
       # Pass system configuration (top-level "config") to home-manager modules,
       # so we can access it's values for conditional statements
       system-config = config;
-    };
+    }
+    // flake-self.inputs;
 
     users.lasse = flake-self.homeProfiles.server;
   };

@@ -26,6 +26,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Manage networks of machines
+    # https://clan.lol
+    clan-core = {
+      url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
+      # Don't do this if your machines are on nixpkgs stable.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # https://github.com/nix-community/disko
     # Format disks with nix-config
     disko = {
@@ -55,7 +63,6 @@
     # Visual Studio Code Server support in NixOS
     vscode-server = {
       url = "github:msteen/nixos-vscode-server";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
 
@@ -68,6 +75,7 @@
     headplane = {
       # url = "github:tale/headplane/next";
       url = "github:tale/headplane";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # https://github.com/mayniklas/nixos
@@ -84,17 +92,6 @@
         disko.follows = "disko";
       };
     };
-
-    # https://github.com/pinpox/lollypops/
-    # NixOS Deployment Tool
-    # Old version (I change this when I have Time)
-    lollypops = {
-      url = "github:pinpox/lollypops/098b95c871a8fb6f246ead8d7072ec2201d7692b";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-
   };
 
   outputs =
@@ -118,14 +115,51 @@
         }
       );
 
+      # use this to automatically import packages from ./packages
       flakePkgs =
         pkgs:
         (builtins.listToAttrs (
           map (name: {
             inherit name;
-            value = pkgs.callPackage (./pkgs + "/${name}") { flake-self = self; };
-          }) (builtins.attrNames (builtins.readDir ./pkgs))
+            value = pkgs.callPackage (./packages + "/${name}") { flake-self = self; };
+          }) (builtins.attrNames (builtins.readDir ./packages))
         ));
+
+      clan = clan-core.lib.clan {
+        inherit self; # this needs to point at the repository root
+
+        # Make inputs and the flake itself accessible as module parameters.
+        # Technically, adding the inputs is redundant as they can be also
+        # accessed with flake-self.inputs.X, but adding them individually
+        # allows to only pass what is needed to each module.
+        specialArgs = {
+          flake-self = self;
+        }
+        // inputs;
+
+        inventory = {
+
+          meta.name = "lasse-clan";
+
+          instances = {
+            importer-modules-dir = {
+              module = {
+                name = "importer";
+                input = "clan-core";
+              };
+              roles.default.tags."all" = { };
+              roles.default.extraModules = (builtins.attrValues self.nixosModules) ++ [
+                {
+                  nixpkgs.overlays = [
+                    self.overlays.default
+                  ];
+                }
+              ];
+            };
+          };
+        };
+
+      };
     in
     {
 
@@ -175,36 +209,8 @@
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
       # configuration.nix that will be read first
-      nixosConfigurations = builtins.listToAttrs (
-        map (x: {
-          name = x;
-          value = nixpkgs.lib.nixosSystem {
-
-            # Make inputs and the flake itself accessible as module parameters.
-            # Technically, adding the inputs is redundant as they can be also
-            # accessed with flake-self.inputs.X, but adding them individually
-            # allows to only pass what is needed to each module.
-            specialArgs = {
-              flake-self = self;
-            }
-            // inputs;
-
-            modules =
-              builtins.attrValues self.nixosModules
-              ++ [ lollypops.nixosModules.lollypops ]
-              ++ [
-                {
-                  nixpkgs.overlays = [
-                    self.overlays.default
-                    headplane.overlays.default
-                  ];
-                }
-                (import "${./.}/machines/${x}/configuration.nix")
-              ];
-
-          };
-        }) (builtins.attrNames (builtins.readDir ./machines))
-      );
+      inherit (clan.config) nixosConfigurations clanInternals;
+      clan = clan.config;
 
       homeConfigurations = forAllSystems (
         system:
@@ -294,9 +300,18 @@
             };
           };
 
-          apps = {
-            lollypops = lollypops.apps.${pkgs.system}.default { configFlake = self; };
+          devShells = with nixpkgsFor.${system}; {
+            default = pkgs.mkShell {
+              packages = [
+                clan-core.packages.${system}.clan-cli
+                (pkgs.writeShellScriptBin "rebuild" "${pkgs.nixos-rebuild}/bin/nixos-rebuild --sudo switch --flake . $@")
+                (pkgs.writeShellScriptBin "rollout" "${
+                  clan-core.packages.${system}.clan-cli
+                }/bin/clan machines update $@")
+              ];
+            };
           };
+
         }
       );
 }

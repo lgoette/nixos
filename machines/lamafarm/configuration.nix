@@ -60,7 +60,8 @@
       # Pass system configuration (top-level "config") to home-manager modules,
       # so we can access it's values for conditional statements
       system-config = config;
-    };
+    }
+    // flake-self.inputs;
 
     users.lasse = flake-self.homeProfiles.server;
   };
@@ -134,6 +135,8 @@
 
   # Use KVM / QEMU
   services.qemuGuest.enable = true;
+
+  clan.core.enableRecommendedDefaults = false; # incompatible with some wireguard options
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   system.stateVersion = "22.05";

@@ -3,12 +3,13 @@
   config,
   lib,
   flake-self,
+  nixos-hardware,
   ...
 }:
 
 {
   imports = [
-    flake-self.pi.pi4b
+    nixos-hardware.nixosModules.raspberry-pi-4
     ../../users/lasse.nix
     ../../users/root.nix
     ./wg0.nix
@@ -65,7 +66,8 @@
       # Pass system configuration (top-level "config") to home-manager modules,
       # so we can access it's values for conditional statements
       system-config = config;
-    };
+    }
+    // flake-self.inputs;
 
     users.lasse = flake-self.homeProfiles.server;
   };
@@ -206,7 +208,18 @@
     pwr.disable = true;
   };
 
+  clan.core.networking.targetHost = config.networking.hostName;
+  clan.core.enableRecommendedDefaults = false; # incompatible with some wireguard options
+
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   system.stateVersion = "22.05";
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/NIXOS_SD";
+      fsType = "ext4";
+      options = [ "noatime" ];
+    };
+  };
 
 }

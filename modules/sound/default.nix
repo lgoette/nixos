@@ -2,7 +2,7 @@
   lib,
   pkgs,
   config,
-  flake-self,
+  musnix,
   ...
 }:
 with lib;
@@ -17,7 +17,7 @@ in
 
   # import additional modules from flake inputs
   imports = [
-    flake-self.inputs.musnix.nixosModules.musnix
+    musnix.nixosModules.musnix
   ];
 
   config = mkIf cfg.enable (mkMerge [
