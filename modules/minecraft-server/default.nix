@@ -47,7 +47,7 @@ in
             difficulty = 3;
             gamemode = 0;
             max-players = 12;
-            motd = "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\n1.20.10 \\u00a74<3";
+            motd = "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\n1.21.10 \\u00a74<3";
             white-list = true;
             entity-broadcast-range-percentage = 100;
             view-distance = 16;

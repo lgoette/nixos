@@ -23,6 +23,14 @@
       #   enableWebservice = true;
       #   openFirewall = true;
       # };
+      minecraft-controller = {
+        enable = true;
+        schedule = {
+          enable = true;
+          start-time = "10:30";
+          stop-time = "02:30";
+        };
+      };
     };
   };
 
@@ -146,18 +154,6 @@
   #   # };
   # };
 
-  # TODO: Anpassen auf nix-minecraft (minecraft-servers)
-  # Ferien Zeit 10-3
-  # Normale Zeit: 10-2
-  # services.cron = {
-  #   enable = false;
-  #   systemCronJobs = [
-  #     "50 1 * * *     root    echo 'say Server is shutting down in 10 minutes!' > ${config.systemd.sockets.minecraft-server.socketConfig.ListenFIFO}"
-  #     "0 2 * * *      root    ${pkgs.systemd}/bin/systemctl stop minecraft-server"
-  #     "0 10 * * *      root    ${pkgs.systemd}/bin/systemctl start minecraft-server"
-  #   ];
-  # };
-
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
@@ -210,9 +206,10 @@
     };
 
     firewall.allowedTCPPorts = [
-      25565
-      50937
+      25565 # Minecraft Server Port
+      50937 # SSH Port
       9100
+      8100 # Bluemap Port
     ];
     firewall.allowedUDPPorts = [ 25565 ];
 
@@ -222,6 +219,7 @@
     bash-completion
     git
     wget
+    tmux
   ];
 
   # swapfile empty because minecraft uses fixed ram
@@ -229,6 +227,8 @@
 
   # Use KVM / QEMU
   services.qemuGuest.enable = true;
+
+  clan.core.networking.targetHost = "10.11.12.8:50937";
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   system.stateVersion = "22.05";
