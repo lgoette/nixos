@@ -27,8 +27,8 @@
         enable = true;
         schedule = {
           enable = true;
-          start-time = "10:30";
-          stop-time = "02:30";
+          start-time = "10:00"; # Normale Zeit: 10-2; Ferien Zeit 10-3
+          stop-time = "02:00";
         };
       };
     };

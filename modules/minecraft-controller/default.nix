@@ -66,8 +66,6 @@ in
 
   config = mkIf cfg.enable {
 
-    # Ferien Zeit 10-3
-    # Normale Zeit: 10-2
     services.cron =
       let
         hasServers = lib.hasAttr "minecraft-servers" config.services;
