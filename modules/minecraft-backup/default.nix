@@ -72,7 +72,7 @@ in
               User = "root";
               Type = "oneshot";
               ExecStart = ''
-                ${pkgs.minecraft-backup}/bin/minecraft-backup ${cfg.dataDir} ${serverDataDir} ${mcServices}
+                ${pkgs.minecraft-backup}/bin/minecraft-backup ${cfg.dataDir} ${serverDataDir} '${lib.concatStringsSep " " mcServices}'
               '';
             };
           };
