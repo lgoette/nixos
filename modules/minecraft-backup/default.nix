@@ -33,6 +33,15 @@ in
   };
 
   config =
+    let
+
+      hasServers =
+        (lib.hasAttr "minecraft-servers" config.services) && config.services.minecraft-servers.enable;
+
+      hasServer =
+        (lib.hasAttr "minecraft-server" config.services) && config.services.minecraft-server.enable;
+
+    in
     mkIf
       (
         cfg.enable && (config.services.minecraft-server.enable || config.services.minecraft-servers.enable)
@@ -48,13 +57,22 @@ in
                 config.services.minecraft-servers.dataDir
               else
                 throw "Minecraft backup enabled but no Minecraft server found!";
+
+            # minecraft-servers-<name> when using nix-minecraft; minecraft-server else
+            mcServices =
+              if hasServers then
+                map (name: "minecraft-server-${name}.service") (
+                  lib.attrNames (lib.filterAttrs (name: srv: srv.enable) config.services.minecraft-servers.servers)
+                )
+              else
+                [ "minecraft-server.service" ];
           in
           {
             serviceConfig = {
               User = "root";
               Type = "oneshot";
               ExecStart = ''
-                ${pkgs.minecraft-backup}/bin/minecraft-backup ${cfg.dataDir} ${serverDataDir}
+                ${pkgs.minecraft-backup}/bin/minecraft-backup ${cfg.dataDir} ${serverDataDir} ${mcServices}
               '';
             };
           };

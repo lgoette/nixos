@@ -11,24 +11,43 @@ stdenv.mkDerivation {
   installPhase =
     let
       minecraft-backup-skript = pkgs.writeShellScriptBin "minecraft-backup" ''
-        backup_dir=$1
-        mc_dir=$2
+        backup_dir="$1"
+        mc_dir="$2"
+        mc_services="$3"
 
-        if systemctl is-active --quiet minecraft-server.service; then
-          ${pkgs.systemd}/bin/systemctl stop minecraft-server # TODO: Anpassen auf nix-minecraft (minecraft-servers)
-          if [[ $? == 0 ]]; then
+        # Liste der gestoppten Dienste (wird in umgekehrter Reihenfolge
+        # aufgebaut, sodass beim Starten die ursprüngliche Reihenfolge
+        # wiederhergestellt wird)
+        stopped_services=""
+
+        if [ -n "$mc_services" ]; then
+          for svc in $mc_services; do
+            if ${pkgs.systemd}/bin/systemctl is-active --quiet "$svc"; then
+              if ${pkgs.systemd}/bin/systemctl stop "$svc"; then
+                # prepend, damit die Startreihenfolge umgekehrt wird
+                stopped_services="$svc $stopped_services"
+              fi
+            fi
+          done
+
+          # kurze Wartezeit, falls die Server Zeit zum Herunterfahren brauchen
+          if [ -n "$stopped_services" ]; then
             sleep 60
-            ${pkgs.zip}/bin/zip -r $backup_dir/minecraft.zip $mc_dir
-            ${pkgs.systemd}/bin/systemctl start minecraft-server
-            ${pkgs.coreutils}/bin/chown nginx:nginx $backup_dir/minecraft.zip
-            ${pkgs.coreutils}/bin/chmod 550 $backup_dir/minecraft.zip
           fi
-        else
-          ${pkgs.zip}/bin/zip -r $backup_dir/minecraft.zip $mc_dir
-          ${pkgs.coreutils}/bin/chown nginx:nginx $backup_dir/minecraft.zip
-          ${pkgs.coreutils}/bin/chmod 550 $backup_dir/minecraft.zip
         fi
 
+        # Backup erstellen
+        ${pkgs.zip}/bin/zip -r "$backup_dir/minecraft.zip" "$mc_dir"
+
+        # Dienste wieder starten (in umgekehrter Reihenfolge der Stopps)
+        if [ -n "$stopped_services" ]; then
+          for svc in $stopped_services; do
+            ${pkgs.systemd}/bin/systemctl start "$svc"
+          done
+        fi
+
+        ${pkgs.coreutils}/bin/chown nginx:nginx "$backup_dir/minecraft.zip"
+        ${pkgs.coreutils}/bin/chmod 550 "$backup_dir/minecraft.zip"
       '';
     in
     ''

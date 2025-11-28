@@ -18,11 +18,11 @@
   lgoette = {
     services = {
       minecraft-server.enable = true;
-      # minecraft-backup = {
-      #   enable = true;
-      #   enableWebservice = true;
-      #   openFirewall = true;
-      # };
+      minecraft-backup = {
+        enable = true;
+        enableWebservice = true;
+        openFirewall = true;
+      };
       minecraft-controller = {
         enable = true;
         schedule = {
