@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  nix-minecraft,
   pkgs,
   ...
 }:
@@ -64,76 +63,97 @@ in
 
   };
 
-  config = mkIf cfg.enable {
+  config =
+    let
 
-    services.cron =
-      let
-        hasServers = lib.hasAttr "minecraft-servers" config.services;
-        hasServer = lib.hasAttr "minecraft-server" config.services;
+      hasServers =
+        (lib.hasAttr "minecraft-servers" config.services)
+        && config.services.minecraft-servers.enable
+        && config.services.minecraft-servers.servers != { };
 
-        # ensure exactly one of the two options is present
-        _ensureOne =
-          if hasServers != hasServer then
-            true
-          else
-            builtins.throw "Please use services.minecraft-servers or services.minecraft-server (not both or none).";
+      hasServer =
+        (lib.hasAttr "minecraft-server" config.services) && config.services.minecraft-server.enable;
 
-        # If minecraft-servers
-        mcInstances = if hasServers then lib.attrNames config.services.minecraft-servers.servers else [ ];
-        mcInstance =
-          if hasServers then
-            (
-              if mcInstances == [ ] then
-                builtins.throw "services.minecraft-servers is set, but there is no instance."
-              else
-                builtins.elemAt mcInstances 0
-            )
-          else
-            "";
+    in
+    mkIf cfg.enable {
 
-        # Find Service-Name and Socket-Path:
-        mcService =
-          if hasServers then "minecraft-server-${mcInstance}.service" else "minecraft-server.service";
-        cmd =
-          if hasServers then
-            "${pkgs.tmux}/bin/tmux -S ${config.services.minecraft-servers.runDir}/${mcInstance}.sock send-keys -t 0 'say ${cfg.schedule.stop-message}' ENTER"
-          else
-            "echo 'say ${cfg.schedule.stop-message}' > ${config.systemd.sockets.minecraft-server.socketConfig.ListenFIFO}";
+      lgoette.services.minecraft-controller.schedule.enable = lib.mkIf (!hasServer && !hasServers) (
+        builtins.warn "No Servers configured. Turning off schedule." (lib.mkForce false)
+      );
 
-        parseTime =
-          timeStr:
-          let
-            parts = lib.splitString ":" timeStr;
-          in
-          {
-            hour = lib.toIntBase10 (lib.elemAt parts 0);
-            minute = lib.toIntBase10 (lib.elemAt parts 1);
-          };
+      services.cron =
+        let
+          # Get all enabled nix-minecraft (minecraft-servers) instances
+          mcInstances =
+            if hasServers then
+              lib.attrNames (lib.filterAttrs (name: srv: srv.enable) config.services.minecraft-servers.servers)
+            else
+              [ ];
 
-        stop = parseTime cfg.schedule.stop-time;
-        start = parseTime cfg.schedule.start-time;
+          # Time-calculation for shutdown message
+          parseTime =
+            timeStr:
+            let
+              parts = lib.splitString ":" timeStr;
+            in
+            {
+              hour = lib.toIntBase10 (lib.elemAt parts 0);
+              minute = lib.toIntBase10 (lib.elemAt parts 1);
+            };
 
-        # subtract 10 minutes for the warning message, wrap around midnight
-        stopTotal = stop.hour * 60 + stop.minute;
-        msgTotal = if stopTotal >= 10 then stopTotal - 10 else stopTotal - 10 + 24 * 60;
-        msgHour = builtins.div msgTotal 60;
-        msgMin = msgTotal - (msgHour * 60);
+          stop = parseTime cfg.schedule.stop-time;
+          start = parseTime cfg.schedule.start-time;
 
-        toCron = t: "${toString t.minute} ${toString t.hour} * * *";
+          # subtract 10 minutes for the warning message, wrap around midnight
+          stopTotal = stop.hour * 60 + stop.minute;
+          msgTotal = if stopTotal >= 10 then stopTotal - 10 else stopTotal - 10 + 24 * 60;
+          msgHour = builtins.div msgTotal 60;
+          msgMin = msgTotal - (msgHour * 60);
 
-        # exported cron time strings
-        msg-time-cron = "${toString msgMin} ${toString msgHour} * * *";
-        start-time-cron = toCron start;
-        stop-time-cron = toCron stop;
+          toCron = t: "${toString t.minute} ${toString t.hour} * * *";
 
-      in
-      {
-        enable = cfg.schedule.enable;
-        systemCronJobs = [
-          "${msg-time-cron}      root    ${cmd}"
-          "${stop-time-cron}      root    ${pkgs.systemd}/bin/systemctl stop ${mcService}"
-          "${start-time-cron}      root    ${pkgs.systemd}/bin/systemctl start ${mcService}"
-        ];
-      };
-  };
+          # exported cron time strings
+          msg-time-cron = "${toString msgMin} ${toString msgHour} * * *";
+          start-time-cron = toCron start;
+          stop-time-cron = toCron stop;
+
+          # Generate cron jobs for all nix-minecraft (minecraft-servers) instances
+          nixMinecraftJobs =
+            if hasServers then
+              lib.concatMap (
+                inst:
+                let
+                  mcService = "minecraft-server-${inst}.service";
+                  stopMessageCmd = "${pkgs.tmux}/bin/tmux -S ${config.services.minecraft-servers.runDir}/${inst}.sock send-keys -t 0 'say ${cfg.schedule.stop-message}' ENTER";
+                in
+                [
+                  "${msg-time-cron}      root    ${stopMessageCmd}"
+                  "${stop-time-cron}      root    ${pkgs.systemd}/bin/systemctl stop ${mcService}"
+                  "${start-time-cron}      root    ${pkgs.systemd}/bin/systemctl start ${mcService}"
+                ]
+              ) mcInstances
+            else
+              [ ];
+
+          # Generate cron jobs for single minecraft-server instance
+          minecraftJobs =
+            if hasServer then
+              [
+                "${msg-time-cron}      root    echo 'say ${cfg.schedule.stop-message}' > ${config.systemd.sockets.minecraft-server.socketConfig.ListenFIFO}"
+                "${stop-time-cron}      root    ${pkgs.systemd}/bin/systemctl stop minecraft-server.service"
+                "${start-time-cron}      root    ${pkgs.systemd}/bin/systemctl start minecraft-server.service"
+              ]
+            else
+              [ ];
+
+        in
+        {
+          enable = lib.mkIf cfg.schedule.enable true;
+          systemCronJobs = lib.concatLists [
+            nixMinecraftJobs
+            minecraftJobs
+          ];
+        };
+
+    };
 }
