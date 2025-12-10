@@ -221,7 +221,7 @@ in
                   };
                 };
               }
-              # We can also configure the widgets. For example if you want to pin
+              # We can also configure the widgets. For example if0.18.5 you want to pin
               # konsole and dolphin to the task-launcher the following widget will
               # have that.
               {
@@ -258,6 +258,7 @@ in
                       "org.kde.plasma.volume"
                       "org.kde.plasma.notifications"
                       # "org.kde.plasma.clipboard"
+                      "dev.deedles.Trayscale"
                     ];
                     hidden = [
                       "org.kde.kalendar.contact"
@@ -267,7 +268,6 @@ in
                       "Wallet Manager"
                       "KDE Daemon"
                       "The KDE Crash Handler"
-                      "dev.deedles.Trayscale"
                     ];
                   };
                 };

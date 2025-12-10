@@ -36,6 +36,9 @@ stdenv.mkDerivation {
           fi
         fi
 
+        # Pfad zum Backup-Verzeichnis erstellen, falls nicht existent
+        ${pkgs.coreutils}/bin/mkdir -p "$backup_dir"
+
         # Backup erstellen
         ${pkgs.zip}/bin/zip -r "$backup_dir/minecraft.zip" "$mc_dir"
 

@@ -28,7 +28,7 @@
         schedule = {
           enable = false;
           start-time = "10:00"; # Normale Zeit: 10-2; Ferien Zeit 10-3
-          stop-time = "02:00";
+          stop-time = "04:00";
         };
       };
     };
@@ -113,6 +113,7 @@
           allowedIPs = [
             "10.11.12.1/32"
             "10.11.12.0/24"
+            "192.168.178.3" # Allow NAS for pulling Minecraft Backup
           ];
           # hardcode wireguard endpoint
           # -> wireguard can be started with no DNS available

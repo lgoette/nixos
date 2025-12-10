@@ -21,7 +21,7 @@
     };
 
     unifi-controller = {
-      enable = true;
+      enable = false;
       domain = "unifi.lasse-goette.de";
     };
 
@@ -136,6 +136,7 @@
   # Use KVM / QEMU
   services.qemuGuest.enable = true;
 
+  clan.core.networking.targetHost = config.networking.hostName;
   clan.core.enableRecommendedDefaults = false; # incompatible with some wireguard options
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

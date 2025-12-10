@@ -68,6 +68,7 @@ in
       shellAliases = rec {
         # nix
         nixos-rebuild = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo";
+        "ssh -A" = "eval '$(ssh-agent)' & ssh-add ~/.ssh/id_rsa & ssh -A ";
       };
     };
 
