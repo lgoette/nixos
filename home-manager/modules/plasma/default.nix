@@ -221,7 +221,7 @@ in
                   };
                 };
               }
-              # We can also configure the widgets. For example if0.18.5 you want to pin
+              # We can also configure the widgets. For example if you want to pin
               # konsole and dolphin to the task-launcher the following widget will
               # have that.
               {
@@ -317,6 +317,14 @@ in
           # }
 
         ];
+
+        configFile = {
+          # Disable track-point (has stickdrift)
+          kcminputrc = {
+            "Libinput/2/10/TPPS\\/2 Elan TrackPoint"."Enabled" = false;
+          };
+        };
+
         # Restart plasmashell after applying panels (needed for custom popup size)
         # startup.desktopScript."apply_panels".postCommands = ''
         #   echo "Restarting plasmashell..."
