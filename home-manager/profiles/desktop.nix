@@ -78,6 +78,7 @@ with lib;
       ))
       # postman
       go
+      claude-code
 
       # Office
       chromium
