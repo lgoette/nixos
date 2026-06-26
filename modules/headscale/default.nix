@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  headplane,
+  #headplane,
   ...
 }:
 with lib;
@@ -12,9 +12,9 @@ let
 in
 {
 
-  imports = [
-    headplane.nixosModules.headplane
-  ];
+  # imports = [
+  #   headplane.nixosModules.headplane
+  # ];
 
   options.lgoette.headscale-controller = {
 
@@ -30,10 +30,6 @@ in
   };
 
   config = mkIf cfg.enable {
-
-    nixpkgs.overlays = [
-      headplane.overlays.default
-    ];
 
     # Open firewall ports
     networking.firewall = {

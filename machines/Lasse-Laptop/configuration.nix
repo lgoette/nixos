@@ -52,6 +52,9 @@
     users.lasse = flake-self.homeProfiles.desktop;
   };
 
+  # Enable Librepods Tray-App
+  programs.librepods.enable = true;
+
   # Enable tailscale vpn
   # Start with `tailscale up --login-server=https://tailscale.lasse-goette.de/`
   services.tailscale = {
@@ -115,9 +118,11 @@
 
     };
   };
+
   users.extraUsers.lasse.extraGroups = [
     "networkmanager"
     "audio"
+    "librepods"
   ]; # TODO: move audio group to sound module - find variant for generic user
 
   # Enable autostart

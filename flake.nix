@@ -72,11 +72,11 @@
 
     # https://github.com/tale/headplane/
     # Headscale UI
-    headplane = {
-      # url = "github:tale/headplane/next";
-      url = "github:tale/headplane";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # headplane = {
+    #   # url = "github:tale/headplane/next";
+    #   url = "github:tale/headplane";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # https://github.com/mayniklas/nixos
     # @MayNiklas NixOS configuration

@@ -8,6 +8,7 @@
 with lib;
 let
   cfg = config.lasse.programs.plasma;
+  powerInhibitToggle = import ./power-inhibit-toggle.nix { inherit pkgs; };
 in
 {
   imports = [ plasma-manager.homeManagerModules.plasma-manager ];
@@ -21,6 +22,8 @@ in
 
     # This block is always enabled
     {
+      home.packages = [ powerInhibitToggle ];
+
       programs.plasma = {
         enable = true;
         overrideConfig = true;
@@ -32,10 +35,17 @@ in
           wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images/5120x2880.png";
         };
 
-        hotkeys.commands."open-settings" = {
-          name = "Open Settings";
-          key = "Meta+I";
-          command = "systemsettings";
+        hotkeys.commands = {
+          "open-settings" = {
+            name = "Open Settings";
+            key = "Meta+I";
+            command = "systemsettings";
+          };
+          "power-inhibit-toggle" = {
+            name = "Toggle power inhibit (sleep, lock, lid)";
+            key = "Meta+S";
+            command = "${powerInhibitToggle}/bin/power-inhibit-toggle";
+          };
         };
 
         configFile = {

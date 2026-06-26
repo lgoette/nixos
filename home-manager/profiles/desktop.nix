@@ -13,7 +13,7 @@ with lib;
       programs.git.enable = true;
     };
 
-    # Sctivate Trayscale tray icon
+    # Activate Trayscale tray icon
     systemd.user.services.trayscale = {
       Unit = {
         Description = "Trayscale tray icon";
@@ -49,6 +49,7 @@ with lib;
       # barrier # TODO: Keyboard is us instead of de when starting input-leap
       # input-leap # Fails to build
       yubioath-flutter
+      #librepods
 
       # Kde
       kdePackages.dolphin
@@ -78,7 +79,11 @@ with lib;
       ))
       # postman
       go
+      rust-analyzer
+      bacon
       claude-code
+      claude-monitor
+      claude-sandbox
 
       # Office
       chromium

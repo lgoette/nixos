@@ -18,6 +18,10 @@ in
 
     hardware.bluetooth = {
       enable = true;
+      settings = {
+        Policy.AutoEnable = true;
+        General.Experimental = true;
+      };
       # hsphfpd.enable = true;
     };
 

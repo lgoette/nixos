@@ -21,13 +21,13 @@ in
         jnoortheen.nix-ide
 
         golang.go
+        rust-lang.rust-analyzer
 
         gruntfuggly.todo-tree
         editorconfig.editorconfig
         james-yu.latex-workshop
         yzhang.markdown-all-in-one
         esbenp.prettier-vscode
-
         ms-azuretools.vscode-docker
         ms-python.python
         ms-vscode-remote.remote-ssh
