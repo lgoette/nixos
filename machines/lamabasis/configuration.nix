@@ -36,7 +36,7 @@
       deviceType = "avr";
       name = "Lama";
     };
-    oracle-cloud-instance-launcher.enable = true;
+    # oracle-cloud-instance-launcher.enable = true;
   };
 
   mayniklas = {
@@ -206,6 +206,11 @@
     eth.disable = true;
     act.disable = true;
     pwr.disable = true;
+  };
+
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
   };
 
   clan.core.networking.targetHost = config.networking.hostName;
