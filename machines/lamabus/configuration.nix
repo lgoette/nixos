@@ -249,6 +249,8 @@ in
     efiInstallAsRemovable = true;
   };
 
+  clan.core.deployment.requireExplicitUpdate = true;
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.enableRedistributableFirmware = config.nixpkgs.config.allowUnfree;

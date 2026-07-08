@@ -64,6 +64,8 @@
     };
   };
 
+  clan.core.deployment.requireExplicitUpdate = true;
+
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   system.stateVersion = "22.05";
 
