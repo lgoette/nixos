@@ -148,7 +148,7 @@ in
     ];
     environment.DISPLAY = ":0";
     environment.WAYLAND_DISPLAY = "wayland-0";
-    environment.DEBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus";
+    environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus";
     environment.QT_QPA_PLATFORM = "wayland";
     environment.XDG_RUNTIME_DIR = "/run/user/1000";
     after = [
