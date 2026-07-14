@@ -31,6 +31,8 @@ in
     # if pro-audio is enabled
     (mkIf cfg.pro-audio {
 
+      systemd.services.jack.serviceConfig.TimeoutStopSec = 5;
+
       # Enable sound with jack
       services.jack = {
         jackd.enable = true;

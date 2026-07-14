@@ -141,6 +141,15 @@ in
     jack1
   ];
 
+  systemd.user.services.apply-screen-rotation = {
+    wantedBy = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.kdePackages.kscreen}/bin/kscreen-doctor output.Unknown-1.rotation.inverted";
+    };
+  };
+
   systemd.user.services.carla = {
     wantedBy = [
       "default.target"
