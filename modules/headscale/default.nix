@@ -27,6 +27,12 @@ in
       description = "(Sub-) domain for headscale.";
     };
 
+    policy = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = "HuJSON ACL policy text for headscale.";
+    };
+
   };
 
   config = mkIf cfg.enable {
@@ -41,6 +47,11 @@ in
       ];
     };
 
+    environment.etc."headscale/policy.hujson" = mkIf (cfg.policy != null) {
+      mode = "0444";
+      text = cfg.policy;
+    };
+
     # Enable headscale service
     services.headscale = {
       enable = true;
@@ -48,6 +59,10 @@ in
       port = 4443;
       settings = {
         server_url = "https://${cfg.headscale-domain}";
+        policy = mkIf (cfg.policy != null) {
+          mode = "file";
+          path = "/etc/headscale/policy.hujson";
+        };
         dns = {
           base_domain = "tailnet.local";
           nameservers.global = [

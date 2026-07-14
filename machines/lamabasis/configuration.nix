@@ -89,6 +89,7 @@
     ];
     extraSetFlags = [
       "--advertise-exit-node"
+      "--advertise-routes=192.168.176.0/24"
     ];
   };
 

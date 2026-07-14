@@ -28,6 +28,14 @@
     headscale-controller = {
       enable = true;
       headscale-domain = "tailscale.lasse-goette.de";
+      policy = ''
+        {
+          "acls": [
+            { "action": "accept", "src": ["lasse@"], "dst": ["*:*"] },
+            { "action": "accept", "src": ["roland@"], "dst": ["192.168.176.5:8006"] }
+          ]
+        }
+      '';
     };
 
   };
@@ -119,6 +127,8 @@
     wget
     wg-friendly-peer-names
   ];
+
+  boot.loader.grub.device = lib.mkForce "/dev/vda";
 
   # During boot, resize the root partition to the size of the disk.
   # This makes upgrading the size of the vDisk easier.
