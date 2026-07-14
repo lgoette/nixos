@@ -46,6 +46,7 @@ in
     # home-manager versions and does not work with configs using
     # nixpkgs.config`
     useUserPackages = true;
+    backupFileExtension = "backup";
 
     extraSpecialArgs = {
       # Pass all flake inputs to home-manager modules aswell so we can use them
