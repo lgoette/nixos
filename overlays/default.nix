@@ -24,8 +24,12 @@ in
   # unifi = super.pkgs.unifi7;
 
   # packages from nixpkgs-stable
+  # yabridge must come from the same nixpkgs as carla: its libyabridge-*.so
+  # gets dlopen'ed into the carla process, so both need the same glibc.
   inherit (nixpkgs-stable)
     carla
+    yabridge
+    yabridgectl
     ;
 
   # downgrade mixxx to 2.4.1
