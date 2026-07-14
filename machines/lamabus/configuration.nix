@@ -22,6 +22,7 @@ in
       enable = true;
       pro-audio = true;
     };
+    bluetooth.enable = true;
     locale.enable = true;
   };
   users.extraUsers.lasse.extraGroups = [
@@ -30,9 +31,6 @@ in
   ];
 
   mayniklas = {
-    user = {
-      root.enable = true;
-    };
     var.mainUser = "lasse";
     locale.enable = true;
     nix-common = {
