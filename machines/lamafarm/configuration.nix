@@ -125,7 +125,6 @@
     bash-completion
     git
     wget
-    wg-friendly-peer-names
   ];
 
   boot.loader.grub.device = lib.mkForce "/dev/vda";
