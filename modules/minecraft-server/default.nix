@@ -57,7 +57,7 @@ in
           symlinks = {
             "plugins/bluemap-5.22-paper.jar" = pkgs.fetchurl {
               url = "https://cdn.modrinth.com/data/swbUV1cr/versions/8Ci8SkQp/bluemap-5.22-paper.jar";
-              hash = "sha256-KkMLP09ZZN+Ev4WhRp4BA6l+applaGAJbwurzwTsUqc=";
+              hash = "sha256-kSiwssaTnFwDUrh4gF8LEN1Nwr9Y/DHRryYJAvm5TQU=";
             };
           };
         };
