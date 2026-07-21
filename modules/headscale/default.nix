@@ -95,7 +95,6 @@ in
         integration.agent = {
           # Agent später noch testen um mehr Infos über Nodes zu bekommen
           enabled = false;
-          pre_authkey_path = "/var/src/secrets/headplane/agent_preauthkey";
         };
         # integration.proc.enabled = true; # Depricated
 
