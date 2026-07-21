@@ -36,7 +36,7 @@ in
       servers = {
         vanilla = {
           enable = true;
-          package = pkgs.paperServers.paper-1_21_11;
+          package = pkgs.paperServers.paper-26_2;
           openFirewall = true;
           autoStart = true;
           jvmOpts = "-Xms2G -Xmx6G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1";
@@ -47,7 +47,7 @@ in
             difficulty = 3;
             gamemode = 0;
             max-players = 12;
-            motd = "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\n1.21.10 \\u00a74<3";
+            motd = "\\u00a7e\\u273f\\u00a72\\u00a7lLamacraft\\u00a7e\\u273f\\n26.2 \\u00a74<3";
             white-list = true;
             entity-broadcast-range-percentage = 100;
             view-distance = 16;
@@ -55,8 +55,8 @@ in
           };
 
           symlinks = {
-            "plugins/bluemap-5.13-paper.jar" = pkgs.fetchurl {
-              url = "https://cdn.modrinth.com/data/swbUV1cr/versions/wpE4tHiK/bluemap-5.13-paper.jar";
+            "plugins/bluemap-5.22-paper.jar" = pkgs.fetchurl {
+              url = "https://cdn.modrinth.com/data/swbUV1cr/versions/8Ci8SkQp/bluemap-5.22-paper.jar";
               hash = "sha256-KkMLP09ZZN+Ev4WhRp4BA6l+applaGAJbwurzwTsUqc=";
             };
           };
