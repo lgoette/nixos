@@ -6,7 +6,7 @@
 }:
 with lib;
 {
-  imports = [ vscode-server.nixosModules.home ];
+  imports = [ vscode-server.homeModules.default ];
 
   config = {
     # Install these packages for my user
