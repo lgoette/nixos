@@ -36,8 +36,8 @@ let
     }
     {
       ip = "10.11.12.7";
-      name = "Raspberry Pi Zero W";
-      publicKey = "BhB16enX+GWBjX9NKj1+sScpTylm106SAfbw2wJ/pHg=";
+      name = "VM Build Server";
+      publicKey = "BhBl6enX+GWBjX9NKj1+sScpTylm1O6SAfbw2wJ/pHg=";
     }
     {
       ip = "10.11.12.8";
