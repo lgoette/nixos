@@ -83,18 +83,8 @@ in
       after = [ "network.target" ];
 
       serviceConfig = {
-        # ExecStart = ''
-        #   ${pkgs.librespot} -n \"${cfg.name}\" -b ${cfg.bitrate}
-        # '' + (if cfg.enableCache then ''
-        #   -c ./cache
-        # '' else
-        #   "") + ''
-        #     --enable-volume-normalisation --initial-volume ${cfg.initialVolume} --device-type ${cfg.deviceType}" --zeroconf-port ${cfg.zeroconfigPort}
-        #   '';
-
-        # TODO: zeroconfigport not hardcoded. Somehow convert into string (in ExecStart)
-        ExecStart = ''
-          ${pkgs.librespot}/bin/librespot -n "${cfg.name}" -b 320 --enable-volume-normalisation --initial-volume 75 --device-type ${cfg.deviceType} --zeroconf-port 54120 --backend pulseaudio
+ExecStart = ''
+          ${pkgs.librespot}/bin/librespot -n "${cfg.name}" -b ${toString cfg.bitrate} --enable-volume-normalisation --initial-volume ${toString cfg.initialVolume} --device-type ${cfg.deviceType} --zeroconf-port ${toString cfg.zeroconfigPort} --backend pulseaudio
         '';
         Restart = "on-failure";
         RestartSec = "5s";
