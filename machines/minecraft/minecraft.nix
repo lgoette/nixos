@@ -13,14 +13,20 @@ in
   # define new options here
   options = { };
 
-  config = mkIf cfg.enable {
+  # config = mkIf cfg.enable {
+  #
+  #   systemd.services.minecraft-server = {
+  #     # replace pre-start with custom script
+  #     preStart = lib.mkForce ''
+  #       echo "custom pre-start"
+  #     '';
+  #   };
+  # };
 
-    systemd.services.minecraft-server = {
-      # replace pre-start with custom script
-      preStart = lib.mkForce ''
-        echo "custom pre-start"
-      '';
-    };
+  config = {
+    systemd.services.minecraft-server-vanilla.preStart = ''
+      rm -f /run/minecraft/vanilla.sock
+    '';
   };
 
 }
