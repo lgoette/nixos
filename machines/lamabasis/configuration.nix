@@ -79,18 +79,10 @@
     openssh.authorizedKeys.keys = [ ];
   };
 
-  # Enable a systemd service to prune unused docker images
-  systemd.services.docker-prune = {
-    description = "Prune unused Docker images";
-    serviceConfig.ExecStart = "${pkgs.docker}/bin/docker image prune -f";
-  };
-
-  systemd.timers.docker-prune = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "weekly";
-      Persistent = true;
-    };
+  # Enable docker auto prune weekly
+  virtualisation.docker.autoPrune = {
+    enable = true;
+    dates = "weekly";
   };
 
   # Enable tailscale vpn
