@@ -65,6 +65,7 @@ in
         "/etc/localtime:/etc/localtime:ro"
       ];
       extraOptions = [
+        "--pull=always"
         "--privileged"
         "--network=host"
       ]; # "--restart=unless-stopped"
