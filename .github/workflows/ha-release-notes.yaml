@@ -34,7 +34,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Comment on PR
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         env:
           RELEASE_BODY: ${{ steps.notes.outputs.body }}
           OLD_VERSION: ${{ steps.versions.outputs.old }}
