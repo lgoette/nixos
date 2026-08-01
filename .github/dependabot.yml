@@ -12,3 +12,10 @@ updates:
       - "MayNiklas"
     schedule:
       interval: "weekly"
+
+  - package-ecosystem: "docker"
+    directory: "/modules/home-assistant"
+    reviewers:
+      - "lgoette"
+    schedule:
+      interval: "weekly"
