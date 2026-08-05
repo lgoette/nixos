@@ -77,7 +77,9 @@
     ];
     extraSetFlags = [
       "--advertise-exit-node"
-      "--accept-routes"
+      # Tailscales Routing-Tabelle hat Vorrang vor der Haupttabelle und wuerde
+      # die WireGuard-Routen fuer 192.168.176.0/24 (von lamabasis) ueberschreiben.
+      "--accept-routes=false"
       "--advertise-routes=192.168.178.0/24"
     ];
   };
@@ -85,9 +87,11 @@
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
     startWhenNeeded = true;
-    kbdInteractiveAuthentication = false;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
     listenAddresses = [
       {
         addr = "0.0.0.0";
