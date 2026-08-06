@@ -24,7 +24,7 @@
   nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
   nix.registry.nixpkgs.flake = nixpkgs;
   sdImage.compressImage = false;
-  sdImage.imageBaseName = "pi4b-image";
+  image.baseName = "pi4b-image";
   ###
 
   imports = [
@@ -120,7 +120,7 @@
   clan.core.networking.buildHost = "lasse@10.11.12.7:50937";
   clan.core.enableRecommendedDefaults = false; # incompatible with some wireguard options
 
-  boot.initrd.systemd.enableTpm2 = false;
+  boot.initrd.systemd.tpm2.enable = false;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   system.stateVersion = "22.05";

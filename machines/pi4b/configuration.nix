@@ -23,7 +23,7 @@
   nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
   nix.registry.nixpkgs.flake = nixpkgs;
   sdImage.compressImage = false;
-  sdImage.imageBaseName = "pi4b-image";
+  image.baseName = "pi4b-image";
   ###
 
   imports = [
@@ -46,9 +46,11 @@
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
     startWhenNeeded = true;
-    kbdInteractiveAuthentication = false;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
   };
 
   environment.systemPackages = with pkgs; [
