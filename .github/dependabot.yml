@@ -1,9 +1,11 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
 version: 2
+registries:
+  ghcr-io:
+    type: docker-registry
+    url: https://ghcr.io
+    username: lgoette
+    password: ${{secrets.GHCR_PAT}}
+
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -15,6 +17,8 @@ updates:
 
   - package-ecosystem: "docker"
     directory: "/modules/home-assistant"
+    registries:
+      - ghcr-io
     reviewers:
       - "lgoette"
     schedule:
