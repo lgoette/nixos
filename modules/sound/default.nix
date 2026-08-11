@@ -41,9 +41,9 @@ in
           "--device"
           "hw:SCARLETT" # Use focusrite scarlett interface id set with udev rule
           "--rate"
-          "192000"
+          "48000"
           "--period"
-          "1024"
+          "64"
           "--nperiods"
           "3"
         ];
@@ -79,11 +79,11 @@ in
 
         # magic to me
         rtirq = {
-          # highList = "snd_hrtimer";
+          highList = "snd_hrtimer";
           resetAll = 1;
           prioLow = 0;
           enable = true;
-          nameList = "rtc0 snd";
+          nameList = "rtc0 snd xhci usb";
         };
       };
 

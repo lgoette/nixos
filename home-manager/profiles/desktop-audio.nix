@@ -67,13 +67,13 @@ with lib;
       chromium
 
       # Media
-      spotify
+      # spotify
       vlc
       yt-dlp
-      mixxx
+      # mixxx
 
       # Misc
-      screenfetch
+
     ];
     # ++ plugins;
 

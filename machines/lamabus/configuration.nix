@@ -58,7 +58,16 @@ in
     }
     // flake-self.inputs;
 
-    users.lasse = flake-self.homeProfiles.desktop-audio;
+    users.lasse = {
+      imports = [ flake-self.homeProfiles.desktop-audio ];
+      # Rebuild yabridge symlinks after every nixos-rebuild so plugin bridges
+      # point to the current yabridge store path instead of a stale one.
+      home.activation.yabridgectl =
+        flake-self.inputs.home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ]
+          ''
+            ${pkgs.yabridgectl}/bin/yabridgectl sync --force || true
+          '';
+    };
   };
 
   # Add lightweight desktop environment
@@ -134,13 +143,11 @@ in
     bash-completion
     git
     wget
-    wineWowPackages.stable
-    winePackages.stagingFull
+    wineWow64Packages.stagingFull
     # airwave
     carla
     yabridge
     yabridgectl
-    jack1
   ];
 
   systemd.user.services.apply-screen-rotation = {
@@ -153,15 +160,17 @@ in
   };
 
   systemd.user.services.carla = {
-    wantedBy = [
-      "default.target"
-      "graphical-session.target"
-    ];
+    wantedBy = [ "graphical-session.target" ];
+    requires = [ "jack.service" ];
     environment.DISPLAY = ":0";
     environment.WAYLAND_DISPLAY = "wayland-0";
     environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus";
     environment.QT_QPA_PLATFORM = "wayland";
     environment.XDG_RUNTIME_DIR = "/run/user/1000";
+    environment.WINEESYNC = "1";
+    environment.WINEFSYNC = "1";
+    environment.WINEDEBUG = "-all";
+    environment.STAGING_SHARED_MEMORY = "1";
     after = [
       "plasma-workspace-wayland.target"
       "jack.service"
@@ -172,6 +181,11 @@ in
       Type = "exec";
       #WorkingDirectory = "/home/lasse";
       ExecStop = "${pkgs.killall}/bin/killall -9 -r .*winedevice.exe";
+      CPUSchedulingPolicy = "fifo";
+      CPUSchedulingPriority = 50;
+      LimitMEMLOCK = "infinity";
+      Restart = "on-failure";
+      RestartSec = "5";
     };
     script = ''
       ${pkgs.carla}/bin/carla ~/.carla/default.carxp
@@ -186,18 +200,27 @@ in
     AllowSuspendThenHibernate = "no";
   };
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "nvme"
-    "usbhid"
-    "rtsx_pci_sdmmc"
-  ];
-  boot.kernelModules = [
-    "kvm-intel"
-    "snd-seq"
-    "snd-rawmidi"
-  ];
+  boot = {
+    kernelParams = [
+      "skew_tick=1"
+      "nmi_watchdog=0"
+      "transparent_hugepage=never"
+    ];
+
+    kernelModules = [
+      "kvm-intel"
+      "snd-seq"
+      "snd-rawmidi"
+    ];
+
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "nvme"
+      "usbhid"
+      "rtsx_pci_sdmmc"
+    ];
+  };
 
   # lollypops.deployment = {
   #   local-evaluation = false;
@@ -212,7 +235,7 @@ in
   swapDevices = [
     {
       device = "/var/swapfile";
-      size = (1024 * 2);
+      size = (1024 * 8);
     }
   ];
 
