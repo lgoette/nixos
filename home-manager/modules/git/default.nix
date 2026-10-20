@@ -47,12 +47,12 @@ in
           "node_modules/"
           "bun.lockb"
         ];
-        extraConfig = {
+        settings = {
+          user.email = "git@lasse-goette.de";
+          user.name = "lgoette";
           pull.rebase = false;
           init.defaultBranch = "main";
         };
-        userEmail = "git@lasse-goette.de";
-        userName = "lgoette";
       };
     };
     home.packages = with pkgs; [

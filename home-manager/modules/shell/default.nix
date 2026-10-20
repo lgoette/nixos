@@ -18,9 +18,9 @@ in
       autosuggestion.enable = true;
       enableCompletion = true;
       autocd = true;
-      dotDir = ".config/zsh";
+      dotDir = "${config.xdg.configHome}/zsh";
 
-      initExtra = ''
+      initContent = ''
         [[ -f ~/.profile ]] && . ~/.profile
 
         bindkey "^[[1;5C" forward-word

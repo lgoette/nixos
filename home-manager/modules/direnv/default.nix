@@ -33,7 +33,7 @@ in
         ignores = [ ".direnv/" ];
       };
       vscode = {
-        extensions = with pkgs.vscode-extensions; [ mkhl.direnv ];
+        profiles.default.extensions = with pkgs.vscode-extensions; [ mkhl.direnv ];
       };
     };
 

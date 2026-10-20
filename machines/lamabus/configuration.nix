@@ -8,17 +8,6 @@
 }:
 let
   primaryDisk = "/dev/disk/by-id/nvme-Samsung_SSD_980_1TB_S649NL0T853248L";
-  stable = import flake-self.inputs.nixpkgs-stable { system = "x86_64-linux"; };
-  carlaPythonPath = lib.concatStringsSep ":" (
-    map (p: "${p}/${stable.python3.sitePackages}") (
-      with stable.python3Packages; [
-        pyqt5
-        pyqt5-sip
-        rdflib
-        pyliblo3
-      ]
-    )
-  );
 in
 {
   imports = [
@@ -164,7 +153,10 @@ in
     yabridgectl
     x42-plugins
     aj-snapshot
-    neural-amp-modeler-lv2
+    # Ships the plugin with a native X11 UI merged into its bundle, replacing
+    # the modgui that Carla cannot render. Declares the same plugin URI and
+    # ships the same bundle path as neural-amp-modeler-lv2, so never both.
+    neural-amp-modeler-ui
   ];
 
   systemd.user.services.aj-snapshot = {
@@ -201,7 +193,6 @@ in
     environment.WINEFSYNC = "1";
     environment.WINEDEBUG = "-all";
     environment.STAGING_SHARED_MEMORY = "1";
-    environment.PYTHONPATH = carlaPythonPath;
     after = [
       "plasma-workspace-wayland.target"
       "jack.service"

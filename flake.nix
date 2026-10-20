@@ -280,6 +280,7 @@
               allowUnfree = true;
             };
           };
+          pkgs-stable = import nixpkgs-stable { inherit system; };
         in
         {
 
@@ -297,6 +298,14 @@
             woodpecker-pipeline = pkgs.callPackage ./packages/woodpecker-pipeline {
               inputs = inputs;
               flake-self = self;
+            };
+
+            # `pkgs` here has no overlays, so pass our own plugin explicitly
+            # rather than picking up nixpkgs' older release. Built from stable
+            # to match the overlay: carla dlopen's this bundle, so its
+            # cairo/pixman must link carla's glibc (see overlays/default.nix).
+            neural-amp-modeler-ui = pkgs-stable.callPackage ./packages/neural-amp-modeler-ui {
+              neural-amp-modeler-lv2 = pkgs-stable.callPackage ./packages/neural-amp-modeler-lv2 { };
             };
           };
 
