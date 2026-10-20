@@ -73,7 +73,10 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [ 5173 ]; # Open Port for NPM Dev Server (Stiftungsprojekt)
-      allowedUDPPorts = [ 7255 ]; # Open Port for IDN-Hello (Uni-Project)
+      allowedUDPPorts = [
+        7255
+        7355
+      ]; # Open Port for IDN-Hello (Uni-Project)
     };
     # Enable networkmanager
     networkmanager = {
@@ -141,6 +144,15 @@
 
   # Enable pcscd for yubikey support
   services.pcscd.enable = true;
+
+  # Android apps via Waydroid (braucht eine Wayland-Session)
+  # Einmalig nach dem Rebuild: sudo waydroid init
+  virtualisation.waydroid = {
+    enable = true;
+    # Kernel 6.18 liefert keine Legacy-ip_tables.ko mehr, waydroid-net.sh
+    # würde sonst auf iptables-legacy laufen und scheitern.
+    package = pkgs.waydroid-nftables;
+  };
 
   # Trackpad, Trackpoint and mouse options
   services.xserver.libinput.enable = true;

@@ -173,6 +173,9 @@ in
               "Timeout" = 0;
             };
           };
+          # Never turn off display
+          "powerdevilrc"."AC/Display"."TurnOffDisplayWhenIdle" = false;
+          "powerdevilrc"."AC/Display"."TurnOffDisplayIdleTimeoutSec" = -1;
           # Disable windowdecorations because wine has a bug with touchscreen input where the titlebar is creating an unwanted offset
           kwinrulesrc = {
             "General" = {

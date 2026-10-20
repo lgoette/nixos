@@ -43,10 +43,21 @@ in
           "--rate"
           "48000"
           "--period"
-          "64"
+          "128"
           "--nperiods"
           "3"
         ];
+        # Bridge ALSA MIDI into JACK without the ALSA client ID in port names.
+        # Without -u, a2jmidid names ports like "FootCtrlPlus [129] (capture): ..."
+        # and that number is reassigned every time a bluetooth device reconnects,
+        # so aj-snapshot can no longer match the stored connection. mkForce is
+        # required because the upstream jack module already sets this option and
+        # its type (lines) would otherwise merge and start a2jmidid twice.
+        # Requires ALSA client names to be unique, which they are here.
+        jackd.session = mkForce ''
+          ${pkgs.a2jmidid}/bin/a2jmidid -e -u &
+        '';
+
         # support ALSA only programs via ALSA JACK PCM plugin
         alsa.enable = true;
         # support ALSA only programs via loopback device (supports programs like Steam)

@@ -19,7 +19,19 @@ in
 
   minecraft-backup = super.pkgs.callPackage ../packages/minecraft-backup { };
   claude-sandbox = super.pkgs.callPackage ../packages/claude-sandbox { };
-  neural-amp-modeler-lv2 = super.pkgs.callPackage ../packages/neural-amp-modeler-lv2 { };
+  # Built from nixpkgs-stable for the same reason as carla below: the merged
+  # bundle gets dlopen'ed into the carla process, so the cairo/pixman the UI
+  # pulls in must link the same glibc carla already has loaded. Built against
+  # unstable, opening the UI fails with "Failed to load UI binary: version
+  # `GLIBC_ABI_GNU2_TLS' not found (required by libpixman-1.so.0)".
+  # This pins no version: both packages fetch their own pinned sources, so
+  # stable vs. unstable only decides which libraries they link against.
+  neural-amp-modeler-lv2 = nixpkgs-stable.callPackage ../packages/neural-amp-modeler-lv2 { };
+  # Must merge against our own neural-amp-modeler-lv2 (0.2.3): the UI drives
+  # port index 6 (quality_scale), which nixpkgs' older release does not have.
+  neural-amp-modeler-ui = nixpkgs-stable.callPackage ../packages/neural-amp-modeler-ui {
+    inherit (self) neural-amp-modeler-lv2;
+  };
 
   # inherit (super.pkgs.callPackages ../packages/unifi { }) unifiLTS unifi5 unifi6 unifi7;
   # unifi = super.pkgs.unifi7;
