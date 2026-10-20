@@ -19,6 +19,7 @@ in
 
   minecraft-backup = super.pkgs.callPackage ../packages/minecraft-backup { };
   claude-sandbox = super.pkgs.callPackage ../packages/claude-sandbox { };
+  neural-amp-modeler-lv2 = super.pkgs.callPackage ../packages/neural-amp-modeler-lv2 { };
 
   # inherit (super.pkgs.callPackages ../packages/unifi { }) unifiLTS unifi5 unifi6 unifi7;
   # unifi = super.pkgs.unifi7;

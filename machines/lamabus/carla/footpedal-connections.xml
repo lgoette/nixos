@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aj-snapshot>
+<alsa>
+  <client name="FootCtrlPlus">
+    <port id="0" />
+  </client>
+</alsa>
+<jack>
+  <client name="a2j">
+    <port name="FootCtrlPlus (capture): FootCtrlPlus Bluetooth">
+      <connection port="Midi Event Map:events-in" />
+    </port>
+  </client>
+  <client name="Midi Event Map">
+    <port name="events-out">
+      <connection port="Archetype Gojira:events-in" />
+    </port>
+  </client>
+</jack>
+</aj-snapshot>

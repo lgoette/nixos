@@ -8,6 +8,17 @@
 }:
 let
   primaryDisk = "/dev/disk/by-id/nvme-Samsung_SSD_980_1TB_S649NL0T853248L";
+  stable = import flake-self.inputs.nixpkgs-stable { system = "x86_64-linux"; };
+  carlaPythonPath = lib.concatStringsSep ":" (
+    map (p: "${p}/${stable.python3.sitePackages}") (
+      with stable.python3Packages; [
+        pyqt5
+        pyqt5-sip
+        rdflib
+        pyliblo3
+      ]
+    )
+  );
 in
 {
   imports = [
@@ -67,6 +78,7 @@ in
           ''
             ${pkgs.yabridgectl}/bin/yabridgectl sync --force || true
           '';
+
     };
   };
 
@@ -118,6 +130,8 @@ in
     user = "lasse";
   };
 
+  security.rtkit.enable = true;
+
   security.sudo.extraRules = [
     {
       users = [ "lasse" ];
@@ -148,7 +162,24 @@ in
     carla
     yabridge
     yabridgectl
+    x42-plugins
+    aj-snapshot
+    neural-amp-modeler-lv2
   ];
+
+  systemd.user.services.aj-snapshot = {
+    wantedBy = [ "graphical-session.target" ];
+    after = [
+      "jack.service"
+      "carla.service"
+    ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.aj-snapshot}/bin/aj-snapshot -d ${./carla/footpedal-connections.xml}";
+      Restart = "on-failure";
+      RestartSec = "5";
+    };
+  };
 
   systemd.user.services.apply-screen-rotation = {
     wantedBy = [ "graphical-session.target" ];
@@ -161,7 +192,6 @@ in
 
   systemd.user.services.carla = {
     wantedBy = [ "graphical-session.target" ];
-    requires = [ "jack.service" ];
     environment.DISPLAY = ":0";
     environment.WAYLAND_DISPLAY = "wayland-0";
     environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus";
@@ -171,6 +201,7 @@ in
     environment.WINEFSYNC = "1";
     environment.WINEDEBUG = "-all";
     environment.STAGING_SHARED_MEMORY = "1";
+    environment.PYTHONPATH = carlaPythonPath;
     after = [
       "plasma-workspace-wayland.target"
       "jack.service"
@@ -179,16 +210,17 @@ in
     serviceConfig = {
       # User = "lasse";
       Type = "exec";
-      #WorkingDirectory = "/home/lasse";
+      ExecStartPre = "${pkgs.bash}/bin/bash -c 'for i in $(seq 30); do [ -S /run/user/1000/wayland-0 ] && exit 0; sleep 1; done; exit 1'";
       ExecStop = "${pkgs.killall}/bin/killall -9 -r .*winedevice.exe";
       CPUSchedulingPolicy = "fifo";
       CPUSchedulingPriority = 50;
       LimitMEMLOCK = "infinity";
+      LimitRTPRIO = 99;
       Restart = "on-failure";
       RestartSec = "5";
     };
     script = ''
-      ${pkgs.carla}/bin/carla ~/.carla/default.carxp
+      ${pkgs.carla}/bin/carla ${./carla/default.carxp}
     '';
   };
 
@@ -282,6 +314,7 @@ in
     efiInstallAsRemovable = true;
   };
 
+  clan.core.networking.targetHost = config.networking.hostName;
   clan.core.deployment.requireExplicitUpdate = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
