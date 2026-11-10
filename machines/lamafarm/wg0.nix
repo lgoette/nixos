@@ -36,7 +36,7 @@ let
     }
     {
       ip = "10.11.12.7";
-      name = "VM Build Server";
+      name = "VM Lamaforge";
       publicKey = "BhBl6enX+GWBjX9NKj1+sScpTylm1O6SAfbw2wJ/pHg=";
     }
     {

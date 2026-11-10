@@ -59,7 +59,7 @@
   services.getty.autologinUser = "root";
 
   networking = {
-    hostName = "lamabuild";
+    hostName = "lamaforge";
     enableIPv6 = false;
     nameservers = [
       "1.1.1.1"
