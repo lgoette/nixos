@@ -76,7 +76,6 @@
 
       peers = [
 
-        # 10.11.12.100
         {
           publicKey = "qBxrUEGSaf/P4MovOwoUO4PXOjznnWRjE7HoEyZMBBA=";
           allowedIPs = [
@@ -84,6 +83,7 @@
             "10.11.12.5"
             "10.11.12.6"
             "10.11.12.8"
+            "10.11.12.100"
           ];
           persistentKeepalive = 15;
           endpoint = "lamafarm.lasse-goette.de:53115";
