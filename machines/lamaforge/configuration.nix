@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   flake-self,
   ...
@@ -94,6 +95,13 @@
     };
 
   };
+
+  environment.systemPackages = with pkgs; [
+    tmux
+    claude-code
+    claude-sandbox
+    claude-monitor
+  ];
 
   # Use KVM / QEMU
   services.qemuGuest.enable = true;

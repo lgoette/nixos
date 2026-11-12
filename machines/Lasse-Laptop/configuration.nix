@@ -73,10 +73,19 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [ 5173 ]; # Open Port for NPM Dev Server (Stiftungsprojekt)
+      # Open Ports for IDN-Hello (Uni-Projekt)
       allowedUDPPorts = [
         7255
         7355
-      ]; # Open Port for IDN-Hello (Uni-Project)
+      ];
+      extraCommands = ''
+        iptables  -A nixos-fw -p udp --sport 7255 -j nixos-fw-accept
+        ip6tables -A nixos-fw -p udp --sport 7255 -j nixos-fw-accept
+      '';
+      extraStopCommands = ''
+        iptables  -D nixos-fw -p udp --sport 7255 -j nixos-fw-accept || true
+        ip6tables -D nixos-fw -p udp --sport 7255 -j nixos-fw-accept || true
+      '';
     };
     # Enable networkmanager
     networkmanager = {

@@ -46,6 +46,7 @@ with lib;
       traceroute
       remmina
       parsec-bin
+      tmux
       # barrier # TODO: Keyboard is us instead of de when starting input-leap
       # input-leap # Fails to build
       yubioath-flutter
@@ -81,6 +82,7 @@ with lib;
       go
       rust-analyzer
       bacon
+      cargo
       claude-code
       claude-monitor
       claude-sandbox
