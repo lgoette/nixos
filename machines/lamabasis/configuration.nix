@@ -15,6 +15,22 @@
     ./wg0.nix
   ];
 
+  # Remove when the Pi kernel includes upstream commit 10a47fb67340.
+  # Older kernel tools lack __u128, which newer ARM64 system headers require.
+  # nixos-hardware ignores boot.kernelPatches for the Pi kernel, so patch it directly.
+  boot.kernelPackages = pkgs.linuxPackagesFor (
+    (pkgs.callPackage "${nixos-hardware}/raspberry-pi/common/kernel.nix" { rpiVersion = 4; })
+    .overrideAttrs
+      (old: {
+        patches = old.patches ++ [
+          (pkgs.fetchurl {
+            url = "https://github.com/torvalds/linux/commit/10a47fb67340.patch";
+            hash = "sha256-MLRaNOAprujNVxIzAKg6sd/kc8tsiNh60bPMzYkeBkg=";
+          })
+        ];
+      })
+  );
+
   # Sound on Raspberry Pi
   # boot = {
   #   extraModprobeConfig = ''
@@ -223,6 +239,7 @@
   };
 
   clan.core.networking.targetHost = config.networking.hostName;
+  clan.core.networking.buildHost = "lasse@10.11.12.7:50937";
   clan.core.enableRecommendedDefaults = false; # incompatible with some wireguard options
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
