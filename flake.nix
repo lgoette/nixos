@@ -32,6 +32,7 @@
       url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
       # Don't do this if your machines are on nixpkgs stable.
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.disko.follows = "disko";
     };
 
     # https://github.com/nix-community/disko

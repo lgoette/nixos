@@ -103,6 +103,8 @@
     claude-monitor
   ];
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; # allows building ARM stuff
+
   # Use KVM / QEMU
   services.qemuGuest.enable = true;
 
