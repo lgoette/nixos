@@ -79,6 +79,13 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
+    # https://github.com/lgoette/librepods
+    # Librepods rust tray app for linux (can be removed when merged)
+    librepods = {
+      url = "github:lgoette/librepods/linux/rust";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # https://github.com/mayniklas/nixos
     # @MayNiklas NixOS configuration
     # We use a few modules from this flake as well as @MayNiklas home manager config

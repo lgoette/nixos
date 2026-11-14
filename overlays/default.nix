@@ -33,6 +33,9 @@ in
     inherit (self) neural-amp-modeler-lv2;
   };
 
+  # Rust fork of librepods, until merged upstream (programs.librepods uses pkgs.librepods)
+  librepods = inputs.librepods.packages.${system}.default;
+
   # inherit (super.pkgs.callPackages ../packages/unifi { }) unifiLTS unifi5 unifi6 unifi7;
   # unifi = super.pkgs.unifi7;
 

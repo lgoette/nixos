@@ -29,6 +29,22 @@ with lib;
       };
     };
 
+    # Librepods tray icon
+    # Requires programs.librepods.enable and the librepods group on the NixOS side
+    systemd.user.services.librepods = {
+      Unit = {
+        Description = "Librepods tray icon";
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "/run/wrappers/bin/librepods --start-minimized";
+        Restart = "on-failure";
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
+
     # Install these packages for my user
     home.packages = with pkgs; [
 

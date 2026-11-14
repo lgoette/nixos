@@ -52,7 +52,7 @@
     users.lasse = flake-self.homeProfiles.desktop;
   };
 
-  # Enable Librepods Tray-App
+  # Enable Librepods Tray-App (package comes from overlays/default.nix)
   programs.librepods.enable = true;
 
   # Enable tailscale vpn
