@@ -42,7 +42,9 @@ in
   # packages from nixpkgs-stable
   # yabridge must come from the same nixpkgs as carla: its libyabridge-*.so
   # gets dlopen'ed into the carla process, so both need the same glibc.
+  # aider-chat: on unstable its dependency python3-posthog is marked broken.
   inherit (nixpkgs-stable)
+    aider-chat
     carla
     yabridge
     yabridgectl

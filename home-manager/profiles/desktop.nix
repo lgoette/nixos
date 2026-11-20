@@ -11,7 +11,11 @@ with lib;
       programs.plasma.enable = true;
       programs.direnv.enable = true;
       programs.git.enable = true;
+      programs.aider.enable = true;
     };
+
+    # KDE's font installer rewrites this file; overwrite it on every rebuild
+    xdg.configFile."fontconfig/conf.d/10-hm-fonts.conf".force = true;
 
     # Activate Trayscale tray icon
     systemd.user.services.trayscale = {

@@ -57,6 +57,8 @@
     ];
   };
 
+  lgoette.local-llm.enable = true;
+
   services.getty.autologinUser = "root";
 
   networking = {
